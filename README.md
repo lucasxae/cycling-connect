@@ -1,18 +1,20 @@
-# [Nome do projeto]
+# Pedal Conecta (provisório)
 
-[Escreva um ou dois  parágrafo resumindo o objetivo do seu projeto.]
+O objetivo deste projeto é desenvolver e implementar uma aplicativo móvel dedicado para otimizar o treinamento de ciclistas, visando melhorar o processo de comunicação e acompanhamento entre o treinador e os atletas. A aplicação buscará superar as limitações do atual método manual de envio de planilhas diárias via WhatsApp, proporcionando uma experiência mais eficiente e personalizada para cada ciclista. O foco está na criação de um ambiente virtual que permita a fácil disponibilização das fichas de treino, adaptação dinâmica conforme as necessidades individuais, e a implementação de mecanismos eficazes de acompanhamento do progresso, facilitando a avaliação da aderência ao programa de treinamento.
 
 ## Alunos integrantes da equipe
 
-* [Nome completo do aluno 1]
-* [Nome completo do aluno 2]
-* [Nome completo do aluno 3]
-* [Nome completo do aluno 4]
+* Ana Luiza Machado Alves
+* André Augusto Silva Carvalho
+* Guilherme Leroy Teixeira Capanema
+* Lucas Henrique Chaves de Barros
+* Ryann Victor de Almeida Parreira
 
 ## Professores responsáveis
 
-* [Nome completo do professor 1]
-* [Nome completo do professor 2]
+* Eveline Alonso Veloso
+* Lucas Henrique Pereira
+* Pedro Pongelupe Lopes
 
 ## Instruções de utilização
 
