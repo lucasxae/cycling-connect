@@ -6,7 +6,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.CyclingConnect.cyclingconnect.repositories.UsuarioRepository;
+import com.CyclingConnect.cyclingconnect.repositories.UserRepository;
+
 
 
 /**
@@ -16,7 +17,7 @@ import com.CyclingConnect.cyclingconnect.repositories.UsuarioRepository;
 public class AuthorizationService implements UserDetailsService {
 
     @Autowired
-    UsuarioRepository repository;
+    UserRepository repository;
 
 
     /**

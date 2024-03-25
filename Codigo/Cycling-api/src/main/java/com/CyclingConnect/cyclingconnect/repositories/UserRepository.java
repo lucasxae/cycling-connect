@@ -4,13 +4,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
-import com.CyclingConnect.cyclingconnect.models.Usuario;
+import com.CyclingConnect.cyclingconnect.models.User;
 
 /**
  * Repositório para operações relacionadas a usuários.
  */
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuario, String>{
+public interface UserRepository extends JpaRepository<User, Long>{
 
      /**
      * Busca um usuário pelo login.
