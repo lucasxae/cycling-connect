@@ -31,7 +31,7 @@ public class User {
     @Column(name = "cpf", length = 11, unique = true, nullable = false)
     private String cpf;
 
-    @Column(name = "type",nullable = false)
+    @Column(name = "type", nullable = false)
     private String type;
 
     @Column(name = "email", length = 50, unique = true, nullable = false)
@@ -53,11 +53,12 @@ public class User {
     public User() {
     }
 
-    public User(Integer id, String login, String cpf, String email, String phone, String gender, String profileUrl,
-            String password) {
+    public User(Integer id, String login, String cpf, String type, String email, String phone, String gender,
+            String profileUrl, String password) {
         this.id = id;
         this.login = login;
         this.cpf = cpf;
+        this.type = type;
         this.email = email;
         this.phone = phone;
         this.gender = gender;
@@ -73,12 +74,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUser() {
+    public String getLogin() {
         return this.login;
     }
 
-    public void setUser(String user) {
-        this.login = user;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getCpf() {
@@ -87,6 +88,14 @@ public class User {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public String getType() {
+        return this.type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getEmail() {
