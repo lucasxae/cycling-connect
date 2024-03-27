@@ -1,6 +1,12 @@
 package com.CyclingConnect.cyclingconnect.models;
 
-import jakarta.annotation.Nonnull;
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,7 +16,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = User.TABLE_NAME)
-public class User {
+public class User implements UserDetails {
 
     public interface CreateUser {
     }
@@ -25,43 +31,51 @@ public class User {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "login", length = 100, unique = true)
+    @Column(name = "login", length = 100, unique = true, nullable = false)
     private String login;
 
-    @Column(name = "cpf", length = 11, unique = true, nullable = false)
+    @Column(name = "cpf", length = 11, unique = true, nullable = true)
     private String cpf;
 
-    @Column(name = "type",nullable = false)
-    private String type;
+    @Column(name = "type", nullable = false)
+    private UserType type;
 
-    @Column(name = "email", length = 50, unique = true, nullable = false)
+    @Column(name = "email", unique = true)
     private String email;
 
     @Column(name = "phone", length = 50, unique = true, nullable = false)
     private String phone;
 
-    @Column(name = "gender", length = 50, unique = true, nullable = false)
-    private String gender;
+    @Column(name = "gender", length = 50, nullable = false)
+    private char gender;
 
-    @Column(name = "profileUrl", length = 5000, unique = false, nullable = true)
-    private String profileUrl;
+    @Column(name = "birthdate", nullable = false)
+    private String birthdate;
 
-    @Column(name = "password", length = 60)
-    @Nonnull
+    @Column(name = "password", nullable = false)
     private String password;
 
     public User() {
     }
 
-    public User(Integer id, String login, String cpf, String email, String phone, String gender, String profileUrl,
-            String password) {
+    public User(String login, String password, UserType role, String phone, char gender, String birthdate, String email) {
+        this.login = login;
+        this.password = password;
+        this.type = role;
+        this.phone = phone;
+        this.birthdate = birthdate;
+        this.gender = gender;
+    }
+
+    public User(Integer id, String login, String cpf, UserType type, String email, String phone, char gender,
+            String profileUrl, String password) {
         this.id = id;
         this.login = login;
         this.cpf = cpf;
+        this.type = type;
         this.email = email;
         this.phone = phone;
         this.gender = gender;
-        this.profileUrl = profileUrl;
         this.password = password;
     }
 
@@ -73,12 +87,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUser() {
+    public String getLogin() {
         return this.login;
     }
 
-    public void setUser(String user) {
-        this.login = user;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getCpf() {
@@ -87,6 +101,14 @@ public class User {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public UserType getType() {
+        return this.type;
+    }
+
+    public void setType(UserType type) {
+        this.type = type;
     }
 
     public String getEmail() {
@@ -105,20 +127,12 @@ public class User {
         this.phone = phone;
     }
 
-    public String getGender() {
+    public char getGender() {
         return this.gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(char gender) {
         this.gender = gender;
-    }
-
-    public String getProfileUrl() {
-        return this.profileUrl;
-    }
-
-    public void setProfileUrl(String profileUrl) {
-        this.profileUrl = profileUrl;
     }
 
     public String getPassword() {
@@ -127,6 +141,37 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if(this.type == UserType.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    @Override
+    public String getUsername() {
+        return login;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
 }

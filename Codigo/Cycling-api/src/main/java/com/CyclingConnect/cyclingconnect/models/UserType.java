@@ -4,8 +4,8 @@ package com.CyclingConnect.cyclingconnect.models;
  * Enumeração que define os tipos de usuário.
  */
 public enum UserType {
-    ADMIN("admin"),
-    USER("user");
+    ADMIN("ADMIN"),
+    USER("USER");
 
     private String role;
 
