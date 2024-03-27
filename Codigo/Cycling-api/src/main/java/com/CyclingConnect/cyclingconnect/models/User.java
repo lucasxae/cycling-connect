@@ -58,13 +58,15 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String login, String password, UserType role, String phone, char gender, String birthdate, String email) {
+    public User(String login, String password, UserType role, String phone, char gender, String birthdate, String email,
+            String cpf) {
         this.login = login;
         this.password = password;
         this.type = role;
         this.phone = phone;
         this.birthdate = birthdate;
         this.gender = gender;
+        this.cpf = cpf;
     }
 
     public User(Integer id, String login, String cpf, UserType type, String email, String phone, char gender,
@@ -145,8 +147,10 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(this.type == UserType.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
-        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        if (this.type == UserType.ADMIN)
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        else
+            return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override
