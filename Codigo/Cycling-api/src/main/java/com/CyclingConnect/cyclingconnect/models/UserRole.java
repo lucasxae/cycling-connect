@@ -3,7 +3,7 @@ package com.CyclingConnect.cyclingconnect.models;
 /**
  * Enumeração que define os tipos de usuário.
  */
-public enum UserType {
+public enum UserRole {
     ADMIN("ADMIN"),
     USER("USER");
 
@@ -15,7 +15,7 @@ public enum UserType {
      * 
      * @param role A role associada ao tipo de usuário.
      */
-    private UserType(String role) {
+    private UserRole(String role) {
         this.role = role;
     }
 
