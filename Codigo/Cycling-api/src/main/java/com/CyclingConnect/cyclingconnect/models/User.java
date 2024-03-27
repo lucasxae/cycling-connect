@@ -25,13 +25,13 @@ public class User {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "login", length = 100, unique = true)
+    @Column(name = "login", length = 100, unique = true, nullable = false)
     private String login;
 
     @Column(name = "cpf", length = 11, unique = true, nullable = false)
     private String cpf;
 
-    @Column(name = "type", nullable = false)
+    @Column(name = "type", nullable = false, length = 50, unique = false)
     private String type;
 
     @Column(name = "email", length = 50, unique = true, nullable = false)
@@ -40,7 +40,7 @@ public class User {
     @Column(name = "phone", length = 50, unique = true, nullable = false)
     private String phone;
 
-    @Column(name = "gender", length = 50, unique = true, nullable = false)
+    @Column(name = "gender", length = 50, unique = false, nullable = false)
     private String gender;
 
     @Column(name = "profileUrl", length = 5000, unique = false, nullable = true)

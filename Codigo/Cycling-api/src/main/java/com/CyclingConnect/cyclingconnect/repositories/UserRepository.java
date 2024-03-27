@@ -24,5 +24,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
      */
     UserDetails findByLogin(String login);
 
-    Optional<User> findByLog(String login);
 }

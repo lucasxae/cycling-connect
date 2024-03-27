@@ -28,23 +28,19 @@ public class UserService {
 
     @Transactional
     public User createUser(User obj) {
-        User athlete = new User();
-        obj.setLogin(obj.getLogin());
         obj.setId(null);
-        obj.setLogin(athlete.getLogin());
-
         obj = this.userRepository.save(obj);
         return obj;
     }
 
-    public void updatePassword(String login, String newPassword) {
-        Optional<User> user = userRepository.findByLog(login);
-        if (user.isPresent()) {
-            User actualUser = user.get();
-            actualUser.setPassword(newPassword);
-            userRepository.save(actualUser);
-        } else {
-            throw new UsernameNotFoundException("User not found with login: " + login);
-        }
-    }
+    // public void updatePassword(String login, String newPassword) {
+    //     Optional<User> user = userRepository.findByLog(login);
+    //     if (user.isPresent()) {
+    //         User actualUser = user.get();
+    //         actualUser.setPassword(newPassword);
+    //         userRepository.save(actualUser);
+    //     } else {
+    //         throw new UsernameNotFoundException("User not found with login: " + login);
+    //     }
+    // }
 }

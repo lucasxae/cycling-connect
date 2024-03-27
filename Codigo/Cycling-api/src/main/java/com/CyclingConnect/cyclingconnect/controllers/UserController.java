@@ -16,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,7 +30,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/{login}", method = RequestMethod.GET)
+    @GetMapping("/{login}")
     public ResponseEntity<String> getUser(@PathVariable String login) {
         String entity = this.userService.findByLogin(login);
         return ResponseEntity.ok(entity);
@@ -43,10 +44,11 @@ public class UserController {
         return ResponseEntity.created(uri).build();
     }
 
-    @PutMapping("changePassword/{id}")
-    public String putMethodName(@PathVariable String id, @RequestBody String entity) {
-        this.userService.updatePassword(id, entity);
+    // @PutMapping("changePassword/{id}")
+    // public String putMethodName(@PathVariable String id, @RequestBody String
+    // entity) {
+    // this.userService.updatePassword(id, entity);
 
-        return entity;
-    }
+    // return entity;
+    // }
 }
