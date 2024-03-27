@@ -16,6 +16,16 @@ buildscript {
         classpath("com.facebook.react:react-native-gradle-plugin")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
     }
+    allprojects {
+
+        repositories { /* ... */ }
+
+        configurations.all {
+            resolutionStrategy {
+                force 'com.facebook.react:react-native:0.73.6'
+            }
+        }
+    }
 }
 
 apply plugin: "com.facebook.react.rootproject"
