@@ -1,11 +1,13 @@
 package com.CyclingConnect.cyclingconnect.repositories;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Optional;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 import com.CyclingConnect.cyclingconnect.models.User;
+import java.util.List;
 
 /**
  * Repositório para operações relacionadas a usuários.
@@ -20,6 +22,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
      * @return Os detalhes do usuário encontrado.
      */
     UserDetails findByLogin(String login);
-
 
 }
