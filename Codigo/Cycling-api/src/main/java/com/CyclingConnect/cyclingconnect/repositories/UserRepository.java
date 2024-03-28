@@ -3,6 +3,7 @@ package com.CyclingConnect.cyclingconnect.repositories;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
@@ -22,5 +23,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
      * @return Os detalhes do usuário encontrado.
      */
     UserDetails findByLogin(String login);
+
+    @Query("SELECT u FROM User u WHERE u.login = :login")
+    User findByLoginAsync(String login);
 
 }

@@ -33,4 +33,17 @@ public class AuthorizationService implements UserDetailsService {
         return repository.findByLogin(username);
     }
 
+    /**
+     * Faz a requisição de atualizar a senha do usuário.
+     * 
+     * @param newPassword A nova senha do usuário.
+     * @return Booleano que indica se a senha foi atualizada.
+     */
+    public User changeUserPassword(String newPassword, String username) {
+        User user = repository.findByLoginAsync(username);
+        user.getPassword();
+        user.setPassword(newPassword);
+        return repository.save(user);
+    }
+
 }
