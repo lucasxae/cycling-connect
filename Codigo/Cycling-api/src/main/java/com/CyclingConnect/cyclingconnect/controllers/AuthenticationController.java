@@ -6,9 +6,12 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.CyclingConnect.cyclingconnect.infra.security.TokenService;
@@ -34,30 +37,35 @@ public class AuthenticationController {
 
     /**
      * Endpoint para autenticar um usuário.
+     * 
      * @param data Os dados de autenticação do usuário.
-     * @return Um ResponseEntity contendo o token de autenticação se a autenticação for bem-sucedida.
+     * @return Um ResponseEntity contendo o token de autenticação se a autenticação
+     *         for bem-sucedida.
      */
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data){
+    public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data) {
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);
 
-        var token = tokenService.generateToken((User)auth.getPrincipal());
+        var token = tokenService.generateToken((User) auth.getPrincipal());
 
         return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
     /**
      * Endpoint para registrar um novo usuário.
+     * 
      * @param data Os dados do novo usuário.
      * @return Um ResponseEntity indicando se o registro foi bem-sucedido.
      */
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid RegisterDTO data){
-        if (this.userRepository.findByLogin(data.login()) != null) return ResponseEntity.badRequest().build();
+    public ResponseEntity register(@RequestBody @Valid RegisterDTO data) {
+        if (this.userRepository.findByLogin(data.login()) != null)
+            return ResponseEntity.badRequest().build();
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-        User newUser = new User(data.login(), encryptedPassword, data.role(), data.phone(), data.gender(), data.birthdate(), data.email(), data.cpf());
-            
+        User newUser = new User(data.login(), encryptedPassword, data.role(), data.phone(), data.gender(),
+                data.birthdate(), data.email(), data.cpf());
+
         this.userRepository.save(newUser);
 
         return ResponseEntity.ok().build();
@@ -65,10 +73,31 @@ public class AuthenticationController {
 
     /**
      * Endpoint para obter todos os usuários.
+     * 
      * @return Um ResponseEntity contendo a lista de todos os usuários registrados.
      */
     @GetMapping("/allUsers")
-    public ResponseEntity allUsers(){
+    public ResponseEntity allUsers() {
         return ResponseEntity.ok(this.userRepository.findAll());
     }
+
+    /**
+     * Endpoint para alterar a senha de um usuário.
+     * 
+     * @param newPassword A nova senha do usuário.
+     * @return Um ResponseEntity indicando se a senha foi alterada com sucesso.
+     */
+
+    @PutMapping("/changePassword/{username}")
+    public ResponseEntity changePassword(@PathVariable String username, @RequestParam String newPassword) {
+        User user = this.userRepository.findByLoginAsync(username);
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+        String encryptedPassword = new BCryptPasswordEncoder().encode(newPassword);
+        user.setPassword(encryptedPassword);
+        this.userRepository.save(user);
+        return ResponseEntity.ok().build();
+    }
+
 }
