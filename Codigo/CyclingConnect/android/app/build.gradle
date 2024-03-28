@@ -102,6 +102,11 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
+    externalNativeBuild {
+        cmake {
+            version "3.22.1"
+        }
+    }
 }
 
 dependencies {
