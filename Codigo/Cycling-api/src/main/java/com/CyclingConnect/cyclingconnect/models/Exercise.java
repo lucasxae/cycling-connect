@@ -7,10 +7,19 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import jakarta.persistence.Table;
-import java.util.Objects;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = Exercise.TABLE_NAME)
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@EqualsAndHashCode(of = "id")
 public class Exercise {
 
     public static final String TABLE_NAME = "exercise";
@@ -22,43 +31,4 @@ public class Exercise {
 
     @Column(name = "description")
     private String description;
-
-    public Exercise() {
-    }
-
-    public Exercise(String description) {
-        this.description = description;
-    }
-
-    public Long getId() {
-        return this.id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (!(o instanceof Exercise))
-            return false;
-            Exercise exercise = (Exercise) o;
-        return Objects.equals(id, exercise.id) && Objects.equals(description, exercise.description);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, description);
-    }
-
 }
