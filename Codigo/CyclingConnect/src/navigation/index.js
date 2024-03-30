@@ -6,6 +6,8 @@ import {
 } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Welcome from '../screens/Welcome';
+import Login from '../screens/Login';
+import Signup from '../screens/Signup';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +18,16 @@ function RootNavigator() {
         name="Welcome"
         component={Welcome}
         options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{headerShown: true}}
+      />
+      <Stack.Screen
+        name="Signup"
+        component={Signup}
+        options={{headerShown: true}}
       />
     </Stack.Navigator>
   );
