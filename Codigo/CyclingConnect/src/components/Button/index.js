@@ -1,7 +1,7 @@
 import React from 'react';
 import * as S from './styles';
 
-function Button({children, onPress, bgColor, ...props}) {
+function Button({children, onPress, ...props}) {
   return (
     <S.ButtonContainer>
       <S.Button
@@ -11,7 +11,7 @@ function Button({children, onPress, bgColor, ...props}) {
         height={props.height}
         padding={props.padding}
         borderRadius={props.borderRadius}
-        backgroundColor={bgColor}>
+        backgroundColor={props.bgColor}>
         {children}
       </S.Button>
     </S.ButtonContainer>

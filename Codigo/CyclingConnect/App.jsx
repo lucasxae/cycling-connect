@@ -10,11 +10,6 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 function App() {
   const colorScheme = useColorScheme();
-  const isDarkMode = colorScheme === 'dark';
-
-  // const backgroundStyle = {
-  //   backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  // };
 
   return (
     <GestureHandlerRootView style={{flex: 1}}>
