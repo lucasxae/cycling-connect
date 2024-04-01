@@ -9,6 +9,7 @@ function CustomText({children, ...props}) {
         align={props.align}
         color={props.color}
         size={props.size}
+        bold={props.bold}
         lineHeight={props.lineHeight}
         marginBottom={props.marginBottom}>
         {children}

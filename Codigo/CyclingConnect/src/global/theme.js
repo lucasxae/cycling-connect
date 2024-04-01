@@ -4,6 +4,7 @@ export default {
     textLight: '#f0f0f0',
     light_text: 'rgba(23, 23, 27, 0.6)',
     detail: '#747476',
+    error: '#F03C24',
 
     palette: {
       primary: '#F03C24',
@@ -30,7 +31,8 @@ export default {
     primaryExtraLight: 'Inter-ExtraLight',
   },
   fontSizes: {
-    small: '12px',
+    smaller: '12px',
+    small: '14px',
     regular: '16px',
     medium: '18px',
     large: '20px',

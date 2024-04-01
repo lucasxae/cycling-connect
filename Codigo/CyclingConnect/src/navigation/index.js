@@ -22,12 +22,22 @@ function RootNavigator() {
       <Stack.Screen
         name="Login"
         component={Login}
-        options={{headerShown: true}}
+        options={{
+          headerShown: true,
+          headerShadowVisible: false,
+          headerTitle: '',
+          headerTransparent: true,
+        }}
       />
       <Stack.Screen
         name="Signup"
         component={Signup}
-        options={{headerShown: true}}
+        options={{
+          headerShown: true,
+          headerShadowVisible: false,
+          headerTitle: '',
+          headerTransparent: true,
+        }}
       />
     </Stack.Navigator>
   );

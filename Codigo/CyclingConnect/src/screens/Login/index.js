@@ -1,18 +1,26 @@
 import React from 'react';
 import {useForm, Controller} from 'react-hook-form';
-import {View, TextInput, Text} from 'react-native';
-import {loginSchema} from '../../utils/schemas/schemas';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {Button} from '../../components/Button/styles';
-import CustomText from '../../components/CustomText';
+import {loginSchema} from '../../utils/schemas/schemas';
+import {
+  Button,
+  CustomText,
+  CustomInput,
+  Separator,
+  Link,
+} from '../../components';
+import {View} from 'react-native';
 import * as S from './styles';
+import useKeyboardListener from '../../hooks/useKeyboardListener';
+import CyclingConnect from '../../assets/images/cc-logo2.svg';
 
-function Login() {
+function Login({navigation}) {
+  const keyboardOpen = useKeyboardListener();
   const {
     control,
     handleSubmit,
     setError,
-    formState: {errors, isSubmitting},
+    formState: {errors, isSubmitting, isValid},
   } = useForm({
     defaultValues: {
       email: '',
@@ -40,49 +48,93 @@ function Login() {
   };
 
   return (
-    <S.SafeAreaView>
-      <View>
-        <Controller
-          name="email"
-          control={control}
-          render={({field: {onChange, onBlur, value}}) => (
-            <>
-              <Text>E-mail</Text>
-              <TextInput
-                placeholder="E-mail"
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
+    <S.KeyboardWrapper>
+      <S.SafeAreaView keyboardVisible={keyboardOpen}>
+        <S.Container>
+          <S.Background>
+            {!keyboardOpen && (
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginTop: 20,
+                }}>
+                <CyclingConnect width={150} height={150} />
+              </View>
+            )}
+            <S.Content keyboardVisible={keyboardOpen}>
+              <S.TitleContainer>
+                <CustomText bold size={24} hasMargin align={'left'}>
+                  Faça login
+                </CustomText>
+              </S.TitleContainer>
+              <Controller
+                name="email"
+                control={control}
+                render={({field: {onChange, onBlur, value}}) => (
+                  <CustomInput
+                    label="Email"
+                    placeholder="Email"
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                  />
+                )}
               />
-            </>
-          )}
-        />
-        {errors.email && <Text>{errors.email.message}</Text>}
-        <Controller
-          name="password"
-          control={control}
-          render={({field: {onChange, onBlur, value}}) => (
-            <>
-              <Text>Senha</Text>
-              <TextInput
-                placeholder="Senha"
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
+              {errors.email && <S.Error>{errors.email.message}</S.Error>}
+              <Controller
+                name="password"
+                control={control}
+                render={({field: {onChange, onBlur, value}}) => (
+                  <CustomInput
+                    label="Senha"
+                    placeholder="Senha"
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                    secureTextEntry
+                    password
+                    hasMargin
+                  />
+                )}
               />
-            </>
-          )}
-        />
-        {errors.password && <Text>{errors.password.message}</Text>}
-        <Button onPress={handleSubmit(onSubmit)}>
-          <CustomText>Entrar</CustomText>
-        </Button>
-        <Button onPress={handleSubmit(onSubmit)} backgroundColor={'#fff'}>
-          <CustomText>Entrar com o Google</CustomText>
-        </Button>
-        {errors.root && <Text>{errors.root.message}</Text>}
-      </View>
-    </S.SafeAreaView>
+              <Link
+                onPress={() => console.log('Esqueceu a senha?')}
+                linkText={'Esqueceu a senha?'}
+                align={'right'}
+                justifyContent={'flex-end'}
+              />
+              <Button
+                hasMargin
+                mt={30}
+                fullWidth
+                onPress={handleSubmit(onSubmit)}
+                disabled={!isValid || isSubmitting}>
+                <CustomText bold color={'#fff'}>
+                  Entrar
+                </CustomText>
+              </Button>
+              <Separator mv={20} text={'ou'} />
+              <Button
+                fullWidth={true}
+                onPress={handleSubmit(googleSubmit)}
+                bgColor={'#fff'}>
+                <CustomText bold>Entrar com o Google</CustomText>
+              </Button>
+              {errors.root && <S.Error>{errors.root.message}</S.Error>}
+              <Link
+                onPress={() => navigation.navigate('Signup')}
+                regularText={`Não tem uma conta?`}
+                linkText={'Cadastre-se'}
+                align={'center'}
+                mt={30}
+              />
+            </S.Content>
+          </S.Background>
+        </S.Container>
+      </S.SafeAreaView>
+    </S.KeyboardWrapper>
   );
 }
 
