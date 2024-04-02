@@ -17,7 +17,7 @@ function Welcome() {
       <Text>Bem-vindo!</Text>
       <CustomCarousel data={slides} />
       <Button title="Login" onPress={() => handleNavigation('Login')} />
-      <Button title="Cadastro" onPress={() => console.log('nada ainda')} />
+      <Button title="Cadastro" onPress={() => handleNavigation('Signup')} />
     </S.Container>
   );
 }
