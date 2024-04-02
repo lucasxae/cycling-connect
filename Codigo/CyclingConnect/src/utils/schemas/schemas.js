@@ -6,8 +6,11 @@ export const loginSchema = z.object({
 });
 
 export const signUpSchema = z.object({
+  cpf: z.string().length(11),
   name: z.string().min(3),
   email: z.string().email(),
+  phone: z.string().length(11),
+  gender: z.string(),
+  birthDate: z.string().length(10),
   password: z.string().min(8),
-  confirmPassword: z.string().min(8),
 });

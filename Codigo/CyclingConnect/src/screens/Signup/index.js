@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useCallback} from 'react';
 import {useForm, Controller} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {signUpSchema} from '../../utils/schemas/schemas';
@@ -10,6 +10,7 @@ import {
   Link,
 } from '../../components';
 import * as S from './styles';
+import {api} from '../../services/api';
 
 function Signup() {
   const {
@@ -19,28 +20,42 @@ function Signup() {
     formState: {errors, isSubmitting, isValid},
   } = useForm({
     defaultValues: {
-      name: '',
-      email: '',
-      phone: '',
+      login: '',
       password: '',
-      confirmPassword: '',
+      phone: '',
+      gender: '',
+      birthdate: '',
+      email: '',
+      cpf: '',
     },
     resolver: zodResolver(signUpSchema),
   });
 
-  const onSubmit = async data => {
+  const onSubmit = useCallback(async data => {
     try {
-      // implementar a chamada /auth/signup
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      console.log('Cadastro => ', data);
-    } catch (error) {
+      const formData = data;
+      formData.role = 'admin';
+      console.log('formData', formData);
+
+      const response = await api.post(
+        '/auth/register',
+        {formData},
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+      return response;
+    } catch (err) {
+      console.log('Error => ', err.response.data);
       setError('root', {
         type: 'manual',
         message:
-          'Ops! Ocorreu um erro ao tentar fazer o seu cadastro, tente novamente mais tarde.',
+          'Ops! Ocorreu um erro ao tentar fazer login, tente novamente mais tarde.',
       });
     }
-  };
+  }, []);
 
   return (
     <S.KeyboardWrapper>
@@ -56,7 +71,21 @@ function Signup() {
               </CustomText>
             </S.TitleContainer>
             <Controller
-              name="name"
+              name="cpf"
+              control={control}
+              render={({field: {onChange, onBlur, value}}) => (
+                <CustomInput
+                  label="CPF"
+                  placeholder="Insira seu CPF"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                />
+              )}
+            />
+            {errors.cpf && <S.Error>{errors.cpf.message}</S.Error>}
+            <Controller
+              name="login"
               control={control}
               render={({field: {onChange, onBlur, value}}) => (
                 <CustomInput
@@ -68,6 +97,7 @@ function Signup() {
                 />
               )}
             />
+            {errors.name && <S.Error>{errors.name.message}</S.Error>}
             <Controller
               name="email"
               control={control}
@@ -82,6 +112,7 @@ function Signup() {
                 />
               )}
             />
+            {errors.email && <S.Error>{errors.email.message}</S.Error>}
             <Controller
               name="phone"
               control={control}
@@ -96,6 +127,37 @@ function Signup() {
                 />
               )}
             />
+            {errors.phone && <S.Error>{errors.phone.message}</S.Error>}
+            <Controller
+              name="birthDate"
+              control={control}
+              render={({field: {onChange, onBlur, value}}) => (
+                <CustomInput
+                  label="Data de nascimento"
+                  placeholder="DD/MM/YYYY"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  hasMargin
+                />
+              )}
+            />
+            {errors.birthDate && <S.Error>{errors.birthDate.message}</S.Error>}
+            <Controller
+              name="gender"
+              control={control}
+              render={({field: {onChange, onBlur, value}}) => (
+                <CustomInput
+                  label="Gênero"
+                  placeholder="M ou F"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  hasMargin
+                />
+              )}
+            />
+            {errors.gender && <S.Error>{errors.gender.message}</S.Error>}
             <Controller
               name="password"
               control={control}
@@ -107,15 +169,18 @@ function Signup() {
                   onChangeText={onChange}
                   value={value}
                   hasMargin
+                  secureTextEntry
+                  password
                 />
               )}
             />
+            {errors.password && <S.Error>{errors.password.message}</S.Error>}
             <Button
               hasMargin
               mt={30}
               fullWidth
               onPress={handleSubmit(onSubmit)}
-              disabled={!isValid || isSubmitting}>
+              disabled={isSubmitting}>
               <CustomText bold color={'#fff'}>
                 Cadastrar
               </CustomText>

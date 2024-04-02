@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {useForm, Controller} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {loginSchema} from '../../utils/schemas/schemas';
@@ -13,9 +13,11 @@ import {View} from 'react-native';
 import * as S from './styles';
 import useKeyboardListener from '../../hooks/useKeyboardListener';
 import CyclingConnect from '../../assets/images/cc-logo2.svg';
+import {useAuth} from '../../../context/AuthContext';
 
 function Login({navigation}) {
   const keyboardOpen = useKeyboardListener();
+  const {onLogin} = useAuth();
   const {
     control,
     handleSubmit,
@@ -29,19 +31,21 @@ function Login({navigation}) {
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = async data => {
+  const onSubmit = useCallback(async data => {
     try {
-      // implementar a chamada /auth/login
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      console.log('Login => ', data);
+      const response = await onLogin(data.email, data.password);
+      if (response.status === 200) {
+        navigation.navigate('Home');
+      }
     } catch (error) {
+      console.log('Erro', error);
       setError('root', {
         type: 'manual',
         message:
           'Ops! Ocorreu um erro ao tentar fazer login, tente novamente mais tarde.',
       });
     }
-  };
+  }, []);
 
   const googleSubmit = data => {
     console.log('Google => ', data);
