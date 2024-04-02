@@ -44,7 +44,7 @@ public class AuthenticationController {
      */
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data) {
-        var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
+        var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);
 
         var token = tokenService.generateToken((User) auth.getPrincipal());
@@ -60,7 +60,7 @@ public class AuthenticationController {
      */
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody @Valid RegisterDTO data) {
-        if (this.userRepository.findByLogin(data.login()) != null)
+        if (this.userRepository.findByEmail(data.email()) != null)
             return ResponseEntity.badRequest().build();
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
         User newUser = new User(data.login(), encryptedPassword, data.role(), data.phone(), data.gender(),
@@ -90,7 +90,7 @@ public class AuthenticationController {
 
     @PutMapping("/changePassword/{username}")
     public ResponseEntity changePassword(@PathVariable String username, @RequestParam String newPassword) {
-        User user = this.userRepository.findByLoginAsync(username);
+        User user = this.userRepository.findByEmailAsync(username);
         if (user == null) {
             return ResponseEntity.notFound().build();
         }

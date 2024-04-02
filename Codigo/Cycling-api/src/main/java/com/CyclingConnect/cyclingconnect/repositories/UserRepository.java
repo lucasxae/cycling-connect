@@ -16,15 +16,10 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-    /**
-     * Busca um usuário pelo login.
-     * 
-     * @param login O login do usuário a ser buscado.
-     * @return Os detalhes do usuário encontrado.
-     */
-    UserDetails findByLogin(String login);
 
-    @Query("SELECT u FROM User u WHERE u.login = :login")
-    User findByLoginAsync(String login);
+    UserDetails findByEmail(String email);
+
+    @Query("SELECT u FROM User u WHERE u.email = :email")
+    User findByEmailAsync(String email);
 
 }

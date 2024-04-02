@@ -29,8 +29,8 @@ public class AuthorizationService implements UserDetailsService {
      *                                   fornecido não puder ser encontrado.
      */
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return repository.findByLogin(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return repository.findByEmail(email);
     }
 
     /**
@@ -39,8 +39,8 @@ public class AuthorizationService implements UserDetailsService {
      * @param newPassword A nova senha do usuário.
      * @return Booleano que indica se a senha foi atualizada.
      */
-    public User changeUserPassword(String newPassword, String username) {
-        User user = repository.findByLoginAsync(username);
+    public User changeUserPassword(String newPassword, String email) {
+        User user = repository.findByEmailAsync(email);
         user.getPassword();
         user.setPassword(newPassword);
         return repository.save(user);
