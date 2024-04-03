@@ -17,7 +17,7 @@ export const RegularText = styled.Text`
   font-family: ${fonts.primaryRegular};
   font-size: ${fontSizes.small};
   margin-top: 4px;
-  color: #000;
+  color: ${props => (props.color ? props.color : '#747476')};
   text-align: ${props => (props.align ? props.align : 'center')};
 `;
 

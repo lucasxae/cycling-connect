@@ -1,24 +1,33 @@
-import React, {useEffect, useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import {useForm, Controller} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {signUpSchema} from '../../utils/schemas/schemas';
+import axios from 'axios';
 import {
   Button,
   CustomText,
   CustomInput,
-  Separator,
-  Link,
+  CircleCheckbox,
 } from '../../components';
 import * as S from './styles';
-import {api} from '../../services/api';
+import {cpfMask, dateMask, onlyLetters, phoneMask} from '../../utils/masks';
+import {faCalendar} from '@fortawesome/free-regular-svg-icons';
+import DatePicker from 'react-native-date-picker';
+import moment from 'moment';
+import SquareCheckbox from '../../components/Checkbox/SquareCheckbox';
 
-function Signup() {
+function Signup({navigation}) {
+  const [isChecked, setIsChecked] = useState(false);
+  const [date, setDate] = useState(new Date());
+  const [open, setOpen] = useState(false);
+
   const {
     control,
     handleSubmit,
     setError,
     formState: {errors, isSubmitting, isValid},
   } = useForm({
+    mode: 'onBlur',
     defaultValues: {
       login: '',
       password: '',
@@ -31,28 +40,48 @@ function Signup() {
     resolver: zodResolver(signUpSchema),
   });
 
+  const teste = value => {
+    return moment(value).format('DD/MM/YYYY');
+  };
+
+  const formatValue = value => {
+    return value.replace(/[^\d/]/g, '');
+  };
+
+  const handleTerms = value => {
+    setIsChecked(value);
+  };
+
   const onSubmit = useCallback(async data => {
     try {
-      const formData = data;
-      formData.role = 'admin';
-      console.log('formData', formData);
-
-      const response = await api.post(
-        '/auth/register',
-        {formData},
+      const response = await axios.post(
+        'http://10.0.2.2:8080/auth/register',
+        {
+          birthdate: formatValue(data.birthdate),
+          cpf: formatValue(data.cpf),
+          email: data.email,
+          gender: data.gender,
+          login: data.login,
+          password: data.password,
+          phone: formatValue(data.phone),
+          role: 'USER',
+        },
         {
           headers: {
             'Content-Type': 'application/json',
           },
         },
       );
+      if (response.status === 200) {
+        navigation.navigate('Login');
+      }
       return response;
     } catch (err) {
-      console.log('Error => ', err.response.data);
+      console.log('Erro => ', err);
       setError('root', {
         type: 'manual',
         message:
-          'Ops! Ocorreu um erro ao tentar fazer login, tente novamente mais tarde.',
+          'Ops! Ocorreu um erro ao tentar fazer seu cadastro, tente novamente mais tarde.',
       });
     }
   }, []);
@@ -70,20 +99,7 @@ function Signup() {
                 Comece agora a sua jornada no Cycling Connect.
               </CustomText>
             </S.TitleContainer>
-            <Controller
-              name="cpf"
-              control={control}
-              render={({field: {onChange, onBlur, value}}) => (
-                <CustomInput
-                  label="CPF"
-                  placeholder="Insira seu CPF"
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                />
-              )}
-            />
-            {errors.cpf && <S.Error>{errors.cpf.message}</S.Error>}
+
             <Controller
               name="login"
               control={control}
@@ -93,11 +109,27 @@ function Signup() {
                   placeholder="Nome completo"
                   onBlur={onBlur}
                   onChangeText={onChange}
-                  value={value}
+                  value={onlyLetters(value)}
                 />
               )}
             />
-            {errors.name && <S.Error>{errors.name.message}</S.Error>}
+            {errors.login && <S.Error>{errors.login.message}</S.Error>}
+            <Controller
+              name="cpf"
+              control={control}
+              render={({field: {onChange, onBlur, value}}) => (
+                <CustomInput
+                  label="CPF"
+                  placeholder="Insira seu CPF"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={cpfMask(value)}
+                  maxLength={14}
+                  hasMargin
+                />
+              )}
+            />
+            {errors.cpf && <S.Error>{errors.cpf.message}</S.Error>}
             <Controller
               name="email"
               control={control}
@@ -108,6 +140,8 @@ function Signup() {
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
+                  autoComplete="email"
+                  keyboardType={'email-address'}
                   hasMargin
                 />
               )}
@@ -122,42 +156,71 @@ function Signup() {
                   placeholder="(XX) X XXXX-XXXX"
                   onBlur={onBlur}
                   onChangeText={onChange}
-                  value={value}
+                  value={phoneMask(value)}
+                  maxLength={15}
                   hasMargin
                 />
               )}
             />
             {errors.phone && <S.Error>{errors.phone.message}</S.Error>}
             <Controller
-              name="birthDate"
+              name="birthdate"
               control={control}
               render={({field: {onChange, onBlur, value}}) => (
-                <CustomInput
-                  label="Data de nascimento"
-                  placeholder="DD/MM/YYYY"
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                  hasMargin
-                />
+                <>
+                  <CustomInput
+                    label="Data de nascimento"
+                    placeholder="DD/MM/YYYY"
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    icon={faCalendar}
+                    onPressIcon={() => setOpen(true)}
+                    value={dateMask(value)}
+                    maxLength={10}
+                    hasMargin
+                  />
+                  <DatePicker
+                    modal
+                    mode={'date'}
+                    buttonColor={'#F03C24'}
+                    open={open}
+                    date={date}
+                    onDateChange={date => {
+                      setDate(date);
+                      onChange(teste(date));
+                    }}
+                    onConfirm={date => {
+                      setOpen(false);
+                      setDate(date);
+                      onChange(teste(date));
+                    }}
+                    onCancel={() => setOpen(false)}
+                  />
+                </>
               )}
             />
-            {errors.birthDate && <S.Error>{errors.birthDate.message}</S.Error>}
+
+            {errors.birthdate && <S.Error>{errors.birthdate.message}</S.Error>}
             <Controller
               name="gender"
               control={control}
-              render={({field: {onChange, onBlur, value}}) => (
-                <CustomInput
-                  label="Gênero"
-                  placeholder="M ou F"
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                  hasMargin
-                />
+              render={({field: {onChange, value}}) => (
+                <>
+                  <S.CheckboxContainer hasError={errors.gender}>
+                    <CircleCheckbox
+                      label={'Gênero'}
+                      options={[
+                        {name: 'Feminino', value: 'F'},
+                        {name: 'Masculino', value: 'M'},
+                      ]}
+                      onSelect={onChange}
+                      selectedOption={value}
+                    />
+                  </S.CheckboxContainer>
+                  {errors.gender && <S.Error>{errors.gender.message}</S.Error>}
+                </>
               )}
             />
-            {errors.gender && <S.Error>{errors.gender.message}</S.Error>}
             <Controller
               name="password"
               control={control}
@@ -168,19 +231,28 @@ function Signup() {
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
-                  hasMargin
-                  secureTextEntry
+                  hasMargin={errors.gender}
+                  isPassword={true}
                   password
                 />
               )}
             />
             {errors.password && <S.Error>{errors.password.message}</S.Error>}
+            <SquareCheckbox onSelect={handleTerms}>
+              <S.CheckboxText>
+                Ao prosseguir, você concorda com os{' '}
+                <S.CheckboxText link>Termos de Uso</S.CheckboxText>
+                {'\n'}e a{' '}
+                <S.CheckboxText link>Política de Privacidade</S.CheckboxText> do
+                Cycling Connect.
+              </S.CheckboxText>
+            </SquareCheckbox>
             <Button
               hasMargin
               mt={30}
               fullWidth
               onPress={handleSubmit(onSubmit)}
-              disabled={isSubmitting}>
+              disabled={!isChecked || !isValid || isSubmitting}>
               <CustomText bold color={'#fff'}>
                 Cadastrar
               </CustomText>

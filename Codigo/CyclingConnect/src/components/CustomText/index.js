@@ -1,10 +1,9 @@
 import React from 'react';
-import {View} from 'react-native';
 import * as S from './styles';
 
 function CustomText({children, ...props}) {
   return (
-    <View>
+    <S.TextContainer hasMargin={props.hasMargin}>
       <S.Text
         align={props.align}
         color={props.color}
@@ -14,7 +13,7 @@ function CustomText({children, ...props}) {
         marginBottom={props.marginBottom}>
         {children}
       </S.Text>
-    </View>
+    </S.TextContainer>
   );
 }
 

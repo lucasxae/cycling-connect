@@ -13,12 +13,12 @@ function Welcome() {
   };
 
   return (
-    <S.Container>
+    <S.SafeAreaView>
       <Text>Bem-vindo!</Text>
       <CustomCarousel data={slides} />
       <Button title="Login" onPress={() => handleNavigation('Login')} />
       <Button title="Cadastro" onPress={() => handleNavigation('Signup')} />
-    </S.Container>
+    </S.SafeAreaView>
   );
 }
 

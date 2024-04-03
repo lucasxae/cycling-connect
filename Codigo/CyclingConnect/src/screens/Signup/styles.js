@@ -40,3 +40,16 @@ export const Error = styled.Text`
   font-size: ${fontSizes.smaller};
   color: ${colors.error};
 `;
+
+export const CheckboxContainer = styled.View`
+  flex-direction: row;
+  margin-bottom: ${({hasError}) => (hasError ? 0 : 14)}px;
+`;
+
+export const CheckboxText = styled.Text`
+  font-family: ${({link}) =>
+    link ? fonts.primaryMedium : fonts.primaryRegular};
+  text-decoration: ${({link}) => (link ? 'underline' : 'none')};
+  font-size: ${fontSizes.smaller};
+  color: #000;
+`;

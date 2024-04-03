@@ -3,6 +3,10 @@ import theme from '../../global/theme';
 
 const {fonts} = theme;
 
+export const TextContainer = styled.View`
+  margin-top: ${props => (props.hasMargin ? '14px' : '0')};
+`;
+
 export const Text = styled.Text`
   font-family: ${props =>
     props.bold ? `${fonts.primaryMedium}` : `${fonts.primaryRegular}`};

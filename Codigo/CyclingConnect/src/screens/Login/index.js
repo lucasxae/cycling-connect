@@ -13,7 +13,7 @@ import {View} from 'react-native';
 import * as S from './styles';
 import useKeyboardListener from '../../hooks/useKeyboardListener';
 import CyclingConnect from '../../assets/images/cc-logo2.svg';
-import {useAuth} from '../../../context/AuthContext';
+import {useAuth} from '../../context/AuthContext';
 
 function Login({navigation}) {
   const keyboardOpen = useKeyboardListener();
@@ -33,12 +33,9 @@ function Login({navigation}) {
 
   const onSubmit = useCallback(async data => {
     try {
-      const response = await onLogin(data.email, data.password);
-      if (response.status === 200) {
-        navigation.navigate('Home');
-      }
+      const response = await onLogin(data);
+      console.log('Status=>', response.status);
     } catch (error) {
-      console.log('Erro', error);
       setError('root', {
         type: 'manual',
         message:
@@ -97,7 +94,7 @@ function Login({navigation}) {
                     onBlur={onBlur}
                     onChangeText={onChange}
                     value={value}
-                    secureTextEntry
+                    isPassword={true}
                     password
                     hasMargin
                   />
@@ -130,6 +127,7 @@ function Login({navigation}) {
               <Link
                 onPress={() => navigation.navigate('Signup')}
                 regularText={`Não tem uma conta?`}
+                color={'#CD2B15'}
                 linkText={'Cadastre-se'}
                 align={'center'}
                 mt={30}

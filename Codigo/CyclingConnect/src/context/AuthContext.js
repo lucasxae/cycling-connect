@@ -33,12 +33,17 @@ export const AuthProvider = ({children}) => {
     loadToken();
   }, []);
 
-  const login = async (email, password) => {
+  const login = async data => {
     try {
-      const response = await api.post('/auth/login', {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        'http://10.0.2.2:8080/auth/login',
+        data,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
 
       setAuthState({
         token: response.data.token,
@@ -51,14 +56,14 @@ export const AuthProvider = ({children}) => {
 
       await AsyncStorage.setItem('AccessKey', response.data.token);
     } catch (error) {
-      console.log(error);
+      console.log('Erro authContext', error);
     }
   };
 
   const logout = async () => {
     await AsyncStorage.removeItem('AccessKey');
 
-    axios.defaults.headers.common['Authorization'] = '';
+    axios.defaults.headers.common = [''];
 
     setAuthState({
       token: null,
