@@ -45,4 +45,5 @@ export const Error = styled.Text`
   font-family: ${fonts.primaryRegular};
   font-size: ${fontSizes.smaller};
   color: ${colors.error};
+  text-align: ${({align}) => (align ? align : 'left')};
 `;

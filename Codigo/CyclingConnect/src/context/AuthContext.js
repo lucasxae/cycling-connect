@@ -1,7 +1,6 @@
 import React, {createContext, useContext, useState, useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import {api} from '../src/services/api';
 
 const AuthContext = createContext();
 
@@ -18,7 +17,6 @@ export const AuthProvider = ({children}) => {
   useEffect(() => {
     const loadToken = async () => {
       const token = await AsyncStorage.getItem('AccessKey');
-      console.log('Token armazenado => ', token);
 
       if (token) {
         setAuthState({

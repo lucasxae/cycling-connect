@@ -8,21 +8,25 @@ import theme from './src/global/theme';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {AuthProvider} from './src/context/AuthContext';
+import Toast from 'react-native-toast-message';
 
 function App() {
   const colorScheme = useColorScheme();
 
   return (
-    <AuthProvider>
-      <GestureHandlerRootView style={{flex: 1}}>
-        <ThemeProvider theme={theme}>
-          <SafeAreaProvider>
-            <StatusBar />
-            <Navigation colorScheme={colorScheme} />
-          </SafeAreaProvider>
-        </ThemeProvider>
-      </GestureHandlerRootView>
-    </AuthProvider>
+    <>
+      <AuthProvider>
+        <GestureHandlerRootView style={{flex: 1}}>
+          <ThemeProvider theme={theme}>
+            <SafeAreaProvider>
+              <StatusBar />
+              <Navigation colorScheme={colorScheme} />
+            </SafeAreaProvider>
+          </ThemeProvider>
+        </GestureHandlerRootView>
+      </AuthProvider>
+      <Toast />
+    </>
   );
 }
 

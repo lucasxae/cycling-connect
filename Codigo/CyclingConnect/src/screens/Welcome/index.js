@@ -1,8 +1,6 @@
 import React from 'react';
-import {Text, Button} from 'react-native';
 import * as S from './styles';
-import CustomCarousel from '../../components/Carousel';
-import slides from './slides';
+import {Button, CustomText, CarouselBase} from '../../components';
 import {useNavigation} from '@react-navigation/native';
 
 function Welcome() {
@@ -14,10 +12,26 @@ function Welcome() {
 
   return (
     <S.SafeAreaView>
-      <Text>Bem-vindo!</Text>
-      <CustomCarousel data={slides} />
-      <Button title="Login" onPress={() => handleNavigation('Login')} />
-      <Button title="Cadastro" onPress={() => handleNavigation('Signup')} />
+      <CarouselBase />
+      <S.Container>
+        <Button
+          title="Login"
+          fullWidth={true}
+          onPress={() => handleNavigation('Signup')}>
+          <CustomText bold color={'#fff'}>
+            Comece já sua jornada
+          </CustomText>
+        </Button>
+        <Button
+          mt={10}
+          bgColor={'#fff'}
+          fullWidth={true}
+          onPress={() => handleNavigation('Login')}>
+          <CustomText bold color={'#000'}>
+            Já tem uma conta? Faça login
+          </CustomText>
+        </Button>
+      </S.Container>
     </S.SafeAreaView>
   );
 }
