@@ -7,7 +7,7 @@ import {ThemeProvider} from 'styled-components';
 import theme from './src/global/theme';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {AuthProvider} from './context/AuthContext';
+import {AuthProvider} from './src/context/AuthContext';
 
 function App() {
   const colorScheme = useColorScheme();

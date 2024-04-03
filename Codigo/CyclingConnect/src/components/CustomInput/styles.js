@@ -31,3 +31,7 @@ export const Input = styled.TextInput`
   font-size: ${fontSizes.small};
   color: #000;
 `;
+
+export const IconButton = styled.TouchableOpacity`
+  padding-right: 6px;
+`;

@@ -1,11 +1,19 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Button} from 'react-native';
+import * as S from './styles';
 
-function Home() {
+function Home({navigation}) {
   return (
-    <View>
-      <Text>Home</Text>
-    </View>
+    <S.SafeAreaView>
+      <View style={{flex: 1, justifyContent: 'flex-end'}}>
+        <Button
+          title={'Alterar senha'}
+          onPress={() => {
+            navigation.navigate('ChangePassword');
+          }}
+        />
+      </View>
+    </S.SafeAreaView>
   );
 }
 

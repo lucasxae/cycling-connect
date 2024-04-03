@@ -8,7 +8,9 @@ function Link({linkText, regularText, onPress, ...props}) {
         {regularText && (
           <S.RegularText align={props.align}>{regularText} </S.RegularText>
         )}
-        <S.LinkText onPress={onPress}>{linkText}</S.LinkText>
+        <S.LinkText color={props.color} onPress={onPress}>
+          {linkText}
+        </S.LinkText>
       </S.TextWrapper>
     </S.Link>
   );
