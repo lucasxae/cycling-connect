@@ -23,7 +23,8 @@ O objetivo deste projeto é desenvolver e implementar uma aplicativo móvel dedi
 Este guia tem como objetivo fornecer instruções passo a passo para configurar e executar um projeto React Native CLI em um ambiente Windows para desenvolvimento Android.
 
 ### Pré-requisitos
-- Node.js e npm: Certifique-se de ter o Node.js e o npm instalados em sua máquina.
+- Chocolatey: para instalar as dependências a seguir.
+- Node.js e npm: Certifique-se de ter o Node.js >= 18 e o npm instalados em sua máquina.
 - Git: Instale o Git em sua máquina a partir do site oficial do Git.
 - JDK (Java Development Kit): Certifique-se de ter o JDK >= 17 instalado em sua máquina. 
 - Android Studio: Instale o Android Studio em sua máquina para configurar o ambiente de desenvolvimento Android. Versão utilizada: Android Studio Iguana 2023.2.1
