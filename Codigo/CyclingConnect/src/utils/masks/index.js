@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const cpfMask = value => {
   if (!value) return value;
 
@@ -48,4 +50,12 @@ export const onlyLetters = value => {
   if (!value) return value;
 
   value = value.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+};
+
+export const normalize = value => {
+  return moment(value).format('DD/MM/YYYY');
+};
+
+export const formatValue = value => {
+  return value.replace(/[^\d/]/g, '');
 };

@@ -14,6 +14,7 @@ import * as S from './styles';
 import useKeyboardListener from '../../hooks/useKeyboardListener';
 import CyclingConnect from '../../assets/images/cc-logo2.svg';
 import {useAuth} from '../../context/AuthContext';
+import Toast from 'react-native-toast-message';
 
 function Login({navigation}) {
   const keyboardOpen = useKeyboardListener();
@@ -34,18 +35,27 @@ function Login({navigation}) {
   const onSubmit = useCallback(async data => {
     try {
       const response = await onLogin(data);
-      console.log('Status=>', response.status);
+      return response;
     } catch (error) {
+      showToast();
       setError('root', {
         type: 'manual',
-        message:
-          'Ops! Ocorreu um erro ao tentar fazer login, tente novamente mais tarde.',
+        message: 'Ops! Ocorreu um erro ao tentar fazer login.',
       });
     }
   }, []);
 
   const googleSubmit = data => {
+    // implementar futura autenticação com o Google API
     console.log('Google => ', data);
+  };
+
+  const showToast = () => {
+    Toast.show({
+      type: 'error',
+      text1: 'Ops! Ocorreu um erro ao fazer login',
+      text2: 'Tente novamente mais tarde.',
+    });
   };
 
   return (
@@ -116,6 +126,7 @@ function Login({navigation}) {
                   Entrar
                 </CustomText>
               </Button>
+
               <Separator mv={20} text={'ou'} />
               <Button
                 fullWidth={true}
@@ -123,7 +134,7 @@ function Login({navigation}) {
                 bgColor={'#fff'}>
                 <CustomText bold>Entrar com o Google</CustomText>
               </Button>
-              {errors.root && <S.Error>{errors.root.message}</S.Error>}
+
               <Link
                 onPress={() => navigation.navigate('Signup')}
                 regularText={`Não tem uma conta?`}

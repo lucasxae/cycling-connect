@@ -22,7 +22,7 @@ export const Background = styled.View`
 `;
 
 export const Content = styled.View`
-  padding: 60px 30px 30px;
+  padding: 20px 30px 30px;
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
   background-color: ${colors.background.primary};

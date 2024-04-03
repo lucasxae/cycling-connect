@@ -63,7 +63,7 @@ function RootNavigator() {
               headerShown: true,
               headerShadowVisible: false,
               headerTitle: '',
-              headerTransparent: true,
+              headerStyle: {backgroundColor: '#F0F0F0'},
             }}
           />
         </>

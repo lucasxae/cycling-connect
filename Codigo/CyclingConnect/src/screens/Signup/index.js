@@ -4,17 +4,25 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {signUpSchema} from '../../utils/schemas/schemas';
 import axios from 'axios';
 import {
+  Link,
   Button,
   CustomText,
   CustomInput,
   CircleCheckbox,
+  SquareCheckbox,
 } from '../../components';
 import * as S from './styles';
-import {cpfMask, dateMask, onlyLetters, phoneMask} from '../../utils/masks';
+import {
+  cpfMask,
+  dateMask,
+  onlyLetters,
+  phoneMask,
+  normalize,
+  formatValue,
+} from '../../utils/masks';
 import {faCalendar} from '@fortawesome/free-regular-svg-icons';
 import DatePicker from 'react-native-date-picker';
-import moment from 'moment';
-import SquareCheckbox from '../../components/Checkbox/SquareCheckbox';
+import Toast from 'react-native-toast-message';
 
 function Signup({navigation}) {
   const [isChecked, setIsChecked] = useState(false);
@@ -39,14 +47,6 @@ function Signup({navigation}) {
     },
     resolver: zodResolver(signUpSchema),
   });
-
-  const teste = value => {
-    return moment(value).format('DD/MM/YYYY');
-  };
-
-  const formatValue = value => {
-    return value.replace(/[^\d/]/g, '');
-  };
 
   const handleTerms = value => {
     setIsChecked(value);
@@ -77,7 +77,7 @@ function Signup({navigation}) {
       }
       return response;
     } catch (err) {
-      console.log('Erro => ', err);
+      showToast();
       setError('root', {
         type: 'manual',
         message:
@@ -85,6 +85,14 @@ function Signup({navigation}) {
       });
     }
   }, []);
+
+  const showToast = () => {
+    Toast.show({
+      type: 'error',
+      text1: 'Ops! Ocorreu um erro no cadastro.',
+      text2: 'Tente novamente mais tarde.',
+    });
+  };
 
   return (
     <S.KeyboardWrapper>
@@ -187,12 +195,12 @@ function Signup({navigation}) {
                     date={date}
                     onDateChange={date => {
                       setDate(date);
-                      onChange(teste(date));
+                      onChange(normalize(date));
                     }}
                     onConfirm={date => {
                       setOpen(false);
                       setDate(date);
-                      onChange(teste(date));
+                      onChange(normalize(date));
                     }}
                     onCancel={() => setOpen(false)}
                   />
@@ -257,6 +265,14 @@ function Signup({navigation}) {
                 Cadastrar
               </CustomText>
             </Button>
+            <Link
+              onPress={() => navigation.navigate('Login')}
+              regularText={'Já possui uma conta?'}
+              color={'#CD2B15'}
+              linkText={'Faça login'}
+              align={'center'}
+              mt={20}
+            />
           </S.Content>
         </S.Container>
       </S.SafeAreaView>
