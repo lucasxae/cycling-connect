@@ -220,13 +220,13 @@ Por padrão, existe um APK na pasta `...\android\app\build\outputs\apk\debug` qu
 
     **[APK]** No diretório `/android` do seu projeto, abra um terminal e execute o seguinte comando:
 
-    ```node
+    ```bash
     ./gradlew assembleRelease
     ```
 
     **[AAB]** Dentro do diretório `/android` execute o seguinte comando:
 
-    ```node
+    ```bash
     ./gradlew bundleRelease
     ```
 
