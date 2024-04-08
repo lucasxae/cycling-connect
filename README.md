@@ -159,31 +159,31 @@ Por padrão, existe um APK na pasta `...\android\app\build\outputs\apk\debug` qu
 
 ## Atualizar Gradle
 
-1. Confira a versão atual do seu gradle
+1. Confira a versão atual do seu gradle:
    ```powershell
    ./gradle --version
    ./gradlew --version
    ```
-2. No site [gradle.org/releases](http://gradle.org/releases) confira a versão mais atual e digite o comando
+2. No site [gradle.org/releases](http://gradle.org/releases) confira a versão mais atual e execute o comando:
    ```powershell
    ./gradlew wrapper --gradle-version lts
    ```
-3. Digite novamente o comando `./gradlew --version` para completar o download e verificar a versão atualizada
+3. Digite novamente o comando `./gradlew --version` para completar o download e verificar a versão atualizada.
 
 ## Geração da build
 
-1.  Acesse a pasta do aplicativo
+1.  Acesse a pasta do aplicativo:
     ```powershell
     cd .\Codigo\CyclingConnect
     ```
-2.  Execute o comando abaixo para gerar os arquivo de keystore (chave)
+2.  Execute o comando abaixo para gerar o arquivo keystore (chave):
     ```powershell
     keytool -genkeypair -v -storetype PKCS12 -keystore my-upload-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000
     ```
     - Será necessário inserir uma senha de 6 dígitos e mais algumas informações.
-    - Ao finalizar, serão gerados os arquivos das chaves no diretório raiz (my-release-key.keystore e my-upload-key.keystore).
-3.  Copie a chave e cole no diretório `android/app` que fica dentro da pasta android do seu projeto: `"Nome do Aplicativo"\android\app`
-4.  Configure as variáveis do Gradle
+    - Ao finalizar, será gerado o arquivo de chave no diretório raiz `(my-upload-key.keystore)`.
+3.  Copie a chave e cole no diretório `android/app` que fica dentro da pasta android do seu projeto: `"Nome do Aplicativo"\android\app`.
+4.  Configure as variáveis do Gradle:
 
     Na pasta android do seu projeto `"Nome do Aplicativo"\android` no arquivo `gradle.properties`, insira os comandos a seguir:
 
@@ -207,7 +207,7 @@ Por padrão, existe um APK na pasta `...\android\app\build\outputs\apk\debug` qu
     }
     ```
 
-    E dentro de `{buildTypes}` insira o seguinte:
+    E dentro de `{buildTypes}` adicione o seguinte trecho:
 
     ```gradle
     release {
@@ -216,7 +216,7 @@ Por padrão, existe um APK na pasta `...\android\app\build\outputs\apk\debug` qu
     }
     ```
 
-6.  Gerando o arquivo APK e AAB
+6.  Gerando o arquivo APK e AAB:
 
     **[APK]** No diretório `/android` do seu projeto, abra um terminal e execute o seguinte comando:
 
