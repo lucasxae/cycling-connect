@@ -19,7 +19,7 @@ O objetivo deste projeto é desenvolver e implementar uma aplicativo móvel dedi
 
 Este guia tem como objetivo fornecer instruções passo a passo para configurar e executar um projeto React Native CLI para desenvolvimento Android/IOS.
 
-<details open>
+<details>
 <summary>
 <strong>[Windows] Target OS: Android</strong>
 </summary>
@@ -100,14 +100,14 @@ Após a instalação, abra o Android Studio e siga o passo a passo a seguir:
 
 </details>
 
-<details open>
+<details>
 <summary>
 <strong>[Linux] Target OS: Android</strong>
 </summary>
 Será adicionado em breve.
 </details>
 
-<details open>
+<details>
 <summary>
 <strong>[macOS] Target OS: Android e IOS</strong>
 </summary>
