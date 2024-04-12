@@ -36,7 +36,7 @@ export const TitleContainer = styled.View`
 
 export const Error = styled.Text`
   margin-top: 2px;
-  font-family: ${fonts.primaryRegular};
+  font-family: ${fonts.primary.primaryRegular};
   font-size: ${fontSizes.smaller};
   color: ${colors.error};
 `;
@@ -48,7 +48,7 @@ export const CheckboxContainer = styled.View`
 
 export const CheckboxText = styled.Text`
   font-family: ${({link}) =>
-    link ? fonts.primaryMedium : fonts.primaryRegular};
+    link ? fonts.primary.primaryMedium : fonts.primary.primaryRegular};
   text-decoration: ${({link}) => (link ? 'underline' : 'none')};
   font-size: ${fontSizes.smaller};
   color: #000;

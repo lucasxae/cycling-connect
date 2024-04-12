@@ -14,7 +14,7 @@ export const TextWrapper = styled.View`
 `;
 
 export const RegularText = styled.Text`
-  font-family: ${fonts.primaryRegular};
+  font-family: ${fonts.primary.primaryRegular};
   font-size: ${fontSizes.small};
   margin-top: 4px;
   color: ${props => (props.color ? props.color : '#747476')};
@@ -22,6 +22,6 @@ export const RegularText = styled.Text`
 `;
 
 export const LinkText = styled(RegularText)`
-  font-family: ${fonts.primaryMedium};
+  font-family: ${fonts.primary.primaryMedium};
   text-decoration: underline;
 `;

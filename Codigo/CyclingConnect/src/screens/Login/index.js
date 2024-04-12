@@ -15,6 +15,7 @@ import useKeyboardListener from '../../hooks/useKeyboardListener';
 import CyclingConnect from '../../assets/images/cc-logo2.svg';
 import {useAuth} from '../../context/AuthContext';
 import Toast from 'react-native-toast-message';
+import GoogleIcon from '../../assets/icons/google.svg';
 
 function Login({navigation}) {
   const keyboardOpen = useKeyboardListener();
@@ -36,8 +37,7 @@ function Login({navigation}) {
     try {
       const response = await onLogin(data);
       return response;
-    } catch (error) {
-      showToast();
+    } catch (err) {
       setError('root', {
         type: 'manual',
         message: 'Ops! Ocorreu um erro ao tentar fazer login.',
@@ -115,7 +115,9 @@ function Login({navigation}) {
                 linkText={'Esqueceu a senha?'}
                 align={'right'}
                 justifyContent={'flex-end'}
+                color={'#363636'}
               />
+              {errors.root && <S.Error>{errors.root.message}</S.Error>}
               <Button
                 hasMargin
                 mt={30}
@@ -131,8 +133,13 @@ function Login({navigation}) {
               <Button
                 fullWidth={true}
                 onPress={handleSubmit(googleSubmit)}
-                bgColor={'#fff'}>
-                <CustomText bold>Entrar com o Google</CustomText>
+                bgColor={'#fff'}
+                customIcon={
+                  <GoogleIcon width={24} height={24} marginRight={10} />
+                }>
+                <CustomText bold color={'#363636'}>
+                  Entrar com o Google
+                </CustomText>
               </Button>
 
               <Link

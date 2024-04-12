@@ -5,7 +5,7 @@ import * as S from './styles';
 function Home({navigation}) {
   return (
     <S.SafeAreaView>
-      <View style={{flex: 1, justifyContent: 'flex-end'}}>
+      <View style={{flex: 1, justifyContent: 'flex-start'}}>
         <Button
           title={'Alterar senha'}
           onPress={() => {

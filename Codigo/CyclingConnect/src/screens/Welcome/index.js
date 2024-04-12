@@ -2,6 +2,7 @@ import React from 'react';
 import * as S from './styles';
 import {Button, CustomText, CarouselBase} from '../../components';
 import {useNavigation} from '@react-navigation/native';
+import {ImageBackground} from 'react-native';
 
 function Welcome() {
   const navigation = useNavigation();

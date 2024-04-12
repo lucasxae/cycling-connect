@@ -32,7 +32,7 @@ export const Content = styled.View`
     keyboardVisible ? '60px 30px 30px' : '40px 30px 30px'};
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
-  background-color: ${colors.background.primary};
+  background-color: ${colors.background.ghostWhite};
   justify-content: flex-end;
 `;
 
@@ -42,7 +42,7 @@ export const TitleContainer = styled.View`
 
 export const Error = styled.Text`
   margin-top: 2px;
-  font-family: ${fonts.primaryRegular};
+  font-family: ${fonts.primary.primaryRegular};
   font-size: ${fontSizes.smaller};
   color: ${colors.error};
   text-align: ${({align}) => (align ? align : 'left')};

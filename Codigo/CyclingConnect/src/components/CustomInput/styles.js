@@ -14,12 +14,12 @@ export const Wrapper = styled.View`
   flex-direction: row;
   justify-content: space-between;
   padding: 0 10px;
-  background-color: ${colors.background.secondary};
-  border-radius: 5px;
+  background-color: #e6e6e6;
+  border-radius: 8px;
 `;
 
 export const Label = styled.Text`
-  font-family: ${fonts.primaryMedium};
+  font-family: ${fonts.primary.primaryMedium};
   font-size: ${fontSizes.small};
   color: #000;
   margin-bottom: 2px;
@@ -27,7 +27,7 @@ export const Label = styled.Text`
 
 export const Input = styled.TextInput`
   flex: 1;
-  font-family: ${fonts.primaryRegular};
+  font-family: ${fonts.primary.primaryRegular};
   font-size: ${fontSizes.small};
   color: #000;
 `;

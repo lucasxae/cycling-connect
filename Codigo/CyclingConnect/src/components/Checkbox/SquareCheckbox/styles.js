@@ -20,7 +20,7 @@ export const ButtonContainer = styled.View`
 `;
 
 export const Label = styled.Text`
-  font-family: ${fonts.primaryMedium};
+  font-family: ${fonts.primary.primaryMedium};
   font-size: ${fontSizes.small};
   color: #000;
   margin-top: 14px;
@@ -49,7 +49,7 @@ export const CheckMark = styled.View`
 `;
 
 export const CheckboxText = styled.Text`
-  font-family: ${fonts.primaryRegular};
+  font-family: ${fonts.primary.primaryRegular};
   font-size: ${fontSizes.smaller};
   color: #000;
 `;
