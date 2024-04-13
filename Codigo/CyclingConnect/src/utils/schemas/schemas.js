@@ -58,3 +58,29 @@ export const signUpSchema = z.object({
       message: 'A senha deve possuir ao menos um caractere especial.',
     }),
 });
+
+export const resetPasswordSchema = z
+  .object({
+    password: z
+      .string()
+      .min(8, {
+        message: 'A senha deve possuir ao menos 8 caracteres.',
+      })
+      .regex(/[a-z]/, {
+        message: 'A senha deve possuir ao menos uma letra minúscula.',
+      })
+      .regex(/[A-Z]/, {
+        message: 'A senha deve possuir ao menos uma letra maiúscula.',
+      })
+      .regex(/[0-9]/, {
+        message: 'A senha deve possuir ao menos um número.',
+      })
+      .regex(/[!@#$%^&*]/, {
+        message: 'A senha deve possuir ao menos um caractere especial.',
+      }),
+    confirmPassword: z.string(),
+  })
+  .refine(data => data.password === data.confirmPassword, {
+    message: 'As senhas não coincidem.',
+    path: ['confirmPassword'],
+  });

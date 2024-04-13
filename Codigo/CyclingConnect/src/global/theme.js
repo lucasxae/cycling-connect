@@ -2,7 +2,7 @@ export default {
   colors: {
     black: '#000000',
     white: '#ffffff',
-    error: '#F03C24',
+    error: '#EE5D5D',
 
     redPalette: {
       primary: '#F04444',
@@ -20,11 +20,12 @@ export default {
       input: '#EAEAEA',
     },
 
-    darkPalette: {
-      primary: '#F3F3F3',
+    secondary: {
+      lightText: '#F3F3F3',
       text: '#DBDBDB',
-      placeholder: '#888888',
+      placeholder: '#A0A0A0',
       input: '#484848',
+      focusedInput: '#828282',
       background: '#222222',
     },
 

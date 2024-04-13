@@ -111,7 +111,7 @@ function Login({navigation}) {
                 )}
               />
               <Link
-                onPress={() => console.log('Esqueceu a senha?')}
+                onPress={() => navigation.navigate('EmailVerification')}
                 linkText={'Esqueceu a senha?'}
                 align={'right'}
                 justifyContent={'flex-end'}

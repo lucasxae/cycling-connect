@@ -1,6 +1,13 @@
 import * as React from 'react';
 import {useAuth} from '../context/AuthContext';
-import {Welcome, Login, Signup} from '../screens';
+import {
+  Welcome,
+  Login,
+  Signup,
+  EmailVerification,
+  CodeVerification,
+  NewPassword,
+} from '../screens';
 import TabNavigator from './tabs';
 import {
   NavigationContainer,
@@ -14,6 +21,14 @@ const Stack = createNativeStackNavigator();
 
 function RootNavigator() {
   const keyboardVisible = useKeyboardListener();
+
+  const options = {
+    headerShown: true,
+    headerShadowVisible: false,
+    headerTintColor: '#fff',
+    headerTitle: '',
+    headerStyle: {backgroundColor: '#222'},
+  };
 
   return (
     <Stack.Navigator initialRouteName="Welcome" options={{headerShown: false}}>
@@ -33,15 +48,21 @@ function RootNavigator() {
           headerTransparent: true,
         }}
       />
+      <Stack.Screen name="Signup" component={Signup} options={options} />
       <Stack.Screen
-        name="Signup"
-        component={Signup}
-        options={{
-          headerShown: true,
-          headerShadowVisible: false,
-          headerTitle: '',
-          headerStyle: {backgroundColor: '#F0F0F0'},
-        }}
+        name="EmailVerification"
+        component={EmailVerification}
+        options={options}
+      />
+      <Stack.Screen
+        name="CodeVerification"
+        component={CodeVerification}
+        options={options}
+      />
+      <Stack.Screen
+        name="NewPassword"
+        component={NewPassword}
+        options={options}
       />
     </Stack.Navigator>
   );

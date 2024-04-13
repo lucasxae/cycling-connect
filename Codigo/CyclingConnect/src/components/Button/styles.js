@@ -24,7 +24,7 @@ export const Button = styled.TouchableOpacity`
     props.width ? props.width : props.fullWidth ? '100%' : 300}px;
   height: ${props => (props.height ? props.height : 50)}px;
   padding: ${props => (props.padding ? props.padding : 0)}px;
-  border-radius: ${props => (props.borderRadius ? props.borderRadius : '8px')};
+  border-radius: ${props => (props.borderRadius ? props.borderRadius : '30px')};
   background-color: ${props =>
     props.bgColor ? props.bgColor : colors.palette.primary};
 `;

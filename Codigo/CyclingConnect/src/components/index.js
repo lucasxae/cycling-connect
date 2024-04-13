@@ -1,5 +1,6 @@
 export {default as Button} from './Button';
-export {default as CustomInput} from './CustomInput';
+export {default as CustomInput} from './Input/TextInput';
+export {default as OTPInput} from './Input/OTPInput';
 export {default as CustomText} from './CustomText';
 export {default as Separator} from './Separator';
 export {default as Link} from './Link';

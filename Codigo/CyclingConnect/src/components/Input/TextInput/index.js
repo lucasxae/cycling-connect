@@ -3,6 +3,7 @@ import {View} from 'react-native';
 import * as S from './styles';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faEye, faEyeSlash} from '@fortawesome/free-regular-svg-icons';
+import theme from '../../../global/theme';
 
 function CustomInput({
   icon,
@@ -27,7 +28,11 @@ function CustomInput({
           />
           {icon && (
             <S.IconButton onPress={onPressIcon}>
-              <FontAwesomeIcon icon={icon} size={16} color={'#747476'} />
+              <FontAwesomeIcon
+                icon={icon}
+                size={16}
+                color={theme.colors.secondary.placeholder}
+              />
             </S.IconButton>
           )}
           {isPassword && (
@@ -35,7 +40,7 @@ function CustomInput({
               <FontAwesomeIcon
                 icon={!isVisible ? faEye : faEyeSlash}
                 size={16}
-                color={'#747476'}
+                color={theme.colors.secondary.placeholder}
               />
             </S.IconButton>
           )}
