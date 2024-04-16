@@ -48,6 +48,7 @@ public class User implements UserDetails {
     private String login;
 
     @Column(name = "cpf", unique = true, nullable = true)
+    @Size(min = 11, max = 11, message = "O número de CPF deve ter 11 caracteres")
     private String cpf;
 
     @Column(name = "role", nullable = false)
@@ -57,6 +58,7 @@ public class User implements UserDetails {
     private String email;
 
     @Column(name = "phone", unique = true, nullable = false)
+    @Size(min = 11, max = 14, message = "O número de telefone deve ter entre 11 e 14 caracteres")
     private String phone;
 
     @Column(name = "gender", length = 2, nullable = false)
