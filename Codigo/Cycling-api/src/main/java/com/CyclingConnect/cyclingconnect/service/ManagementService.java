@@ -31,13 +31,15 @@ public class ManagementService {
             user.setSendCode(new Date());
             userRepository.saveAndFlush(user);
 
-            emailService.sendEmailText(user.getEmail(), "Código de recuperação de senha",
-                    "Seu código de recuperação de senha é: " + user.getRecuperationCode());
+            String codigoRecuperacao = user.getRecuperationCode(); // Ajuste aqui para obter o código correto
 
-            return "Codigo enviado!";
+            emailService.sendEmail(user.getEmail(), "Código de recuperação de senha",
+                    "Seu código de recuperação de senha é: " + codigoRecuperacao);
+
+            return "Código enviado!";
         } else {
-            // Aqui você pode lidar com o caso em que o usuário não foi encontrado
-            return "Usuário não encontrado para o email fornecido.";
+            // Lidar com o caso em que o usuário não foi encontrado
+            return "Usuário não encontrado!";
         }
     }
 
@@ -46,10 +48,11 @@ public class ManagementService {
         if (userBd != null) {
             Date diferent = new Date(new Date().getTime() - userBd.getDataSendCode().getTime());
 
-            if (diferent.getTime() / 1000 < 900) { // 15 minutos
-                userBd.setPassword(user.getPassword()); // Encoder de senha: passwordEncoder.encode(). Usar somente
-                                                        // depois de testar
+            if (diferent.getTime() / 1000 < 900) {
+                userBd.setPassword(passwordEncoder.encode(user.getPassword()));
                 userBd.setCode(null);
+                userBd.setSendCode(null);
+                userBd.setCodeExpiration(null);
                 userRepository.saveAndFlush(userBd);
                 return "Senha alterada com sucesso!";
             } else {
@@ -66,8 +69,6 @@ public class ManagementService {
             Date diferent = new Date(new Date().getTime() -
                     userBd.getDataSendCode().getTime());
             if (diferent.getTime() / 1000 < 900) { // 15 minutos
-                userBd.setCode(null);
-                userRepository.saveAndFlush(userBd);
                 return "Código válido!";
             } else {
                 return "Código expirado! Solicite um novo código!";
