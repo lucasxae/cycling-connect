@@ -2,7 +2,6 @@ import React, {useRef, useState} from 'react';
 import {Animated, FlatList, View} from 'react-native';
 import CarouselItem from './CarouselItem';
 import Pagination from './Pagination';
-import CyclingConnect from '../../assets/images/cc-logo.svg';
 import {slides} from './slides';
 
 const CarouselBase = () => {
@@ -27,7 +26,6 @@ const CarouselBase = () => {
   };
 
   const handleOnViewableItemsChanged = useRef(({viewableItems}) => {
-    // console.log('viewableItems', viewableItems);
     setIndex(viewableItems[0].index);
   }).current;
 
@@ -37,11 +35,6 @@ const CarouselBase = () => {
 
   return (
     <View>
-      <CyclingConnect
-        width={150}
-        height={150}
-        style={{position: 'absolute', top: '50'}}
-      />
       <FlatList
         data={slides}
         renderItem={({item}) => <CarouselItem item={item} />}
