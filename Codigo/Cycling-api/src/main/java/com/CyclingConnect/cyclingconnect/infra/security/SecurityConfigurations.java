@@ -45,6 +45,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/exercise").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/auth/allUsers").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/googleLogin").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/auth/changePassword/{username}").permitAll()
                         .requestMatchers(HttpMethod.GET, "/auth/findByEmail/{email}").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/management/get-code").permitAll()
