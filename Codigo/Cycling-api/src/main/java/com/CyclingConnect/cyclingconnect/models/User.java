@@ -1,6 +1,7 @@
 package com.CyclingConnect.cyclingconnect.models;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -13,6 +14,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -68,8 +71,22 @@ public class User implements UserDetails {
     @Size(min = 5, message = "A senha deve ter no minimo 6 caracteres")
     private String password;
 
+    @Column(name = "password_code", nullable = true)
+    private String recuperationCode;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "data_validation_code", nullable = true)
+    private Date dataValidationCode;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "data_send_code", nullable = true)
+    private Date dataSendCode;
+
+    @Column(name = "login_token", unique = true, nullable = true)
+    private String loginToken;
+
     public User(String login, String password, UserRole role, String phone, char gender, String birthdate, String email,
-            String cpf) {
+            String cpf, String recuperationCode, Date dataValidationCode, Date dataSendCode, String loginToken) {
         this.login = login;
         this.password = password;
         this.role = role;
@@ -78,6 +95,10 @@ public class User implements UserDetails {
         this.gender = gender;
         this.cpf = cpf;
         this.email = email;
+        this.recuperationCode = recuperationCode;
+        this.dataValidationCode = dataValidationCode;
+        this.dataSendCode = dataSendCode;
+        this.loginToken = loginToken;
     }
 
     @Override
@@ -120,5 +141,29 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String setCode(String recuperationCode) {
+        return this.recuperationCode = recuperationCode;
+    }
+
+    public Date getCodeExpiration() {
+        return dataValidationCode;
+    }
+
+    public void setCodeExpiration(Date dataValidationCode) {
+        this.dataValidationCode = dataValidationCode;
+    }
+
+    public void setSendCode(Date data) {
+        this.dataSendCode = data;
+    }
+
+    public String getLoginToken() {
+        return this.loginToken;
+    }
+
+    public void setLoginToken(String loginToken) {
+        this.loginToken = loginToken;
     }
 }
