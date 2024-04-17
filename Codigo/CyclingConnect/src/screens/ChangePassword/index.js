@@ -5,8 +5,14 @@ import {useForm, Controller} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {resetPasswordSchema} from '../../utils/schemas/schemas';
 import * as S from './styles';
+import {useRoute} from '@react-navigation/native';
 
 function ChangePassword() {
+  const route = useRoute();
+  const {params} = route;
+
+  console.log(params.props.email);
+
   const {
     control,
     handleSubmit,
@@ -71,7 +77,9 @@ function ChangePassword() {
             )}
             <S.BulletList>
               <S.BulletItem>• Min. 8 caracteres</S.BulletItem>
-              <S.BulletItem>• Incluir 1 letra maiúscula e 1 minúscula</S.BulletItem>
+              <S.BulletItem>
+                • Incluir 1 letra maiúscula e 1 minúscula
+              </S.BulletItem>
               <S.BulletItem>• Incluir um número</S.BulletItem>
               <S.BulletItem>• Incluir um caractere especial</S.BulletItem>
             </S.BulletList>

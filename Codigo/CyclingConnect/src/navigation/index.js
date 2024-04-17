@@ -9,6 +9,7 @@ import {
   NewPassword,
   FirstStep,
   LastStep,
+  ChangePassword,
 } from '../screens';
 import TabNavigator from './tabs';
 import {
@@ -20,15 +21,15 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
 
-function RootNavigator() {
-  const options = {
-    headerShown: true,
-    headerShadowVisible: false,
-    headerTintColor: '#fff',
-    headerTitle: '',
-    headerStyle: {backgroundColor: '#222'},
-  };
+const options = {
+  headerShown: true,
+  headerShadowVisible: false,
+  headerTintColor: '#fff',
+  headerTitle: '',
+  headerStyle: {backgroundColor: '#222'},
+};
 
+function RootNavigator() {
   return (
     <Stack.Navigator initialRouteName="Welcome" options={{headerShown: false}}>
       <Stack.Screen
@@ -59,15 +60,36 @@ function RootNavigator() {
   );
 }
 
+function AuthNavigator(props) {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Tabs"
+        component={TabNavigator}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="ChangePassword"
+        component={ChangePassword}
+        initialParams={props}
+        options={options}
+      />
+    </Stack.Navigator>
+  );
+}
+
 function Navigation({colorScheme}) {
   const {authState} = useAuth();
-  console.log('Autenticado', authState.authenticated);
 
   return (
     <NavigationContainer
       theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       {authState?.authenticated ? (
-        <TabNavigator props={authState.data} />
+        <>
+          <AuthNavigator props={authState.data} />
+        </>
       ) : (
         <RootNavigator />
       )}

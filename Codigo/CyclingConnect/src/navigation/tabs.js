@@ -25,7 +25,7 @@ const screenOptions = {
   },
 };
 
-function TabNavigator(props) {
+function TabNavigator() {
   const {onLogout} = useAuth();
 
   const tabs = [
@@ -63,7 +63,6 @@ function TabNavigator(props) {
             key={index}
             name={tab.name}
             component={tab.component}
-            initialParams={tab.name === 'Home' && props}
             options={({navigation}) => ({
               tabBarShowLabel: false,
               tabBarIcon: props => {
