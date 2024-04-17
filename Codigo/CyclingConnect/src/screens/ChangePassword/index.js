@@ -1,5 +1,6 @@
-import React from 'react';
-import {View, Keyboard, Text} from 'react-native';
+import React, {useCallback} from 'react';
+import {View, Keyboard} from 'react-native';
+import axios from 'axios';
 import {CustomInput} from '../../components';
 import {useForm, Controller} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
@@ -7,7 +8,7 @@ import {resetPasswordSchema} from '../../utils/schemas/schemas';
 import * as S from './styles';
 import {useRoute} from '@react-navigation/native';
 
-function ChangePassword() {
+function ChangePassword({navigation}) {
   const route = useRoute();
   const {params} = route;
 
@@ -19,6 +20,7 @@ function ChangePassword() {
     setError,
     formState: {errors, isSubmitting, isValid},
   } = useForm({
+    mode: 'onBlur',
     defaultValues: {
       password: '',
       confirmPassword: '',
@@ -26,7 +28,30 @@ function ChangePassword() {
     resolver: zodResolver(resetPasswordSchema),
   });
 
-  const onSubmit = data => console.log(data);
+  const onSubmit = useCallback(async data => {
+    try {
+      const newData = {
+        email: params.props.email,
+        password: data.password,
+      };
+
+      const response = await axios.post(
+        'http://10.0.2.2:8080/api/management/update-password',
+        newData,
+      );
+      if (response.status === 200) {
+        navigation.navigate('Home');
+      }
+    } catch (err) {
+      console.log(err);
+      setError('root', [
+        {
+          type: 'manual',
+          message: 'Houve um erro ao alterar a senha.',
+        },
+      ]);
+    }
+  }, []);
 
   return (
     <S.SafeAreaView>
