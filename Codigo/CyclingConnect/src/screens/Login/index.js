@@ -9,12 +9,14 @@ import {
   Separator,
   Link,
 } from '../../components';
-import {View} from 'react-native';
+import {View, Keyboard} from 'react-native';
 import * as S from './styles';
 import useKeyboardListener from '../../hooks/useKeyboardListener';
-import CyclingConnect from '../../assets/images/cc-logo2.svg';
 import {useAuth} from '../../context/AuthContext';
 import Toast from 'react-native-toast-message';
+import GoogleIcon from '../../assets/icons/google.svg';
+import Logo from '../../components/Logo';
+import theme from '../../global/theme';
 
 function Login({navigation}) {
   const keyboardOpen = useKeyboardListener();
@@ -36,8 +38,7 @@ function Login({navigation}) {
     try {
       const response = await onLogin(data);
       return response;
-    } catch (error) {
-      showToast();
+    } catch (err) {
       setError('root', {
         type: 'manual',
         message: 'Ops! Ocorreu um erro ao tentar fazer login.',
@@ -59,34 +60,24 @@ function Login({navigation}) {
   };
 
   return (
-    <S.KeyboardWrapper>
-      <S.SafeAreaView keyboardVisible={keyboardOpen}>
+    <S.SafeAreaView keyboardVisible={keyboardOpen}>
+      <S.TouchableWrapper onPress={() => Keyboard.dismiss()}>
         <S.Container>
-          <S.Background>
-            {!keyboardOpen && (
-              <View
-                style={{
-                  flex: 1,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginTop: 20,
-                }}>
-                <CyclingConnect width={150} height={150} />
-              </View>
-            )}
-            <S.Content keyboardVisible={keyboardOpen}>
-              <S.TitleContainer>
-                <CustomText bold size={24} hasMargin align={'left'}>
-                  Faça login
-                </CustomText>
-              </S.TitleContainer>
+          <S.Content>
+            <View>
+              <S.Header>
+                <S.Title>
+                  Faça Login no
+                  <Logo />
+                </S.Title>
+              </S.Header>
               <Controller
                 name="email"
                 control={control}
                 render={({field: {onChange, onBlur, value}}) => (
                   <CustomInput
-                    label="Email"
-                    placeholder="Email"
+                    label="E-mail"
+                    placeholder="Digite seu e-mail"
                     onBlur={onBlur}
                     onChangeText={onChange}
                     value={value}
@@ -100,7 +91,7 @@ function Login({navigation}) {
                 render={({field: {onChange, onBlur, value}}) => (
                   <CustomInput
                     label="Senha"
-                    placeholder="Senha"
+                    placeholder="Digite sua senha"
                     onBlur={onBlur}
                     onChangeText={onChange}
                     value={value}
@@ -111,11 +102,14 @@ function Login({navigation}) {
                 )}
               />
               <Link
-                onPress={() => console.log('Esqueceu a senha?')}
+                onPress={() => navigation.navigate('EmailVerification')}
                 linkText={'Esqueceu a senha?'}
                 align={'right'}
                 justifyContent={'flex-end'}
+                color={'#363636'}
+                size={'14px'}
               />
+              {errors.root && <S.Error>{errors.root.message}</S.Error>}
               <Button
                 hasMargin
                 mt={30}
@@ -131,23 +125,28 @@ function Login({navigation}) {
               <Button
                 fullWidth={true}
                 onPress={handleSubmit(googleSubmit)}
-                bgColor={'#fff'}>
-                <CustomText bold>Entrar com o Google</CustomText>
+                bgColor={'#F3F3F3'}
+                customIcon={
+                  <GoogleIcon width={24} height={24} marginRight={10} />
+                }>
+                <CustomText bold color={'#363636'}>
+                  Continuar com o Google
+                </CustomText>
               </Button>
-
-              <Link
-                onPress={() => navigation.navigate('Signup')}
-                regularText={`Não tem uma conta?`}
-                color={'#CD2B15'}
-                linkText={'Cadastre-se'}
-                align={'center'}
-                mt={30}
-              />
-            </S.Content>
-          </S.Background>
+            </View>
+            <Link
+              onPress={() => navigation.navigate('FirstStep')}
+              regularText={`Não tem uma conta?`}
+              color={theme.colors.redPalette.primary}
+              linkText={'Cadastre-se'}
+              align={'center'}
+              mt={30}
+              bold
+            />
+          </S.Content>
         </S.Container>
-      </S.SafeAreaView>
-    </S.KeyboardWrapper>
+      </S.TouchableWrapper>
+    </S.SafeAreaView>
   );
 }
 

@@ -10,7 +10,9 @@ function CustomText({children, ...props}) {
         size={props.size}
         bold={props.bold}
         lineHeight={props.lineHeight}
-        marginBottom={props.marginBottom}>
+        mb={props.mb}
+        mv={props.mv}
+        mh={props.mh}>
         {children}
       </S.Text>
     </S.TextContainer>

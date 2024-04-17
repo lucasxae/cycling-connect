@@ -1,0 +1,13 @@
+export {default as Welcome} from './Welcome';
+export {default as Login} from './Login';
+export {default as Signup} from './Signup';
+export {default as Home} from './Home';
+export {default as Events} from './Events';
+export {default as Feedback} from './Feedback';
+export {default as TrainingPlan} from './TrainingPlan';
+export {default as ChangePassword} from './ChangePassword';
+export {default as EmailVerification} from './ResetPassword/EmailVerification';
+export {default as CodeVerification} from './ResetPassword/CodeVerification';
+export {default as NewPassword} from './ResetPassword/NewPassword';
+export {default as FirstStep} from './Signup/FirstStep';
+export {default as LastStep} from './Signup/LastStep';

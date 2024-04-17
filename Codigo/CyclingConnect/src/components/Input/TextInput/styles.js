@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import theme from '../../global/theme';
+import theme from '../../../global/theme';
 
 const {colors, fonts, fontSizes} = theme;
 
@@ -14,22 +14,24 @@ export const Wrapper = styled.View`
   flex-direction: row;
   justify-content: space-between;
   padding: 0 10px;
-  background-color: ${colors.background.secondary};
-  border-radius: 5px;
+  background-color: ${colors.secondary.input};
+  border-radius: 10px;
 `;
 
 export const Label = styled.Text`
-  font-family: ${fonts.primaryMedium};
-  font-size: ${fontSizes.small};
-  color: #000;
-  margin-bottom: 2px;
+  font-family: ${fonts.primary.primaryMedium};
+  font-size: ${fontSizes.regular};
+  color: ${colors.white};
+  margin-bottom: 6px;
 `;
 
-export const Input = styled.TextInput`
+export const Input = styled.TextInput.attrs({
+  placeholderTextColor: colors.secondary.placeholder,
+})`
   flex: 1;
-  font-family: ${fonts.primaryRegular};
+  font-family: ${fonts.primary.primaryRegular};
   font-size: ${fontSizes.small};
-  color: #000;
+  color: ${colors.secondary.text};
 `;
 
 export const IconButton = styled.TouchableOpacity`
