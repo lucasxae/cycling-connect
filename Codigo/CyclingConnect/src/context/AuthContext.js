@@ -8,7 +8,7 @@ export const useAuth = () => {
   return useContext(AuthContext);
 };
 
-export const AuthProvider = ({children}) => {
+export const AuthProvider = ({children, navigation}) => {
   const [authState, setAuthState] = useState({
     token: null,
     authenticated: null,
@@ -44,6 +44,7 @@ export const AuthProvider = ({children}) => {
       );
 
       setAuthState({
+        data: data,
         token: response.data.token,
         authenticated: true,
       });

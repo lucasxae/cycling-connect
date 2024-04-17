@@ -26,7 +26,7 @@ export const Button = styled.TouchableOpacity`
   padding: ${props => (props.padding ? props.padding : 0)}px;
   border-radius: ${props => (props.borderRadius ? props.borderRadius : '30px')};
   background-color: ${props =>
-    props.bgColor ? props.bgColor : colors.palette.primary};
+    props.bgColor ? props.bgColor : colors.redPalette.primary};
 `;
 
 export const Icon = styled(FontAwesomeIcon)`

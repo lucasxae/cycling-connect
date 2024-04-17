@@ -2,6 +2,7 @@ import React from 'react';
 import {Button, CustomText, CarouselBase} from '../../components';
 import {useNavigation} from '@react-navigation/native';
 import * as S from './styles';
+import {View} from 'react-native';
 
 function Welcome() {
   const navigation = useNavigation();
@@ -13,7 +14,8 @@ function Welcome() {
   return (
     <S.SafeAreaView>
       <CarouselBase />
-      <S.Content>
+      <View
+        style={{position: 'absolute', top: 0, bottom: 0, right: 10, left: 10}}>
         <S.Container>
           <Button
             title="Login"
@@ -33,7 +35,7 @@ function Welcome() {
             </CustomText>
           </Button>
         </S.Container>
-      </S.Content>
+      </View>
     </S.SafeAreaView>
   );
 }

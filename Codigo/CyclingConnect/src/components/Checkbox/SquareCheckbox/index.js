@@ -24,7 +24,6 @@ function SquareCheckbox({children, label, onSelect}) {
               )}
             </S.Checkbox>
           </TouchableOpacity>
-          {children}
         </S.ButtonContainer>
       </S.Content>
     </S.Container>

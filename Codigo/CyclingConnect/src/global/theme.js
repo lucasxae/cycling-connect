@@ -27,6 +27,7 @@ export default {
       input: '#484848',
       focusedInput: '#828282',
       background: '#222222',
+      separator: '#838383',
     },
 
     palette: {
@@ -64,6 +65,15 @@ export default {
       secondaryThin: 'Poppins-Thin',
       secondaryLight: 'Poppins-Light',
       secondaryExtraLight: 'Poppins-ExtraLight',
+    },
+    secondaryItalic: {
+      secondaryRegular: 'Poppins-Italic',
+      secondaryMedium: 'Poppins-MediumItalic',
+      secondarySemiBold: 'Poppins-SemiBoldItalic',
+      secondaryBold: 'Poppins-BoldItalic',
+      secondaryThin: 'Poppins-ThinItalic',
+      secondaryLight: 'Poppins-LightItalic',
+      secondaryExtraLight: 'Poppins-ExtraLightItalic',
     },
   },
   fontSizes: {

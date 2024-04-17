@@ -5,7 +5,6 @@ const {colors, fonts, fontSizes} = theme;
 
 export const Container = styled.View`
   flex: 1;
-  margin-top: 14px;
 `;
 
 export const Content = styled.View`
@@ -22,7 +21,7 @@ export const ButtonContainer = styled.View`
 export const Label = styled.Text`
   font-family: ${fonts.primary.primaryMedium};
   font-size: ${fontSizes.small};
-  color: #000;
+  color: #fff;
   margin-top: 14px;
   margin-bottom: 2px;
 `;
@@ -33,23 +32,23 @@ export const Checkbox = styled.View`
   border-radius: 2px;
   border-width: ${({isSelected}) => (isSelected ? 1.5 : 1)}px;
   border-color: ${({isSelected}) =>
-    isSelected ? colors.palette.primary : '#000'};
+    isSelected ? colors.redPalette.primary : '#fff'};
   justify-content: center;
   align-items: center;
   margin-right: 10px;
   background-color: ${({isSelected}) =>
-    isSelected ? colors.palette.primary : 'transparent'};
+    isSelected ? colors.redPalette.primary : 'transparent'};
 `;
 
 export const CheckMark = styled.View`
   height: 8px;
   width: 8px;
   border-radius: 5px;
-  background-color: ${colors.palette.primary};
+  background-color: ${colors.redPalette.primary};
 `;
 
 export const CheckboxText = styled.Text`
   font-family: ${fonts.primary.primaryRegular};
   font-size: ${fontSizes.smaller};
-  color: #000;
+  color: #fff;
 `;

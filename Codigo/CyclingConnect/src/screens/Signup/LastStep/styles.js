@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import {TouchableWithoutFeedback} from 'react-native';
-import theme from '../../global/theme';
+import theme from '../../../global/theme';
 
 const {colors, fonts, fontSizes} = theme;
 
@@ -16,15 +16,19 @@ export const SafeAreaView = styled.SafeAreaView`
 
 export const Container = styled.ScrollView.attrs({
   showsVerticalScrollIndicator: false,
+  contentContainerStyle: {
+    flexGrow: 1,
+  },
 })``;
 
 export const Content = styled.View`
+  flex: 1;
   padding: 0 30px 30px 30px;
-  justify-content: flex-end;
+  justify-content: space-between;
 `;
 
 export const Header = styled.View`
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 `;
 
 export const Title = styled.Text`
@@ -49,7 +53,7 @@ export const Error = styled.Text`
 
 export const CheckboxContainer = styled.View`
   flex-direction: row;
-  margin-bottom: ${({hasError}) => (hasError ? 0 : 14)}px;
+  align-items: center;
 `;
 
 export const CheckboxText = styled.Text`
@@ -58,4 +62,15 @@ export const CheckboxText = styled.Text`
   text-decoration: ${({link}) => (link ? 'underline' : 'none')};
   font-size: ${fontSizes.smaller};
   color: #fff;
+  margin-left: 20px;
+`;
+
+export const PasswordRequirements = styled.View`
+  margin-top: 17px;
+`;
+
+export const Requirements = styled.Text`
+  font-family: ${fonts.primary.primaryRegular};
+  font-size: ${fontSizes.smaller};
+  color: ${colors.secondary.lightText};
 `;

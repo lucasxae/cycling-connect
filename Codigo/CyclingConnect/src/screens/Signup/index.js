@@ -23,6 +23,7 @@ import {
 import {faCalendar} from '@fortawesome/free-regular-svg-icons';
 import DatePicker from 'react-native-date-picker';
 import Toast from 'react-native-toast-message';
+import {Keyboard} from 'react-native';
 
 function Signup({navigation}) {
   const [isChecked, setIsChecked] = useState(false);
@@ -95,18 +96,16 @@ function Signup({navigation}) {
   };
 
   return (
-    <S.KeyboardWrapper>
-      <S.SafeAreaView>
+    <S.SafeAreaView>
+      <S.TouchableWrapper onPress={() => Keyboard.dismiss()}>
         <S.Container>
           <S.Content>
-            <S.TitleContainer>
-              <CustomText bold size={24} hasMargin align="left">
-                Dê a largada
-              </CustomText>
-              <CustomText size={16} hasMargin align="left">
-                Comece agora a sua jornada no Cycling Connect.
-              </CustomText>
-            </S.TitleContainer>
+            <S.Header>
+              <S.Title>Comece Agora</S.Title>
+              <S.Subtitle>
+                Comece agora sua jornada no Cycling Connect.
+              </S.Subtitle>
+            </S.Header>
 
             <Controller
               name="login"
@@ -275,8 +274,8 @@ function Signup({navigation}) {
             />
           </S.Content>
         </S.Container>
-      </S.SafeAreaView>
-    </S.KeyboardWrapper>
+      </S.TouchableWrapper>
+    </S.SafeAreaView>
   );
 }
 

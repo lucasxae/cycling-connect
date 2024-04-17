@@ -5,10 +5,6 @@ import theme from '../../../global/theme';
 
 const {colors, fonts, fontSizes} = theme;
 
-export const KeyboardWrapper = styled.KeyboardAvoidingView`
-  flex: 1;
-`;
-
 export const TouchableWrapper = styled(TouchableWithoutFeedback).attrs({
   flex: 1,
   accessible: false,

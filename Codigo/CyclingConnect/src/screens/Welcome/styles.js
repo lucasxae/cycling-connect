@@ -14,10 +14,10 @@ export const Container = styled.View`
   justify-content: flex-end;
 `;
 
-export const Content = styled.View`'
+export const Content = styled.View`
   poisition: absolute;
   top: 0;
   bottom: 0;
-  left: 10;
-  right: 10;
+  left: 10px;
+  right: 10px;
 `;

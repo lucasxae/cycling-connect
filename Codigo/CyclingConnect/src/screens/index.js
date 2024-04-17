@@ -9,3 +9,5 @@ export {default as ChangePassword} from './ChangePassword';
 export {default as EmailVerification} from './ResetPassword/EmailVerification';
 export {default as CodeVerification} from './ResetPassword/CodeVerification';
 export {default as NewPassword} from './ResetPassword/NewPassword';
+export {default as FirstStep} from './Signup/FirstStep';
+export {default as LastStep} from './Signup/LastStep';

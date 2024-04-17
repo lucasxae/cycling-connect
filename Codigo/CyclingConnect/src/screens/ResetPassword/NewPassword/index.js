@@ -1,12 +1,17 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {View, Keyboard} from 'react-native';
 import {CustomInput} from '../../../components';
 import {useForm, Controller} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {resetPasswordSchema} from '../../../utils/schemas/schemas';
 import * as S from './styles';
+import {useRoute} from '@react-navigation/native';
+import axios from 'axios';
 
-function NewPassword() {
+function NewPassword({navigation}) {
+  const route = useRoute();
+  const {params} = route;
+
   const {
     control,
     handleSubmit,
@@ -21,7 +26,25 @@ function NewPassword() {
     resolver: zodResolver(resetPasswordSchema),
   });
 
-  const onSubmit = data => console.log(data);
+  const onSubmit = useCallback(async data => {
+    try {
+      const newData = {
+        code: params.code,
+        email: params.email,
+        password: data.password,
+      };
+
+      const response = await axios.post(
+        'http://10.0.2.2:8080/api/management/change-password',
+        newData,
+      );
+      if (response.status === 200) {
+        navigation.navigate('Login');
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
 
   return (
     <S.SafeAreaView>

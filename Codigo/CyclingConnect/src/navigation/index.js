@@ -7,6 +7,8 @@ import {
   EmailVerification,
   CodeVerification,
   NewPassword,
+  FirstStep,
+  LastStep,
 } from '../screens';
 import TabNavigator from './tabs';
 import {
@@ -15,13 +17,10 @@ import {
   DarkTheme,
 } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import useKeyboardListener from '../hooks/useKeyboardListener';
 
 const Stack = createNativeStackNavigator();
 
 function RootNavigator() {
-  const keyboardVisible = useKeyboardListener();
-
   const options = {
     headerShown: true,
     headerShadowVisible: false,
@@ -37,18 +36,10 @@ function RootNavigator() {
         component={Welcome}
         options={{headerShown: false}}
       />
-      <Stack.Screen
-        name="Login"
-        component={Login}
-        options={{
-          headerShown: true,
-          headerShadowVisible: false,
-          headerTintColor: keyboardVisible ? '#000' : '#fff',
-          headerTitle: '',
-          headerTransparent: true,
-        }}
-      />
+      <Stack.Screen name="Login" component={Login} options={options} />
       <Stack.Screen name="Signup" component={Signup} options={options} />
+      <Stack.Screen name="FirstStep" component={FirstStep} options={options} />
+      <Stack.Screen name="LastStep" component={LastStep} options={options} />
       <Stack.Screen
         name="EmailVerification"
         component={EmailVerification}
@@ -75,7 +66,11 @@ function Navigation({colorScheme}) {
   return (
     <NavigationContainer
       theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      {authState?.authenticated ? <TabNavigator /> : <RootNavigator />}
+      {authState?.authenticated ? (
+        <TabNavigator props={authState.data} />
+      ) : (
+        <RootNavigator />
+      )}
     </NavigationContainer>
   );
 }

@@ -13,11 +13,11 @@ export const Text = styled.Text`
   font-family: ${fonts.primary.primaryMedium};
   font-size: ${fontSizes.small};
   margin-horizontal: 2.5%;
-  color: #c0c0c0;
+  color: ${colors.secondary.separator};
 `;
 
 export const Line = styled.View`
   flex: 1;
-  border-color: #c0c0c0;
+  border-color: ${colors.secondary.separator};
   border-bottom-width: 1px;
 `;

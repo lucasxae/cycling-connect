@@ -1,14 +1,9 @@
 import React, {useCallback} from 'react';
 import {useForm, Controller} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
+import axios from 'axios';
 import {z} from 'zod';
-import {
-  Button,
-  CustomText,
-  CustomInput,
-  Separator,
-  Link,
-} from '../../../components';
+import {CustomInput} from '../../../components';
 import {View, Text, Keyboard} from 'react-native';
 import * as S from './styles';
 
@@ -30,11 +25,13 @@ function EmailVerification({navigation}) {
     ),
   });
 
-  const onSubmit = useCallback(data => {
+  const onSubmit = useCallback(async data => {
     try {
-      // implementar validação se o e-mail existe, se existe, enviar o código de 4 dígitos
-      console.log(data);
-      if (data) {
+      const response = await axios.post(
+        'http://10.0.2.2:8080/api/management/get-code',
+        data,
+      );
+      if (response.status === 200) {
         navigation.navigate('CodeVerification', {data});
       }
     } catch (err) {
