@@ -5,7 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -31,4 +30,21 @@ public class Exercise {
 
     @Column(name = "description")
     private String description;
+
+    @Column(name = "start")
+    private String start;
+
+    @Column(name = "end")
+    private String fim;
+
+    @Column(name = "situation")
+    private ExerciseSituation situation;
+
+    public Exercise(String description, String inicio, String fim) {
+
+        this.description = description;
+        this.start = inicio;
+        this.fim = fim;
+        situation = situation.PENDENTE;
+    }
 }

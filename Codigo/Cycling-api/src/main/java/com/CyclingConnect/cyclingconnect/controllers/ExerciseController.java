@@ -35,7 +35,7 @@ public class ExerciseController {
     }
 
 
-    @PostMapping
+    @PostMapping("/create")
     @Validated
     public ResponseEntity<Void> create( @Valid @RequestBody Exercise obj){
         this.exerciseService.create(obj);
