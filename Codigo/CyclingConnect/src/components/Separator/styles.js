@@ -10,14 +10,14 @@ export const Separator = styled.View`
 `;
 
 export const Text = styled.Text`
-  font-family: ${fonts.primaryMedium};
+  font-family: ${fonts.primary.primaryMedium};
   font-size: ${fontSizes.small};
   margin-horizontal: 2.5%;
-  color: ${colors.detail};
+  color: ${colors.secondary.separator};
 `;
 
 export const Line = styled.View`
   flex: 1;
-  border-color: ${colors.detail};
+  border-color: ${colors.secondary.separator};
   border-bottom-width: 1px;
 `;

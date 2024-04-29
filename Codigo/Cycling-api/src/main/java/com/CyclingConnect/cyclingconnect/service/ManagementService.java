@@ -81,7 +81,8 @@ public class ManagementService {
     public String updatePassword(User user) {
         User userBd = userRepository.findByEmailAsync(user.getEmail());
         if (userBd != null) {
-            userBd.setPassword(user.getPassword()); // Encoder de senha: passwordEncoder.encode().
+            userBd.setPassword(passwordEncoder.encode(user.getPassword())); // Encoder de senha:
+                                                                            // passwordEncoder.encode().
             userRepository.saveAndFlush(userBd);
             return "Senha alterada com sucesso!";
         } else {

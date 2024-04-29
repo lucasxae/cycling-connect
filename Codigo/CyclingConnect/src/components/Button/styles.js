@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import theme from '../../global/theme';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 const {colors} = theme;
 
@@ -17,13 +18,17 @@ export const Button = styled.TouchableOpacity`
   align-self: auto;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
+  flex-direction: row;
   opacity: ${props => (props.disabled ? 0.5 : 1)};
   width: ${props =>
     props.width ? props.width : props.fullWidth ? '100%' : 300}px;
   height: ${props => (props.height ? props.height : 50)}px;
   padding: ${props => (props.padding ? props.padding : 0)}px;
-  border-radius: ${props => (props.borderRadius ? props.borderRadius : '5px')};
+  border-radius: ${props => (props.borderRadius ? props.borderRadius : '30px')};
   background-color: ${props =>
-    props.bgColor ? props.bgColor : colors.palette.primary};
+    props.bgColor ? props.bgColor : colors.redPalette.primary};
+`;
+
+export const Icon = styled(FontAwesomeIcon)`
+  margin-right: 10px;
 `;

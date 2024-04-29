@@ -1,48 +1,54 @@
 import styled from 'styled-components/native';
+import {TouchableWithoutFeedback} from 'react-native';
 import theme from '../../global/theme';
 
 const {colors, fonts, fontSizes} = theme;
 
-export const KeyboardWrapper = styled.KeyboardAvoidingView`
-  flex: 1;
-`;
+export const TouchableWrapper = styled(TouchableWithoutFeedback).attrs({
+  flex: 1,
+  accessible: false,
+})``;
 
 export const SafeAreaView = styled.SafeAreaView`
   flex: 1;
-  background-color: ${({keyboardVisible}) =>
-    keyboardVisible ? colors.background.primary : colors.palette.primary};
+  background-color: ${colors.secondary.background};
 `;
 
 export const Container = styled.ScrollView.attrs({
   showsVerticalScrollIndicator: false,
   contentContainerStyle: {
     flexGrow: 1,
-    justifyContent: 'space-between',
-    flexDirection: 'column',
   },
 })``;
 
-export const Background = styled.View`
-  flex: 1;
-  justify-content: flex-end;
-`;
-
 export const Content = styled.View`
-  padding: ${({keyboardVisible}) =>
-    keyboardVisible ? '60px 30px 30px' : '40px 30px 30px'};
-  border-top-left-radius: 30px;
-  border-top-right-radius: 30px;
-  background-color: ${colors.background.primary};
-  justify-content: flex-end;
+  flex: 1;
+  padding: 0 30px 30px 30px;
+  justify-content: space-between;
 `;
 
-export const TitleContainer = styled.View`
-  margin-bottom: 30px;
+export const Background = styled.View``;
+
+export const Header = styled.View`
+  margin-bottom: 40px;
+`;
+
+export const Title = styled.Text`
+  font-family: ${fonts.secondary.secondaryMedium};
+  font-size: ${fontSizes.extraLarge};
+  color: ${colors.white};
+`;
+
+export const Subtitle = styled.Text`
+  font-family: ${fonts.primary.primaryRegular};
+  font-size: ${fontSizes.regular};
+  line-height: 24px;
+  color: ${colors.secondary.lightText};
 `;
 
 export const Error = styled.Text`
   margin-top: 2px;
-  font-family: ${fonts.primaryRegular};
+  font-family: ${fonts.primary.primaryRegular};
   font-size: ${fontSizes.smaller};
   color: ${colors.error};
   text-align: ${({align}) => (align ? align : 'left')};

@@ -9,10 +9,14 @@ export const TextContainer = styled.View`
 
 export const Text = styled.Text`
   font-family: ${props =>
-    props.bold ? `${fonts.primaryMedium}` : `${fonts.primaryRegular}`};
+    props.bold
+      ? `${fonts.primary.primaryMedium}`
+      : `${fonts.primary.primaryRegular}`};
   font-size: ${props => (props.size ? props.size : 16)}px;
   line-height: ${props => (props.lineHeight ? props.lineHeight : 24)}px;
   color: ${props => (props.color ? props.color : '#000')};
   text-align: ${props => (props.align ? props.align : 'center')};
-  margin-bottom: ${props => (props.marginBottom ? props.marginBottom : 0)}px;
+  margin-bottom: ${props => (props.mb ? props.mb : 0)}px;
+  margin-vertical: ${props => (props.mv ? props.mv : 0)}px;
+  margin-horizontal: ${props => (props.mh ? props.mh : 0)}px;
 `;
