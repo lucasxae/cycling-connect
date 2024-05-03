@@ -1,4 +1,4 @@
-package com.CyclingConnect.cyclingconnect.models;
+package com.CyclingConnect.cyclingconnect.models.exercise;
 
 public enum ExerciseSituation {
 

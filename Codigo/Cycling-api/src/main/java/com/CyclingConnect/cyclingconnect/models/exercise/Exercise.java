@@ -1,4 +1,4 @@
-package com.CyclingConnect.cyclingconnect.models;
+package com.CyclingConnect.cyclingconnect.models.exercise;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,23 +28,30 @@ public class Exercise {
     @Column(name = "id", unique = true)
     private Long id;
 
-    @Column(name = "description")
-    private String description;
+    @Column(name = "lapSpeed")
+    private String lapSpeed;
 
-    @Column(name = "start")
-    private String start;
+    @Column(name = "suggestedRoute")
+    private String suggestedRoute;
 
-    @Column(name = "end")
-    private String fim;
+    @Column(name = "exerciseTime")
+    private String exerciseTime;
+
+    @Column(name = "averageSpeed")
+    private int averageSpeed;
 
     @Column(name = "situation")
     private ExerciseSituation situation;
 
-    public Exercise(String description, String inicio, String fim) {
+    @Column(name = "date")
+    private ExerciseDate date;
 
-        this.description = description;
-        this.start = inicio;
-        this.fim = fim;
-        situation = situation.PENDENTE;
+    public Exercise (String lapSpeed, String suggestedRoute, String exerciseTime, int averageSpeed, ExerciseDate date) {
+        this.lapSpeed = lapSpeed;
+        this.suggestedRoute = suggestedRoute;
+        this.exerciseTime = exerciseTime;
+        this.averageSpeed = averageSpeed;
+        this.date = date;
+        this.situation = ExerciseSituation.PENDENTE;
     }
 }
