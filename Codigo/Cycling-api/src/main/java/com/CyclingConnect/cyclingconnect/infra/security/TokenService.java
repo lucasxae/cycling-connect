@@ -20,7 +20,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 @Service
 public class TokenService {
     // A chave secreta para assinar e verificar os tokens JWT
-    @Value("{api.security.token.secret}")
+    @Value("${api.security.token.secret}")
     private String secret;
 
      /**
@@ -35,7 +35,7 @@ public class TokenService {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             String token = JWT.create()
                         .withIssuer("auth-api")
-                        .withSubject(user.getLogin())
+                        .withSubject(user.getEmail())
                         .withExpiresAt(genExpirationDate())
                         .sign(algorithm);
             return token;
