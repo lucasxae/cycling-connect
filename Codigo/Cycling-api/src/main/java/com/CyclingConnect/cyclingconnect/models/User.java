@@ -9,6 +9,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.CyclingConnect.cyclingconnect.models.exercise.Exercise;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -74,6 +76,9 @@ public class User implements UserDetails {
     @Column(name = "password", nullable = false)
     @Size(min = 5, message = "A senha deve ter no minimo 6 caracteres")
     private String password;
+
+    @OneToMany
+    private List<Exercise> exercises = new ArrayList<>();
 
     @Column(name = "password_code", nullable = true)
     private String recuperationCode;
@@ -160,5 +165,15 @@ public class User implements UserDetails {
 
     public void setLoginToken(String loginToken) {
         this.loginToken = loginToken;
+    }
+
+    public void addExercise(Exercise exercise) {
+        this.exercises.add(exercise);
+    }
+
+    public List<Exercise> getLatestExercises() {
+        int size = exercises.size();
+        int fromIndex = Math.max(0, size - 5);
+        return exercises.subList(fromIndex, size);
     }
 }

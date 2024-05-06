@@ -38,7 +38,7 @@ public class Exercise {
     private String exerciseTime;
 
     @Column(name = "averageSpeed")
-    private int averageSpeed;
+    private Integer averageSpeed;
 
     @Column(name = "situation")
     private ExerciseSituation situation;
@@ -46,7 +46,7 @@ public class Exercise {
     @Column(name = "date")
     private ExerciseDate date;
 
-    public Exercise (String lapSpeed, String suggestedRoute, String exerciseTime, int averageSpeed, ExerciseDate date) {
+    public Exercise (String lapSpeed, String suggestedRoute, String exerciseTime, Integer averageSpeed, ExerciseDate date) {
         this.lapSpeed = lapSpeed;
         this.suggestedRoute = suggestedRoute;
         this.exerciseTime = exerciseTime;
