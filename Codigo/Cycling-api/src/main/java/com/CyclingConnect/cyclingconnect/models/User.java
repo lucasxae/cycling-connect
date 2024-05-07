@@ -94,8 +94,12 @@ public class User implements UserDetails {
     @Column(name = "login_token", unique = true, nullable = true)
     private String loginToken;
 
+    @Column(name = "locale", nullable = true)
+    private String locale;
+
     public User(String login, String password, UserRole role, String phone, char gender, String birthdate, String email,
-            String cpf, String recuperationCode, Date dataValidationCode, Date dataSendCode, String loginToken) {
+            String cpf, String recuperationCode, Date dataValidationCode, Date dataSendCode, String loginToken,
+            String locale) {
         this.login = login;
         this.password = password;
         this.role = role;
@@ -108,6 +112,7 @@ public class User implements UserDetails {
         this.dataValidationCode = dataValidationCode;
         this.dataSendCode = dataSendCode;
         this.loginToken = loginToken;
+        this.locale = locale;
     }
 
     @Override
@@ -121,6 +126,10 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
         return email;
+    }
+
+    public void setUserName(String login) {
+        this.login = login;
     }
 
     @Override
@@ -165,6 +174,48 @@ public class User implements UserDetails {
 
     public void setLoginToken(String loginToken) {
         this.loginToken = loginToken;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getBirthdate() {
+        return this.birthdate;
+    }
+
+    public void setBirthdate(String date) {
+        this.birthdate = date;
+    }
+
+    public char getGender() {
+        return this.gender;
+    }
+
+    public void setGender(String gender) {
+        gender = gender.toLowerCase();
+        char[] genderArray = gender.toCharArray();
+        if (genderArray[0] == 'f') {
+            this.gender = 'F';
+        } else {
+            this.gender = 'M';
+        }
+    }
+
+    public String getLocale() {
+        return this.locale;
+    }
+
+    public void setLocale(String newLocale) {
+        this.locale = newLocale;
+    }
+
+    public String getPhoneNumber() {
+        return this.phone;
+    }
+
+    public void setPhoneNumber(String number) {
+        this.phone = number;
     }
 
     public void addExercise(Exercise exercise) {
