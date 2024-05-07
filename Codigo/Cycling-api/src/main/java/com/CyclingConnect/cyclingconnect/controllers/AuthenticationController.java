@@ -1,7 +1,6 @@
 package com.CyclingConnect.cyclingconnect.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.CyclingConnect.cyclingconnect.infra.security.TokenService;
 import com.CyclingConnect.cyclingconnect.models.AuthenticationDTO;
-import com.CyclingConnect.cyclingconnect.models.GoogleDTO;
 import com.CyclingConnect.cyclingconnect.models.LoginResponseDTO;
 
 import com.CyclingConnect.cyclingconnect.models.RegisterDTO;
@@ -76,7 +74,7 @@ public class AuthenticationController {
             return ResponseEntity.badRequest().build();
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
         User newUser = new User(data.login(), encryptedPassword, data.role(), data.phone(), data.gender(),
-                data.birthdate(), data.email(), data.cpf(), null, null, null, null);
+                data.birthdate(), data.email(), data.cpf(), null, null, null, null, null);
 
         this.userRepository.save(newUser);
 
@@ -110,22 +108,6 @@ public class AuthenticationController {
         user.setPassword(encryptedPassword);
         this.userRepository.save(user);
         return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/googleLogin")
-    public ResponseEntity loginGoogle(@RequestBody @Valid GoogleDTO data) {
-        User user = (User) userRepository.findByEmail(data.email());
-
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("E-mail precisa de cadastro");
-        }
-
-        String token = tokenService.generateToken(user);
-
-        user.setLoginToken(token);
-        userRepository.save(user);
-
-        return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
 }

@@ -1,5 +1,6 @@
 package com.CyclingConnect.cyclingconnect.models;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -8,11 +9,14 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.CyclingConnect.cyclingconnect.models.exercise.Exercise;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -21,10 +25,12 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = User.TABLE_NAME)
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -71,6 +77,9 @@ public class User implements UserDetails {
     @Size(min = 5, message = "A senha deve ter no minimo 6 caracteres")
     private String password;
 
+    @OneToMany
+    private List<Exercise> exercises = new ArrayList<>();
+
     @Column(name = "password_code", nullable = true)
     private String recuperationCode;
 
@@ -85,8 +94,12 @@ public class User implements UserDetails {
     @Column(name = "login_token", unique = true, nullable = true)
     private String loginToken;
 
+    @Column(name = "locale", nullable = true)
+    private String locale;
+
     public User(String login, String password, UserRole role, String phone, char gender, String birthdate, String email,
-            String cpf, String recuperationCode, Date dataValidationCode, Date dataSendCode, String loginToken) {
+            String cpf, String recuperationCode, Date dataValidationCode, Date dataSendCode, String loginToken,
+            String locale) {
         this.login = login;
         this.password = password;
         this.role = role;
@@ -99,6 +112,7 @@ public class User implements UserDetails {
         this.dataValidationCode = dataValidationCode;
         this.dataSendCode = dataSendCode;
         this.loginToken = loginToken;
+        this.locale = locale;
     }
 
     @Override
@@ -111,7 +125,11 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return login;
+        return email;
+    }
+
+    public void setUserName(String login) {
+        this.login = login;
     }
 
     @Override
@@ -132,15 +150,6 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String setCode(String recuperationCode) {
@@ -165,5 +174,57 @@ public class User implements UserDetails {
 
     public void setLoginToken(String loginToken) {
         this.loginToken = loginToken;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getBirthdate() {
+        return this.birthdate;
+    }
+
+    public void setBirthdate(String date) {
+        this.birthdate = date;
+    }
+
+    public char getGender() {
+        return this.gender;
+    }
+
+    public void setGender(String gender) {
+        gender = gender.toLowerCase();
+        char[] genderArray = gender.toCharArray();
+        if (genderArray[0] == 'f') {
+            this.gender = 'F';
+        } else {
+            this.gender = 'M';
+        }
+    }
+
+    public String getLocale() {
+        return this.locale;
+    }
+
+    public void setLocale(String newLocale) {
+        this.locale = newLocale;
+    }
+
+    public String getPhoneNumber() {
+        return this.phone;
+    }
+
+    public void setPhoneNumber(String number) {
+        this.phone = number;
+    }
+
+    public void addExercise(Exercise exercise) {
+        this.exercises.add(exercise);
+    }
+
+    public List<Exercise> getLatestExercises() {
+        int size = exercises.size();
+        int fromIndex = Math.max(0, size - 5);
+        return exercises.subList(fromIndex, size);
     }
 }
