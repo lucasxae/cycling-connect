@@ -1,5 +1,6 @@
 package com.CyclingConnect.cyclingconnect.models;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -8,11 +9,14 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.CyclingConnect.cyclingconnect.models.exercise.Exercise;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -21,10 +25,12 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = User.TABLE_NAME)
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -71,6 +77,9 @@ public class User implements UserDetails {
     @Size(min = 5, message = "A senha deve ter no minimo 6 caracteres")
     private String password;
 
+    @OneToMany
+    private List<Exercise> exercises = new ArrayList<>();
+
     @Column(name = "password_code", nullable = true)
     private String recuperationCode;
 
@@ -116,7 +125,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return login;
+        return email;
     }
 
     public void setUserName(String login) {
@@ -141,15 +150,6 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String setCode(String recuperationCode) {
@@ -216,5 +216,15 @@ public class User implements UserDetails {
 
     public void setPhoneNumber(String number) {
         this.phone = number;
+    }
+
+    public void addExercise(Exercise exercise) {
+        this.exercises.add(exercise);
+    }
+
+    public List<Exercise> getLatestExercises() {
+        int size = exercises.size();
+        int fromIndex = Math.max(0, size - 5);
+        return exercises.subList(fromIndex, size);
     }
 }
