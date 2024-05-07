@@ -53,6 +53,9 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/api/management/update-password").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/management/validate-code").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/logout").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/users/updateEmail/{currentEmail}").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/users/updateUserData/{email}").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/api/users/deleteByEmail/{email}").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
