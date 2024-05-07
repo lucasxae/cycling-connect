@@ -97,9 +97,12 @@ public class User implements UserDetails {
     @Column(name = "locale", nullable = true)
     private String locale;
 
+    @Column(name = "profile_pic_url", nullable = true)
+    private String profilePicUrl;
+
     public User(String login, String password, UserRole role, String phone, char gender, String birthdate, String email,
             String cpf, String recuperationCode, Date dataValidationCode, Date dataSendCode, String loginToken,
-            String locale) {
+            String locale, String profilePicUrl) {
         this.login = login;
         this.password = password;
         this.role = role;
@@ -113,6 +116,7 @@ public class User implements UserDetails {
         this.dataSendCode = dataSendCode;
         this.loginToken = loginToken;
         this.locale = locale;
+        this.profilePicUrl = profilePicUrl;
     }
 
     @Override
@@ -226,5 +230,13 @@ public class User implements UserDetails {
         int size = exercises.size();
         int fromIndex = Math.max(0, size - 5);
         return exercises.subList(fromIndex, size);
+    }
+
+    public String gerProfilePicUrl() {
+        return this.profilePicUrl;
+    }
+
+    public void setProfilePicUrl(String url) {
+        this.profilePicUrl = url;
     }
 }
