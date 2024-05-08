@@ -33,18 +33,25 @@ function UserInformation({navigation}) {
       title: 'Celular',
       text: phoneMask(params?.userInfo?.phone),
     },
+    {
+      id: 5,
+      title: 'E-mail',
+      text: params?.userInfo?.email,
+    },
   ];
 
   const accountData = [
     {
       id: 1,
       title: 'Alterar e-mail',
-      onPress: () => navigation.navigate('ChangeEmail'),
+      onPress: () =>
+        navigation.navigate('ChangeEmail', {email: params?.userInfo?.email}),
     },
     {
       id: 2,
       title: 'Alterar senha',
-      onPress: () => navigation.navigate('ChangePassword'),
+      onPress: () =>
+        navigation.navigate('ChangePassword', {email: params?.userInfo?.email}),
     },
     {
       id: 3,
@@ -58,68 +65,70 @@ function UserInformation({navigation}) {
     <S.SafeAreaView>
       <S.TouchableWrapper onPress={() => Keyboard.dismiss()}>
         <S.Container>
-          <View>
+          <S.Content>
             <View>
-              <S.Header>
-                <S.Title>Dados Pessoais</S.Title>
-                <S.UserInformation>
-                  <S.UserImage
-                    source={require('../../../assets/images/ciclista.jpeg')}
-                  />
-                </S.UserInformation>
-              </S.Header>
-            </View>
-            <S.MenuContainer>
-              <S.MenuHeader>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}>
-                  <S.MenuTitle>Perfil</S.MenuTitle>
-                  <S.EditButton
-                    onPress={() =>
-                      navigation.navigate('UpdateUserInformation', {userInfo})
-                    }>
-                    <S.EditText>Editar</S.EditText>
-                    <S.Icon icon={faEdit} size={13} color={'#EE5D5D'} />
-                  </S.EditButton>
-                </View>
-                <S.TitleSeparator header />
-              </S.MenuHeader>
-              <FlatList
-                data={personalData}
-                keyExtractor={item => item.id}
-                renderItem={data => (
-                  <>
-                    <S.MenuWrapper>
+              <View>
+                <S.Header>
+                  <S.Title>Dados Pessoais</S.Title>
+                  <S.UserInformation>
+                    <S.UserImage
+                      source={require('../../../assets/images/ciclista.jpeg')}
+                    />
+                  </S.UserInformation>
+                </S.Header>
+              </View>
+              <S.MenuContainer>
+                <S.MenuHeader>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                    }}>
+                    <S.MenuTitle>Perfil</S.MenuTitle>
+                    <S.EditButton
+                      onPress={() =>
+                        navigation.navigate('UpdateUserInformation', {userInfo})
+                      }>
+                      <S.EditText>Editar</S.EditText>
+                      <S.Icon icon={faEdit} size={13} color={'#EE5D5D'} />
+                    </S.EditButton>
+                  </View>
+                  <S.TitleSeparator header />
+                </S.MenuHeader>
+                <FlatList
+                  data={personalData}
+                  keyExtractor={item => item.id}
+                  renderItem={data => (
+                    <>
+                      <S.MenuWrapper>
+                        <S.MenuItemText>{data.item.title}</S.MenuItemText>
+                        <S.MenuItemText>{data.item.text}</S.MenuItemText>
+                      </S.MenuWrapper>
+                    </>
+                  )}
+                  ItemSeparatorComponent={<S.Separator />}
+                />
+                <S.TitleSeparator />
+              </S.MenuContainer>
+              <S.MenuContainer style={{paddingTop: 30}}>
+                <S.MenuHeader>
+                  <S.MenuTitle>Conta</S.MenuTitle>
+                  <S.TitleSeparator header />
+                </S.MenuHeader>
+                <FlatList
+                  data={accountData}
+                  keyExtractor={item => item.id}
+                  renderItem={data => (
+                    <S.MenuItem onPress={data.item.onPress}>
                       <S.MenuItemText>{data.item.title}</S.MenuItemText>
-                      <S.MenuItemText>{data.item.text}</S.MenuItemText>
-                    </S.MenuWrapper>
-                  </>
-                )}
-                ItemSeparatorComponent={<S.Separator />}
-              />
-              <S.TitleSeparator />
-            </S.MenuContainer>
-            <S.MenuContainer style={{paddingTop: 30}}>
-              <S.MenuHeader>
-                <S.MenuTitle>Conta</S.MenuTitle>
-                <S.TitleSeparator header />
-              </S.MenuHeader>
-              <FlatList
-                data={accountData}
-                keyExtractor={item => item.id}
-                renderItem={data => (
-                  <S.MenuItem onPress={data.item.onPress}>
-                    <S.MenuItemText>{data.item.title}</S.MenuItemText>
-                    <S.Icon icon={faChevronRight} size={10} color={'#fff'} />
-                  </S.MenuItem>
-                )}
-                ItemSeparatorComponent={<S.Separator />}
-              />
-            </S.MenuContainer>
-          </View>
+                      <S.Icon icon={faChevronRight} size={10} color={'#fff'} />
+                    </S.MenuItem>
+                  )}
+                  ItemSeparatorComponent={<S.Separator />}
+                />
+              </S.MenuContainer>
+            </View>
+          </S.Content>
         </S.Container>
       </S.TouchableWrapper>
     </S.SafeAreaView>

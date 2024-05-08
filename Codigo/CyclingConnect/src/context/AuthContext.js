@@ -1,6 +1,7 @@
 import React, {createContext, useContext, useState, useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import {set} from 'react-hook-form';
 
 const AuthContext = createContext();
 
@@ -62,11 +63,12 @@ export const AuthProvider = ({children}) => {
     }
   };
 
-  const updateUserEmail = newEmail => {
-    setAuthState(prevState => ({
-      ...prevState,
-      data: {...prevState.data, email: newEmail},
-    }));
+  const updateUserEmail = async newEmail => {
+    setAuthState({
+      data: {email: newEmail, password: authState.data.password},
+      token: authState.token,
+      authenticated: true,
+    });
   };
 
   const deleteAccount = async email => {

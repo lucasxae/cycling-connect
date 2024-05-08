@@ -13,6 +13,8 @@ function Profile({navigation}) {
   const [userInfo, setUserInfo] = useState();
   const {params} = route;
 
+  console.log('Dados', params);
+
   const menu = [
     {
       id: 1,
@@ -37,7 +39,7 @@ function Profile({navigation}) {
   useFocusEffect(
     useCallback(() => {
       axios
-        .get(`http://10.0.2.2:8080/auth/findByEmail/${params.props}`)
+        .get(`http://10.0.2.2:8080/auth/findByEmail/${params.props.email}`)
         .then(response => {
           setUserInfo(response.data);
           console.log('response', response.data);
@@ -50,73 +52,79 @@ function Profile({navigation}) {
     <S.SafeAreaView>
       <S.TouchableWrapper onPress={() => Keyboard.dismiss()}>
         <S.Container>
-          <View>
+          <S.Content>
             <View>
-              <S.Header>
-                <S.Title>Configurações</S.Title>
-                <S.UserInformation>
-                  <S.UserImage
-                    source={require('../../assets/images/ciclista.jpeg')}
-                  />
-                  <S.UserContent>
-                    <S.UserName>{userInfo?.login}</S.UserName>
-                    <S.UserDescription>Ciclista</S.UserDescription>
-                  </S.UserContent>
-                </S.UserInformation>
-              </S.Header>
-            </View>
-            <S.MenuContainer>
-              <S.MenuHeader>
-                <S.MenuTitle>Conta Cycling Connect</S.MenuTitle>
-                <S.TitleSeparator header />
-              </S.MenuHeader>
-              <FlatList
-                data={menu}
-                keyExtractor={item => item.id}
-                renderItem={(data, index) => (
-                  <>
-                    <S.MenuItem onPress={data.item.onPress}>
-                      <S.MenuItemText>{data.item.title}</S.MenuItemText>
-                      <S.Icon icon={faChevronRight} size={12} color={'#fff'} />
+              <View>
+                <S.Header>
+                  <S.Title>Configurações</S.Title>
+                  <S.UserInformation>
+                    <S.UserImage
+                      source={require('../../assets/images/ciclista.jpeg')}
+                    />
+                    <S.UserContent>
+                      <S.UserName>{userInfo?.login}</S.UserName>
+                      <S.UserDescription>Ciclista</S.UserDescription>
+                    </S.UserContent>
+                  </S.UserInformation>
+                </S.Header>
+              </View>
+              <S.MenuContainer>
+                <S.MenuHeader>
+                  <S.MenuTitle>Conta Cycling Connect</S.MenuTitle>
+                  <S.TitleSeparator header />
+                </S.MenuHeader>
+                <FlatList
+                  data={menu}
+                  keyExtractor={item => item.id}
+                  renderItem={(data, index) => (
+                    <>
+                      <S.MenuItem onPress={data.item.onPress}>
+                        <S.MenuItemText>{data.item.title}</S.MenuItemText>
+                        <S.Icon
+                          icon={faChevronRight}
+                          size={12}
+                          color={'#fff'}
+                        />
+                      </S.MenuItem>
+                    </>
+                  )}
+                  ItemSeparatorComponent={<S.Separator />}
+                />
+                <S.TitleSeparator />
+              </S.MenuContainer>
+              <S.MenuContainer style={{paddingTop: 30}}>
+                <S.MenuHeader>
+                  <S.MenuTitle>Conexões de Aplicativos</S.MenuTitle>
+                  <S.TitleSeparator header />
+                </S.MenuHeader>
+                <FlatList
+                  data={[
+                    {
+                      id: 1,
+                      title: 'Strava',
+                      onPress: () => console.log('Strava'),
+                    },
+                  ]}
+                  keyExtractor={item => item.id}
+                  renderItem={({item}) => (
+                    <S.MenuItem onPress={item.onPress}>
+                      <S.MenuItemText>{item.title}</S.MenuItemText>
+                      <S.Icon icon={faChevronRight} size={10} color={'#fff'} />
                     </S.MenuItem>
-                  </>
-                )}
-                ItemSeparatorComponent={<S.Separator />}
-              />
-              <S.TitleSeparator />
-            </S.MenuContainer>
-            <S.MenuContainer style={{paddingTop: 30}}>
-              <S.MenuHeader>
-                <S.MenuTitle>Conexões de Aplicativos</S.MenuTitle>
-                <S.TitleSeparator header />
-              </S.MenuHeader>
-              <FlatList
-                data={[
-                  {
-                    id: 1,
-                    title: 'Strava',
-                    onPress: () => console.log('Strava'),
-                  },
-                ]}
-                keyExtractor={item => item.id}
-                renderItem={({item}) => (
-                  <S.MenuItem onPress={item.onPress}>
-                    <S.MenuItemText>{item.title}</S.MenuItemText>
-                    <S.Icon icon={faChevronRight} size={10} color={'#fff'} />
-                  </S.MenuItem>
-                )}
-              />
-              <S.TitleSeparator />
-            </S.MenuContainer>
-          </View>
-          <View>
-            <S.LogoutContainer>
-              <S.LogoutButton onPress={onLogout}>
-                <S.LogoutText>Sair da conta</S.LogoutText>
-              </S.LogoutButton>
-              <S.Version>V0.1.0</S.Version>
-            </S.LogoutContainer>
-          </View>
+                  )}
+                />
+                <S.TitleSeparator />
+              </S.MenuContainer>
+            </View>
+            <View>
+              <S.LogoutContainer>
+                <S.LogoutButton onPress={onLogout}>
+                  <S.LogoutText>Sair da conta</S.LogoutText>
+                </S.LogoutButton>
+                <S.Version>V0.1.0</S.Version>
+              </S.LogoutContainer>
+            </View>
+          </S.Content>
         </S.Container>
       </S.TouchableWrapper>
     </S.SafeAreaView>

@@ -29,7 +29,7 @@ function ChangePassword({navigation}) {
   const onSubmit = useCallback(async data => {
     try {
       const newData = {
-        email: params.props.email,
+        email: params.email,
         password: data.password,
       };
 
