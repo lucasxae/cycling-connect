@@ -68,6 +68,7 @@ function RootNavigator() {
 }
 
 function AuthNavigator(props) {
+  console.log('AuthNavigator', props);
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -80,13 +81,11 @@ function AuthNavigator(props) {
       <Stack.Screen
         name="ChangePassword"
         component={ChangePassword}
-        initialParams={props}
         options={options}
       />
       <Stack.Screen
         name="ChangeEmail"
         component={ChangeEmail}
-        initialParams={props}
         options={options}
       />
       <Stack.Screen
@@ -103,13 +102,11 @@ function AuthNavigator(props) {
       <Stack.Screen
         name="UserInformation"
         component={UserInformation}
-        initialParams={props}
         options={options}
       />
       <Stack.Screen
         name="UpdateUserInformation"
         component={UpdateUserInformation}
-        initialParams={props}
         options={options}
       />
     </Stack.Navigator>

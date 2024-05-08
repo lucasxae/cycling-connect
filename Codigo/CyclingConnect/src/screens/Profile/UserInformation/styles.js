@@ -15,11 +15,20 @@ export const SafeAreaView = styled.SafeAreaView`
   background-color: ${colors.secondary.background};
 `;
 
-export const Container = styled.View`
-  flex: 1;
+export const Container = styled.ScrollView.attrs({
+  showsVerticalScrollIndicator: false,
+})``;
+
+export const Content = styled.View`
   padding: 0 30px 30px 30px;
-  justify-content: space-between;
+  justify-content: flex-end;
 `;
+
+// export const Container = styled.View`
+//   flex: 1;
+//   padding: 0 30px 30px 30px;
+//   justify-content: space-between;
+// `;
 
 export const Header = styled.View`
   margin-bottom: 40px;

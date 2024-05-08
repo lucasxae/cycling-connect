@@ -34,12 +34,12 @@ function ChangeEmail({navigation}) {
       };
 
       const response = await axios.put(
-        `http://10.0.2.2:8080/api/users/updateEmail/${params.props.email}`,
+        `http://10.0.2.2:8080/api/users/updateEmail/${params.email}`,
         newData,
       );
       if (response.status === 200) {
-        onUpdateEmail(newData);
-        navigation.navigate('UserInformation');
+        await onUpdateEmail(newData.email);
+        navigation.navigate('Home');
       }
     } catch (err) {
       console.log(err);
