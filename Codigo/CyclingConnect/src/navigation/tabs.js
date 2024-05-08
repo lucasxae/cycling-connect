@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {useAuth} from '../context/AuthContext';
 import {Button} from 'react-native';
 import {Home, Events, Feedback, TrainingPlan} from '../screens';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -26,8 +25,6 @@ const screenOptions = {
 };
 
 function TabNavigator() {
-  const {onLogout} = useAuth();
-
   const tabs = [
     {
       name: 'Home',
@@ -75,7 +72,12 @@ function TabNavigator() {
                 );
               },
               headerShown: true,
-              headerRight: () => <Button onPress={onLogout} title="Sair" />,
+              headerRight: () => (
+                <Button
+                  onPress={() => navigation.navigate('Profile')}
+                  title="Menu"
+                />
+              ),
             })}
           />
         );

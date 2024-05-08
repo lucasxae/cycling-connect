@@ -92,6 +92,21 @@ public class AuthenticationController {
     }
 
     /**
+     * Endpoint para obter um usuário pelo seu email.
+     * 
+     * @param email
+     * @return Um ResponseEntity contendo o usuário encontrado.
+     */
+    @GetMapping("/findByEmail/{email}")
+    public ResponseEntity findByEmail(@PathVariable String email) {
+        User user = this.userRepository.findByEmailAsync(email);
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(user);
+    }
+
+    /**
      * Endpoint para alterar a senha de um usuário.
      * 
      * @param newPassword A nova senha do usuário.

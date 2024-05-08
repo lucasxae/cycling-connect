@@ -12,8 +12,6 @@ function ChangePassword({navigation}) {
   const route = useRoute();
   const {params} = route;
 
-  console.log(params.props.email);
-
   const {
     control,
     handleSubmit,

@@ -146,3 +146,39 @@ export const resetPasswordSchema = z
     message: 'As senhas não coincidem.',
     path: ['confirmPassword'],
   });
+
+export const resetEmailSchema = z.object({
+  email: z
+    .string()
+    .min(1, {
+      message: 'Campo obrigatório.',
+    })
+    .email({
+      message: 'Insira um e-mail válido.',
+    }),
+});
+
+export const updateUserInfoSchema = z.object({
+  login: z.string().min(3, {
+    message: 'Campo obrigatório.',
+  }),
+  phone: z.string().min(11, {
+    message: 'Campo obrigatório.',
+  }),
+  gender: z.string().min(1, {
+    message: 'Campo obrigatório.',
+  }),
+  birthdate: z
+    .string()
+    .min(1, {
+      message: 'Campo obrigatório.',
+    })
+    .refine(value => {
+      const dateValue = moment(value, 'DD/MM/YYYY');
+      return (
+        dateValue.isValid() &&
+        dateValue.isBefore() &&
+        dateValue.isAfter(moment('01/01/1900', 'DD/MM/YYYY'))
+      );
+    }, 'Insira uma data válida.'),
+});

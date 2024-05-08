@@ -1,17 +1,16 @@
 import React from 'react';
-import {View, Button} from 'react-native';
+import {View, Button, Text} from 'react-native';
+import {useAuth} from '../../context/AuthContext';
 import * as S from './styles';
 
 function Home({navigation}) {
+  const {onLogout} = useAuth();
+
   return (
     <S.SafeAreaView>
       <View style={{flex: 1, justifyContent: 'flex-start'}}>
-        <Button
-          title={'Alterar senha'}
-          onPress={() => {
-            navigation.navigate('ChangePassword');
-          }}
-        />
+        <Text>Olá, fulano!</Text>
+        <Button title="Sair" onPress={onLogout} />
       </View>
     </S.SafeAreaView>
   );
