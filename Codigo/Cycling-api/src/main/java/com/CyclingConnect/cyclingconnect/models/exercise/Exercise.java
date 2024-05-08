@@ -1,6 +1,5 @@
 package com.CyclingConnect.cyclingconnect.models.exercise;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 
 import jakarta.persistence.Column;
@@ -8,8 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -33,19 +32,29 @@ public class Exercise {
     private Long id;
 
     @Column(name = "lapSpeed")
+    @Size(min = 5, message = "Deve ter no minimo 5 caracteres")
     private String lapSpeed;
 
     @Column(name = "suggestedRoute")
+    @Size(min = 5, message = "Deve ter no minimo 5 caracteres")
     private String suggestedRoute;
 
-    @Column(name = "exerciseTime")
-    private String exerciseTime;
+    @Column(name = "duration")
+    @Size(min = 3, message = "Deve ter no minimo 3 caracteres")
+    private String duration;
 
     @Column(name = "averageSpeed")
     private Integer averageSpeed;
 
-    @Column(name = "situation")
-    private ExerciseSituation situation;
+    @Column(name = "totalDistance")
+    private Integer totalDistance;
+
+    @Column(name = "intensity")
+    @Size(min = 5, message = "Deve ter no minimo 5 caracteres")
+    private String intensity;
+
+    @Column(name = "status")
+    private ExerciseSituation status;
 
     @Column(name = "data")
     private LocalDate date;
@@ -53,13 +62,15 @@ public class Exercise {
     @Column(name = "diaSemana")
     private String diaSemana;
 
-    public Exercise (String lapSpeed, String suggestedRoute, String exerciseTime, Integer averageSpeed, LocalDate date, String diaSemana) {
+    public Exercise (String lapSpeed, String suggestedRoute, String duration, Integer averageSpeed, Integer totalDistance, String intensity, LocalDate date, String diaSemana) {
         this.lapSpeed = lapSpeed;
         this.suggestedRoute = suggestedRoute;
-        this.exerciseTime = exerciseTime;
+        this.duration = duration;
         this.averageSpeed = averageSpeed;
         this.date = date;
         this.diaSemana = diaSemana;
-        this.situation = ExerciseSituation.PENDENTE;
+        this.intensity = intensity;
+        this.totalDistance = totalDistance;
+        this.status = ExerciseSituation.PENDENTE;
     }
 }

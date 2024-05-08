@@ -44,6 +44,14 @@ public class ExerciseController {
             if (!exerciseService.verificaFormatoData(data.date())) {
                 return ResponseEntity.badRequest().body("Formato da data incorreto");
             }
+
+            if (data.totalDistance() <= 0 || data.totalDistance() == null) {
+                return ResponseEntity.badRequest().body("Distancia total menor ou igual a 0km");
+            }
+
+            if (data.totalDistance() >= 3000) {
+                return ResponseEntity.badRequest().body("Distancia total maior ou igual a 3000km");
+            }
             String aux = data.date();
             String[] dataSeparada = aux.split("/");
             
@@ -58,8 +66,8 @@ public class ExerciseController {
 
 
 
-            Exercise exercise = new Exercise(data.lapSpeed(), data.suggestedRoute(), data.exerciseTime(),
-                    data.averageSpeed(), dataCompleta, exerciseService.transformandoDia(diaDaSemana));
+            Exercise exercise = new Exercise(data.lapSpeed(), data.suggestedRoute(), data.duration(),
+                    data.averageSpeed(), data.totalDistance() ,data.intesity(), dataCompleta, exerciseService.transformandoDia(diaDaSemana));
 
             userRepository.findByEmailAsync(data.email()).addExercise(exercise);
             exerciseRepository.save(exercise);
