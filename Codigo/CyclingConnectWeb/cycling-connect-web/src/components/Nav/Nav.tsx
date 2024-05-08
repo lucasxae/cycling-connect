@@ -75,6 +75,7 @@ const profilePicStyle: React.CSSProperties = {
 };
 
 const searchStyle: React.CSSProperties = {
+  backgroundColor: "#F5F5F5",
   padding: "0.5rem",
   paddingLeft: "2rem", // Ajustado para criar espaço para o ícone
   width: "100%", // Ajustado para ocupar toda a largura
@@ -90,6 +91,7 @@ const searchIconStyle: React.CSSProperties = {
   top: "50%",
   transform: "translateY(-50%)",
   paddingRight: "1rem",
+  color: "#F04444",
 };
 
 export default Header;
