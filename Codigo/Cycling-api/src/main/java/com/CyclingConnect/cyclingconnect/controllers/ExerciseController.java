@@ -1,5 +1,8 @@
 package com.CyclingConnect.cyclingconnect.controllers;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -12,6 +15,7 @@ import com.CyclingConnect.cyclingconnect.models.exercise.Exercise;
 import com.CyclingConnect.cyclingconnect.models.exercise.ExerciseDTO;
 import com.CyclingConnect.cyclingconnect.repositories.ExerciseRepository;
 import com.CyclingConnect.cyclingconnect.repositories.UserRepository;
+import com.CyclingConnect.cyclingconnect.service.ExerciseService;
 
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +31,9 @@ public class ExerciseController {
     private ExerciseRepository exerciseRepository;
 
     @Autowired
+    private ExerciseService exerciseService;
+
+    @Autowired
     private UserRepository userRepository;
 
     @PostMapping("/create")
@@ -34,9 +41,33 @@ public class ExerciseController {
             if (userRepository.findByEmail(data.email()) == null) {
                 return ResponseEntity.badRequest().body("Usuário não encontrado.");
             }
+            if (!exerciseService.verificaFormatoData(data.date())) {
+                return ResponseEntity.badRequest().body("Formato da data incorreto");
+            }
 
-            Exercise exercise = new Exercise(data.lapSpeed(), data.suggestedRoute(), data.exerciseTime(),
-                    data.averageSpeed(), data.date());
+            if (data.totalDistance() <= 0 || data.totalDistance() == null) {
+                return ResponseEntity.badRequest().body("Distancia total menor ou igual a 0km");
+            }
+
+            if (data.totalDistance() >= 3000) {
+                return ResponseEntity.badRequest().body("Distancia total maior ou igual a 3000km");
+            }
+            String aux = data.date();
+            String[] dataSeparada = aux.split("/");
+            
+            LocalDate dataCompleta = LocalDate.of(Integer.parseInt(dataSeparada[2]), Integer.parseInt(dataSeparada[1]), Integer.parseInt(dataSeparada[0]));
+            LocalDate dataAtual = LocalDate.now();
+            
+            if (dataCompleta.isBefore(dataAtual)) {
+                return ResponseEntity.badRequest().body("Data anterior a data atual");
+            }
+
+            DayOfWeek diaDaSemana = dataCompleta.getDayOfWeek();
+
+
+
+            Exercise exercise = new Exercise(data.lapSpeed(), data.suggestedRoute(), data.duration(),
+                    data.averageSpeed(), data.totalDistance() ,data.intesity(), dataCompleta, exerciseService.transformandoDia(diaDaSemana));
 
             userRepository.findByEmailAsync(data.email()).addExercise(exercise);
             exerciseRepository.save(exercise);
