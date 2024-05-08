@@ -121,7 +121,7 @@ function Login({navigation}) {
                 </CustomText>
               </Button>
 
-              <Separator mv={20} text={'ou'} />
+              {/* <Separator mv={20} text={'ou'} />
               <Button
                 fullWidth={true}
                 onPress={handleSubmit(googleSubmit)}
@@ -132,7 +132,7 @@ function Login({navigation}) {
                 <CustomText bold color={'#363636'}>
                   Continuar com o Google
                 </CustomText>
-              </Button>
+              </Button> */}
             </View>
             <Link
               onPress={() => navigation.navigate('FirstStep')}
