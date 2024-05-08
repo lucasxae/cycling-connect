@@ -22,7 +22,7 @@ export const AuthProvider = ({children}) => {
 
       if (token) {
         setAuthState({
-          data,
+          data: {email: data},
           token,
           authenticated: true,
         });
