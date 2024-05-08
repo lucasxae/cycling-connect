@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import * as S from './styles';
 
-function CircleCheckbox({options, onSelect, label}) {
-  const [selectedOption, setSelectedOption] = useState(null);
+function CircleCheckbox({options, onSelect, label, defaultOption = null}) {
+  const [selectedOption, setSelectedOption] = useState(defaultOption);
 
   const handleSelectOption = option => {
     if (selectedOption === option) {

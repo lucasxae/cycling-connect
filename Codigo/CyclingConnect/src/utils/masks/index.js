@@ -31,6 +31,16 @@ export const phoneMask = value => {
   return value;
 };
 
+export const genderMask = value => {
+  if (!value) return value;
+
+  if (value === 'M') {
+    return 'Masculino';
+  } else if (value === 'F') {
+    return 'Feminino';
+  }
+};
+
 export const dateMask = value => {
   if (!value) return value;
 

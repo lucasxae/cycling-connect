@@ -8,7 +8,7 @@ export const useAuth = () => {
   return useContext(AuthContext);
 };
 
-export const AuthProvider = ({children, navigation}) => {
+export const AuthProvider = ({children}) => {
   const [authState, setAuthState] = useState({
     token: null,
     authenticated: null,
@@ -17,9 +17,11 @@ export const AuthProvider = ({children, navigation}) => {
   useEffect(() => {
     const loadToken = async () => {
       const token = await AsyncStorage.getItem('AccessKey');
+      const data = await AsyncStorage.getItem('Email');
 
       if (token) {
         setAuthState({
+          data,
           token,
           authenticated: true,
         });
@@ -54,8 +56,32 @@ export const AuthProvider = ({children, navigation}) => {
       ] = `Bearer ${authState.token}`;
 
       await AsyncStorage.setItem('AccessKey', response.data.token);
+      await AsyncStorage.setItem('Email', data.email);
     } catch (error) {
       console.log('Erro authContext', error);
+    }
+  };
+
+  const updateUserEmail = newEmail => {
+    setAuthState(prevState => ({
+      ...prevState,
+      data: {...prevState.data, email: newEmail},
+    }));
+  };
+
+  const deleteAccount = async email => {
+    const response = await axios.delete(
+      `http://10.0.2.2:8080/api/users/deleteByEmail/${email}`,
+    );
+    if (response.status === 200) {
+      await AsyncStorage.removeItem('AccessKey');
+      axios.defaults.headers.common = [''];
+      setAuthState({
+        data: null,
+        token: null,
+        authenticated: false,
+      });
+      console.log('Conta deletada!');
     }
   };
 
@@ -73,6 +99,8 @@ export const AuthProvider = ({children, navigation}) => {
   const value = {
     onLogin: login,
     onLogout: logout,
+    onUpdateEmail: updateUserEmail,
+    onDeleteAccount: deleteAccount,
     authState,
   };
 
