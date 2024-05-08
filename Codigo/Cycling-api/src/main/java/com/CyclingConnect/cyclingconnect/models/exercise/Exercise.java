@@ -1,10 +1,14 @@
 package com.CyclingConnect.cyclingconnect.models.exercise;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -43,15 +47,19 @@ public class Exercise {
     @Column(name = "situation")
     private ExerciseSituation situation;
 
-    @Column(name = "date")
-    private ExerciseDate date;
+    @Column(name = "data")
+    private LocalDate date;
 
-    public Exercise (String lapSpeed, String suggestedRoute, String exerciseTime, Integer averageSpeed, ExerciseDate date) {
+    @Column(name = "diaSemana")
+    private String diaSemana;
+
+    public Exercise (String lapSpeed, String suggestedRoute, String exerciseTime, Integer averageSpeed, LocalDate date, String diaSemana) {
         this.lapSpeed = lapSpeed;
         this.suggestedRoute = suggestedRoute;
         this.exerciseTime = exerciseTime;
         this.averageSpeed = averageSpeed;
         this.date = date;
+        this.diaSemana = diaSemana;
         this.situation = ExerciseSituation.PENDENTE;
     }
 }
