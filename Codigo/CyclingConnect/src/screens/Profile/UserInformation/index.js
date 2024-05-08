@@ -33,17 +33,13 @@ function UserInformation({navigation}) {
       title: 'Celular',
       text: phoneMask(params?.userInfo?.phone),
     },
-    {
-      id: 5,
-      title: 'E-mail',
-      text: params?.userInfo?.email,
-    },
   ];
 
   const accountData = [
     {
       id: 1,
       title: 'Alterar e-mail',
+      text: params?.userInfo?.email,
       onPress: () =>
         navigation.navigate('ChangeEmail', {email: params?.userInfo?.email}),
     },
@@ -121,6 +117,9 @@ function UserInformation({navigation}) {
                   renderItem={data => (
                     <S.MenuItem onPress={data.item.onPress}>
                       <S.MenuItemText>{data.item.title}</S.MenuItemText>
+                      {data.item.text && (
+                        <S.MenuItemText>{data.item.text}</S.MenuItemText>
+                      )}
                       <S.Icon icon={faChevronRight} size={10} color={'#fff'} />
                     </S.MenuItem>
                   )}
