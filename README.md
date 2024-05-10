@@ -1,6 +1,6 @@
 # Cycling Connect
 
-O objetivo deste projeto é desenvolver e implementar uma aplicativo móvel dedicado para otimizar o treinamento de ciclistas, visando melhorar o processo de comunicação e acompanhamento entre o treinador e os atletas. A aplicação buscará superar as limitações do atual método manual de envio de planilhas diárias via WhatsApp, proporcionando uma experiência mais eficiente e personalizada para cada ciclista. O foco está na criação de um ambiente virtual que permita a fácil disponibilização das fichas de treino, adaptação dinâmica conforme as necessidades individuais, e a implementação de mecanismos eficazes de acompanhamento do progresso, facilitando a avaliação da aderência ao programa de treinamento.
+O objetivo deste projeto é desenvolver e implementar um aplicativo móvel dedicado para otimizar o treinamento de ciclistas, visando melhorar o processo de comunicação e acompanhamento entre o treinador e os atletas. A aplicação buscará superar as limitações do atual método manual de envio de planilhas diárias via WhatsApp, proporcionando uma experiência mais eficiente e personalizada para cada ciclista. O foco está na criação de um ambiente virtual que permita a fácil disponibilização das fichas de treino, adaptação dinâmica conforme as necessidades individuais, e a implementação de mecanismos eficazes de acompanhamento do progresso, facilitando a avaliação da aderência ao programa de treinamento.
 
 ## Alunos integrantes da equipe
 
@@ -8,6 +8,7 @@ O objetivo deste projeto é desenvolver e implementar uma aplicativo móvel dedi
 - André Augusto Silva Carvalho
 - Guilherme Leroy Teixeira Capanema
 - Lucas Henrique Chaves de Barros
+- Samuel Ribeiro de Freitas
 
 ## Professores responsáveis
 
