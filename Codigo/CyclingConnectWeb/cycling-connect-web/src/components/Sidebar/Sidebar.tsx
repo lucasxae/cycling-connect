@@ -15,13 +15,30 @@ const Sidebar: React.FC = () => {
           <IconedListItem
             Icon={RiDashboardFill}
             text="Dashboard"
+            href="/dashboard"
           ></IconedListItem>
-          <IconedListItem Icon={IoPeople} text="Atletas" />
-          <IconedListItem Icon={FaClipboardList} text="Planilhas" />
-          <IconedListItem Icon={LuCalendarCheck} text="Eventos" />
-          <IconedListItem Icon={MdOutlineDirectionsBike} text="Training" />
-          <IconedListItem Icon={LuMessagesSquare} text="Feedbacks" />
-          <IconedListItem Icon={IoHelp} text="Ajuda" />
+          <IconedListItem Icon={IoPeople} text="Atletas" href="/atletas" />
+          <IconedListItem
+            Icon={FaClipboardList}
+            text="Planilhas"
+            href="/planilhas"
+          />
+          <IconedListItem
+            Icon={LuCalendarCheck}
+            text="Eventos"
+            href="/eventos"
+          />
+          <IconedListItem
+            Icon={MdOutlineDirectionsBike}
+            text="Training"
+            href="/training"
+          />
+          <IconedListItem
+            Icon={LuMessagesSquare}
+            text="Feedbacks"
+            href="/feedbacks"
+          />
+          <IconedListItem Icon={IoHelp} text="Ajuda" href="/ajuda" />
         </ul>
       </Card>
     </div>
