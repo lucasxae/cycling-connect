@@ -8,3 +8,4 @@ export {default as CircleCheckbox} from './Checkbox/CircleCheckbox';
 export {default as SquareCheckbox} from './Checkbox/SquareCheckbox';
 export {default as CarouselBase} from './CarouselBase';
 export {default as Steps} from './Steps';
+export {default as TrainingCard} from './Cards/TrainingCard';

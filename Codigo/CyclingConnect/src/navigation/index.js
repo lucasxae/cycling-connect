@@ -17,8 +17,8 @@ import {
   ChangeEmail,
   DeleteAccount,
   UpdateUserInformation,
+  TrainingDetails,
 } from '../screens';
-
 import {
   NavigationContainer,
   DefaultTheme,
@@ -107,6 +107,11 @@ function AuthNavigator(props) {
       <Stack.Screen
         name="UpdateUserInformation"
         component={UpdateUserInformation}
+        options={options}
+      />
+      <Stack.Screen
+        name="TrainingDetails"
+        component={TrainingDetails}
         options={options}
       />
     </Stack.Navigator>

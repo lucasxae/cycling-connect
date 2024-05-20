@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {Button} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Home, Events, Feedback, TrainingPlan} from '../screens';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {
@@ -13,8 +14,8 @@ import TabIcon from '../components/Tabs/TabIcon';
 const Tab = createBottomTabNavigator();
 
 const screenOptions = {
-  headerShown: false,
   tabBarStyle: {
+    backgroundColor: '#f04444',
     position: 'absolute',
     bottom: 16,
     right: 16,
@@ -39,15 +40,15 @@ function TabNavigator() {
       icon: faCalendar,
     },
     {
-      name: 'Feedback',
-      label: 'Feedback',
-      component: Feedback,
+      name: 'TrainingPlan',
+      label: 'TrainingPlan',
+      component: TrainingPlan,
       icon: faList,
     },
     {
-      name: 'TrainingPlan',
-      label: 'Planilhas',
-      component: TrainingPlan,
+      name: 'Feedback',
+      label: 'Feedback',
+      component: Feedback,
       icon: faEnvelope,
     },
   ];
@@ -64,20 +65,27 @@ function TabNavigator() {
               tabBarShowLabel: false,
               tabBarIcon: props => {
                 return (
-                  <TabIcon
-                    {...props}
-                    item={tab}
-                    onPress={() => navigation.navigate(tab.name)}
-                  />
+                  <TouchableOpacity>
+                    <TabIcon
+                      {...props}
+                      item={tab}
+                      onPress={() => navigation.navigate(tab.name)}
+                    />
+                  </TouchableOpacity>
                 );
               },
               headerShown: true,
-              headerRight: () => (
-                <Button
-                  onPress={() => navigation.navigate('Profile')}
-                  title="Menu"
-                />
-              ),
+              headerShadowVisible: false,
+              headerTintColor: '#fff',
+              headerTitle: '',
+              headerStyle: {backgroundColor: '#222'},
+              headerRight: () =>
+                tab.name === 'Home' && (
+                  <Button
+                    onPress={() => navigation.navigate('Profile')}
+                    title="Menu"
+                  />
+                ),
             })}
           />
         );

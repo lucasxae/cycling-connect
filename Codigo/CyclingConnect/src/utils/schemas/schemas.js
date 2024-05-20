@@ -182,3 +182,14 @@ export const updateUserInfoSchema = z.object({
       );
     }, 'Insira uma data válida.'),
 });
+
+export const feedbackSchema = z.object({
+  feedback: z
+    .string()
+    .min(1, {
+      message: 'Campo obrigatório.',
+    })
+    .max(500, {
+      message: 'Máximo de 500 caracteres.',
+    }),
+});
