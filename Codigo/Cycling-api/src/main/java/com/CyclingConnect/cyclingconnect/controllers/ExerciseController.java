@@ -63,6 +63,16 @@ public class ExerciseController {
             if (data.totalDistance() >= 3000) {
                 return ResponseEntity.badRequest().body("Distancia total maior ou igual a 3000km");
             }
+
+            List<Exercise> mesmaData = userRepository.findByEmailAsync(data.email()).getExercises();
+
+            for(Exercise exercise : mesmaData){
+                if (exercise.getDate().equals(data.date())) {
+                    return ResponseEntity.badRequest().body("Ja possui um exercicio na mesma data");
+                }
+            }
+
+
             String aux = data.date();
             String[] dataSeparada = aux.split("/");
 
@@ -77,7 +87,7 @@ public class ExerciseController {
             DayOfWeek diaDaSemana = dataCompleta.getDayOfWeek();
 
             Exercise exercise = new Exercise(data.lapSpeed(), data.suggestedRoute(), data.duration(),
-                    data.averageSpeed(), data.totalDistance(), data.intesity(), dataCompleta,
+                    data.averageSpeed(), data.totalDistance(), data.intesity(), data.date(),
                     exerciseService.transformandoDia(diaDaSemana));
 
             userRepository.findByEmailAsync(data.email()).addExercise(exercise);

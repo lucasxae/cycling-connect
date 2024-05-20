@@ -2,6 +2,8 @@ package com.CyclingConnect.cyclingconnect.service;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -19,6 +21,8 @@ public class ExerciseService {
     @Autowired
     private UserRepository userRepository;
 
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
     /**
      * Transforma um enum DayOfWeek em uma string representando o nome do dia da semana em português.
      *
@@ -29,15 +33,15 @@ public class ExerciseService {
 
         switch (data) {
             case MONDAY:
-                return "Segunda";
+                return "Segunda-feira";
             case TUESDAY:
-                return "Terça";
+                return "Terça-feira";
             case WEDNESDAY:
-                return "Quarta";
+                return "Quarta-feira";
             case THURSDAY:
-                return "Quinta";
+                return "Quinta-feira";
             case FRIDAY:
-                return "Sexta";
+                return "Sexta-feira";
             case SATURDAY:
                 return "Sábado";
             case SUNDAY:
@@ -73,14 +77,21 @@ public class ExerciseService {
         }
 
         LocalDate today = LocalDate.now();
-        LocalDate startOfWeek = today.with(java.time.temporal.TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY));
-        LocalDate endOfWeek = today.with(java.time.temporal.TemporalAdjusters.nextOrSame(DayOfWeek.SATURDAY));
+        LocalDate startOfWeek = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY));
+        LocalDate endOfWeek = today.with(TemporalAdjusters.nextOrSame(DayOfWeek.SATURDAY));
 
         List<Exercise> exercises = user.getExercises();
 
         List<Exercise> exercisesForWeek = exercises.stream()
-                .filter(exercise -> exercise.getDate().isAfter(startOfWeek.minusDays(1))
-                        && exercise.getDate().isBefore(endOfWeek.plusDays(1)))
+                .filter(exercise -> {
+                    LocalDate exerciseDate = LocalDate.parse(exercise.getDate(), DATE_FORMATTER);
+                    return !exerciseDate.isBefore(startOfWeek) && !exerciseDate.isAfter(endOfWeek);
+                })
+                .sorted((e1, e2) -> {
+                    LocalDate date1 = LocalDate.parse(e1.getDate(), DATE_FORMATTER);
+                    LocalDate date2 = LocalDate.parse(e2.getDate(), DATE_FORMATTER);
+                    return date1.compareTo(date2);
+                })
                 .collect(Collectors.toList());
 
         return exercisesForWeek;
