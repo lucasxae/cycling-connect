@@ -1,7 +1,5 @@
 package com.CyclingConnect.cyclingconnect.models.exercise;
 
-import java.time.LocalDate;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,15 +30,15 @@ public class Exercise {
     private Long id;
 
     @Column(name = "lapSpeed")
-    @Size(min = 5, message = "Deve ter no minimo 5 caracteres")
+    @Size(min = 5, message = "Velocidade da volta deve ter no minimo 5 caracteres")
     private String lapSpeed;
 
     @Column(name = "suggestedRoute")
-    @Size(min = 5, message = "Deve ter no minimo 5 caracteres")
+    @Size(min = 5, message = "Rota sugerida deve ter no minimo 5 caracteres")
     private String suggestedRoute;
 
     @Column(name = "duration")
-    @Size(min = 3, message = "Deve ter no minimo 3 caracteres")
+    @Size(min = 3, message = "Duração deve ter no minimo 3 caracteres")
     private String duration;
 
     @Column(name = "averageSpeed")
@@ -50,19 +48,19 @@ public class Exercise {
     private Integer totalDistance;
 
     @Column(name = "intensity")
-    @Size(min = 5, message = "Deve ter no minimo 5 caracteres")
+    @Size(min = 3, message = "Intensidade deve ter no minimo 3 caracteres")
     private String intensity;
 
     @Column(name = "status")
     private ExerciseSituation status;
 
     @Column(name = "data")
-    private LocalDate date;
+    private String date;
 
     @Column(name = "diaSemana")
     private String diaSemana;
 
-    public Exercise (String lapSpeed, String suggestedRoute, String duration, Integer averageSpeed, Integer totalDistance, String intensity, LocalDate date, String diaSemana) {
+    public Exercise (String lapSpeed, String suggestedRoute, String duration, Integer averageSpeed, Integer totalDistance, String intensity, String date, String diaSemana) {
         this.lapSpeed = lapSpeed;
         this.suggestedRoute = suggestedRoute;
         this.duration = duration;
