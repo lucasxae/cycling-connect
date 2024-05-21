@@ -13,7 +13,7 @@ import com.CyclingConnect.cyclingconnect.repositories.UserRepository;
 
 import jakarta.validation.Valid;
 
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestBody;
 
 /**
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 @RequestMapping("/feedback")
 public class FeedbackController {
-    
+
     @Autowired
     private FeedbackRepository feedbackRepository;
 
@@ -41,7 +41,8 @@ public class FeedbackController {
         if (userRepository.findByEmail(data.email()) == null) {
             return ResponseEntity.badRequest().body("Usuário não encontrado");
         }
-        Feedback newFeedback = new Feedback(data.weeklyFeedback(), data.nextWeekAvailability(), data.nextWeekSuggestions());
+        Feedback newFeedback = new Feedback(data.weeklyFeedback(), data.nextWeekAvailability(),
+                data.nextWeekSuggestions());
         feedbackRepository.save(newFeedback);
 
         userRepository.findByEmailAsync(data.email()).setFeedback(newFeedback);
@@ -49,4 +50,9 @@ public class FeedbackController {
         return ResponseEntity.ok().body("Feedback criado com sucesso");
     }
 
+    @GetMapping
+    public ResponseEntity getFeedback() {
+
+        return ResponseEntity.ok().body(feedbackRepository.findAll());
+    }
 }
