@@ -55,6 +55,8 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.PUT, "/api/users/updateUserData/{email}").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/api/users/deleteByEmail/{email}").permitAll()
                         .requestMatchers(HttpMethod.POST, "/exercise/create").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/feedback/create").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/feedback").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

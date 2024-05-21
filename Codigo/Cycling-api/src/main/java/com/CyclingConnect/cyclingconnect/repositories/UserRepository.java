@@ -18,10 +18,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     UserDetails findByEmail(String email);
 
-
     @Query("SELECT u FROM User u WHERE u.email = :email")
     User findByEmailAsync(String email);
-
 
     @Query("SELECT u FROM User u WHERE u.email = :email AND u.recuperationCode = :recuperationCode")
     User findByEmailAndCode(String email, String recuperationCode);
