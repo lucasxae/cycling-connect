@@ -85,6 +85,10 @@ function Feedback({navigation}) {
     );
   };
 
+  const onlyNumbers = value => {
+    return value.replace(/[^0-9]/g, '');
+  };
+
   return (
     <S.SafeAreaView>
       <S.TouchableWrapper onPress={() => Keyboard.dismiss()}>
@@ -139,7 +143,7 @@ function Feedback({navigation}) {
                     placeholder="1, 2, 3..."
                     onBlur={onBlur}
                     onChangeText={onChange}
-                    value={value}
+                    value={onlyNumbers(value)}
                     hasMargin={true}
                     keyboardType="numeric"
                   />
