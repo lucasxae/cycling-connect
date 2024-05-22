@@ -3,6 +3,7 @@ import MainLayout from "./layouts/MainLayout.tsx";
 import CreateWorkout from "./pages/CreateWorkout/CreateWorkout.tsx";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material";
+import Feedbacks from "./pages/Feedbacks/Feedbacks.tsx";
 function App() {
   const [count, setCount] = useState(0);
   const theme = createTheme({
@@ -24,6 +25,7 @@ function App() {
       <MainLayout>
         <Routes>
           <Route path="/planilhas" element={<CreateWorkout />}></Route>
+          <Route path="/feedbacks" element={<Feedbacks />}></Route>
         </Routes>
       </MainLayout>
     </ThemeProvider>
