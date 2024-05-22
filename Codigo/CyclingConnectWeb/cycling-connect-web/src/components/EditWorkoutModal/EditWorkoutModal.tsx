@@ -56,7 +56,7 @@ const EditWorkoutModal: React.FC<NewWorkoutModalProps> = ({
 
   return (
     <Dialog open={open} onClose={handleClose} fullWidth>
-      <DialogTitle>Novo Treino</DialogTitle>
+      <DialogTitle>Editar Treino</DialogTitle>
       <DialogContent>
         <Select
           disabled={true}
