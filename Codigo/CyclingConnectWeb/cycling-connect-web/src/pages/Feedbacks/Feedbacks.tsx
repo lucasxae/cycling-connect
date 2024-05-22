@@ -183,7 +183,7 @@ const Feedbacks: React.FC = () => {
           </div>
         </DialogContent>
         <DialogActions>
-          <Button fullWidth onClick={handleClose} variant="outlined">
+          <Button fullWidth onClick={handleClose} variant="contained">
             Fechar
           </Button>
         </DialogActions>

@@ -52,12 +52,20 @@ const CreateDayWorkout: React.FC<CreateDayWorkoutProps> = (props) => {
             <span>{workout.createdAt}</span>
           </div>
           <div style={editButtonStyle}>
-            <Button onClick={handleEditClick} endIcon={<EditIcon />}>
+            <Button
+              variant="outlined"
+              onClick={handleEditClick}
+              endIcon={<EditIcon />}
+            >
               Editar
             </Button>
           </div>
           <div style={deleteButtonStyle}>
-            <Button onClick={handleDeleteClick} endIcon={<DeleteIcon />}>
+            <Button
+              variant="outlined"
+              onClick={handleDeleteClick}
+              endIcon={<DeleteIcon />}
+            >
               Excluir
             </Button>
           </div>

@@ -147,7 +147,7 @@ const CreateWorkout: React.FC = () => {
         <div style={saveButtonContainerStyle}>
           <Button
             fullWidth
-            variant="outlined"
+            variant="contained"
             color="primary"
             style={{ marginTop: "10px" }}
           >

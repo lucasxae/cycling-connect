@@ -139,20 +139,14 @@ const EditWorkoutModal: React.FC<NewWorkoutModalProps> = ({
         />
       </DialogContent>
       <DialogActions>
-        <div style={{ display: "flex" }}>
-          <div>
-            <Button
-              onClick={handleClose}
-              style={{ display: "flex", flex: "flex-start" }}
-            >
+        <div style={{ display: "flex", justifyContent: "flex-start" }}>
+          <div style={{ padding: "0.5rem", flex: "start" }}>
+            <Button variant="contained" onClick={handleClose}>
               Cancelar
             </Button>
           </div>
-          <div>
-            <Button
-              onClick={handleSave}
-              style={{ display: "flex", flex: "flex-start" }}
-            >
+          <div style={{ padding: "0.5rem" }}>
+            <Button variant="contained" onClick={handleSave}>
               Salvar
             </Button>
           </div>
