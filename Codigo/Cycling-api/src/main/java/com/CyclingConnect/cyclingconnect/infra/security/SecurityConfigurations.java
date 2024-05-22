@@ -57,6 +57,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/exercise/create").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/feedback/create").permitAll()
                         .requestMatchers(HttpMethod.GET, "/feedback").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/exercise/getWeeklyExercise/{email}").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

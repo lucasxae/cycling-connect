@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.CyclingConnect.cyclingconnect.models.User;
 import com.CyclingConnect.cyclingconnect.models.feedback.Feedback;
 import com.CyclingConnect.cyclingconnect.models.feedback.FeedbackDTO;
 import com.CyclingConnect.cyclingconnect.repositories.FeedbackRepository;
