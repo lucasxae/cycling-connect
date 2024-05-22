@@ -146,6 +146,7 @@ function Feedback({navigation}) {
                     value={onlyNumbers(value)}
                     hasMargin={true}
                     keyboardType="numeric"
+                    maxLength={1}
                   />
                 )}
               />
