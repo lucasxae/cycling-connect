@@ -15,7 +15,7 @@ function App() {
       },
       text: {
         primary: "#333",
-        secondary: "#fff",
+        secondary: "#333",
       },
     },
   });

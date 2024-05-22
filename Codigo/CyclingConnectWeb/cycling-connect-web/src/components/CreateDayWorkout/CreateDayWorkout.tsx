@@ -1,35 +1,74 @@
 import { Button, Card } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import React from "react";
+import React, { useState } from "react";
+import EditWorkoutModal from "../EditWorkoutModal/EditWorkoutModal";
+
+interface Workout {
+  createdAt: string;
+  weekDay: string;
+  workoutId: string;
+  heartRateZone: string;
+  totalDistance: string;
+  totalDuration: string;
+  averageSpeed: string;
+  lapTime: string;
+  routeSuggestion: string;
+}
 
 interface CreateDayWorkoutProps {
-  weekDay: string;
-  createdAt: string;
-  workoutId: string;
+  workout: Workout;
+  onDelete: (workoutId: string) => void;
+  onEdit: (workout: Workout) => void;
 }
 
 const CreateDayWorkout: React.FC<CreateDayWorkoutProps> = (props) => {
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const { workout, onDelete, onEdit } = props;
+
+  const handleDeleteClick = () => {
+    onDelete(workout.workoutId);
+  };
+
+  const handleEditClick = () => {
+    setEditModalOpen(true);
+  };
+
+  const handleCloseEditModal = () => {
+    setEditModalOpen(false);
+    onEdit(workout);
+  };
+
   return (
     <div style={wrapperStyle}>
       <div style={mainContainerStyle}>
         <div style={rightContainerStyle}>
           <div style={weekDayStyle}>
-            <h4>{props.weekDay}</h4>
+            <h4>{workout.weekDay}</h4>
           </div>
         </div>
         <div style={leftContainerStyle}>
           <div style={createdAtStyle}>
-            <span>{props.createdAt}</span>
+            <span>{workout.createdAt}</span>
           </div>
           <div style={editButtonStyle}>
-            <Button endIcon={<EditIcon />}>Editar</Button>
+            <Button onClick={handleEditClick} endIcon={<EditIcon />}>
+              Editar
+            </Button>
           </div>
           <div style={deleteButtonStyle}>
-            <Button endIcon={<DeleteIcon />}>Excluir</Button>
+            <Button onClick={handleDeleteClick} endIcon={<DeleteIcon />}>
+              Excluir
+            </Button>
           </div>
         </div>
       </div>
+      <EditWorkoutModal
+        workout={workout}
+        open={editModalOpen}
+        handleEditWorkout={onEdit}
+        handleClose={handleCloseEditModal}
+      />
     </div>
   );
 };

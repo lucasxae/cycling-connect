@@ -1,13 +1,58 @@
 import React, { useState } from "react";
 import Card from "../../components/Card/Card";
-import { Select, InputBase, MenuItem, SelectChangeEvent } from "@mui/material";
+import { Select, MenuItem, SelectChangeEvent, Button } from "@mui/material";
 import CreateDayWorkout from "../../components/CreateDayWorkout/CreateDayWorkout";
+import CreateWorkoutModal from "../../components/CreateWorkoutModal/CreateWorkoutModal";
+interface Workout {
+  createdAt: string;
+  weekDay: string;
+  workoutId: string;
+  heartRateZone: string;
+  totalDistance: string;
+  totalDuration: string;
+  averageSpeed: string;
+  lapTime: string;
+  routeSuggestion: string;
+}
 
 const CreateWorkout: React.FC = () => {
   const [age, setAge] = useState("");
+  const [workouts, setWorkouts] = useState<Workout[]>([]);
+  const [open, setOpen] = useState(false);
 
+  const handleOpen = () => {
+    setOpen(true);
+  };
   const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value as string);
+  };
+
+  const handleAddWorkout = (workout: Workout) => {
+    setWorkouts((prevWorkouts) => [
+      ...prevWorkouts,
+      {
+        ...workout,
+        workoutId: (prevWorkouts.length + 1).toString(),
+        createdAt: new Date().toISOString().split("T")[0],
+      },
+    ]);
+  };
+
+  const handleEditWorkout = (workout: Workout) => {
+    setWorkouts((prevWorkouts) => [
+      ...prevWorkouts.map((prevWorkout) => {
+        if (prevWorkout.workoutId === workout.workoutId) {
+          return workout;
+        }
+        return prevWorkout;
+      }),
+    ]);
+  };
+
+  const handleDeleteWorkout = (workoutId: string) => {
+    setWorkouts((prevWorkouts) =>
+      prevWorkouts.filter((workout) => workout.workoutId !== workoutId)
+    );
   };
 
   return (
@@ -24,7 +69,6 @@ const CreateWorkout: React.FC = () => {
                 size="medium"
                 variant="outlined"
                 value={age}
-                label="Age"
                 onChange={handleChange}
                 style={selectAthleteStyle}
               >
@@ -35,7 +79,9 @@ const CreateWorkout: React.FC = () => {
             </div>
           </div>
           <div>
-            <button style={addButtonStyle}>Adicionar</button>
+            <button style={addButtonStyle} onClick={handleOpen}>
+              Adicionar
+            </button>
           </div>
         </div>
         <div style={weekDaysContainerStyle}>
@@ -49,25 +95,40 @@ const CreateWorkout: React.FC = () => {
               </div>
             </div>
           </div>
-          <CreateDayWorkout
-            createdAt="2024-01-01"
-            weekDay="Segunda-Feira"
-            workoutId="1"
-          />
-          <CreateDayWorkout
-            createdAt="2024-01-01"
-            weekDay="Terça-Feira"
-            workoutId="1"
-          />
-          <CreateDayWorkout
-            createdAt="2024-01-01"
-            weekDay="Quarta-Feira"
-            workoutId="1"
-          />
+          {workouts.map((workout, index) => (
+            <CreateDayWorkout
+              key={index}
+              workout={workout}
+              onDelete={handleDeleteWorkout}
+              onEdit={handleEditWorkout}
+            />
+          ))}
+        </div>
+        <div style={saveButtonContainerStyle}>
+          <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            style={{ marginTop: "10px" }}
+          >
+            Salvar
+          </Button>
         </div>
       </Card>
+      <CreateWorkoutModal
+        open={open}
+        handleClose={() => setOpen(false)}
+        handleAddWorkout={handleAddWorkout}
+      />
     </div>
   );
+};
+
+const saveButtonContainerStyle: React.CSSProperties = {
+  display: "flex",
+  justifyContent: "flex-start",
+  padding: "1rem",
+  width: "30%",
 };
 
 const wrapperStyle: React.CSSProperties = {
@@ -93,6 +154,7 @@ const leftContainerStyle: React.CSSProperties = {
 
 const weekDaysContainerStyle: React.CSSProperties = {
   padding: "1rem 0",
+  height: "70%",
 };
 const selectAthleteStyle: React.CSSProperties = {
   width: "200px",
