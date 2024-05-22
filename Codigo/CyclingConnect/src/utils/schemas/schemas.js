@@ -182,3 +182,26 @@ export const updateUserInfoSchema = z.object({
       );
     }, 'Insira uma data válida.'),
 });
+
+export const feedbackSchema = z.object({
+  weeklyFeedback: z
+    .string()
+    .min(1, {
+      message: 'Campo obrigatório.',
+    })
+    .max(200, {
+      message: 'Máximo de 200 caracteres.',
+    }),
+  nextWeekAvailability: z
+    .string()
+    .min(1, {message: 'Campo obrigatório.'})
+    .max(1, {})
+    .refine(
+      value => {
+        const parsedValue = parseInt(value);
+        return parsedValue > 0 && parsedValue < 8;
+      },
+      {message: 'Você só pode ter 7 treinos em uma semana.'},
+    ),
+  nextWeekSuggestions: z.number().min(1, {}).max(5, {}),
+});

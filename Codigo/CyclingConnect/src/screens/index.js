@@ -5,6 +5,7 @@ export {default as Home} from './Home';
 export {default as Events} from './Events';
 export {default as Feedback} from './Feedback';
 export {default as TrainingPlan} from './TrainingPlan';
+export {default as TrainingDetails} from './TrainingPlan/TrainingDetails';
 export {default as ChangePassword} from './ChangePassword';
 export {default as ChangeEmail} from './ChangeEmail';
 export {default as EmailVerification} from './ResetPassword/EmailVerification';
