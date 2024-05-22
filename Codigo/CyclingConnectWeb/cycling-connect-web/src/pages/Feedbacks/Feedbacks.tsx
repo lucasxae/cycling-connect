@@ -16,6 +16,7 @@ import {
   Rating,
 } from "@mui/material";
 import Card from "../../components/Card/Card";
+import { useEffect } from "react";
 
 interface Feedback {
   id: number;
@@ -62,6 +63,14 @@ const Feedbacks: React.FC = () => {
       details: "Detalhes do feedback 4",
     },
   ]);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/feedback")
+      .then((response) => response.json())
+      .then((data) => setFeedbacks(data))
+      .catch((error) => console.error("Erro ao buscar feedbacks:", error));
+  }, []);
+
   const [open, setOpen] = React.useState(false);
   const [selectedFeedback, setSelectedFeedback] =
     React.useState<Feedback | null>(null);
@@ -174,7 +183,7 @@ const Feedbacks: React.FC = () => {
           </div>
         </DialogContent>
         <DialogActions>
-          <Button fullWidth onClick={handleClose}>
+          <Button fullWidth onClick={handleClose} variant="outlined">
             Fechar
           </Button>
         </DialogActions>

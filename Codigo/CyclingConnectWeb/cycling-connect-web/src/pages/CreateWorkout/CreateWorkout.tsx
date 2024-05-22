@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../../components/Card/Card";
 import { Select, MenuItem, SelectChangeEvent, Button } from "@mui/material";
 import CreateDayWorkout from "../../components/CreateDayWorkout/CreateDayWorkout";
@@ -15,10 +15,50 @@ interface Workout {
   routeSuggestion: string;
 }
 
+interface WorkoutApiResponse {
+  date: string;
+  diaSemana: string;
+  id: string;
+  intensity: string;
+  totalDistance: string;
+  duration: string;
+  averageSpeed: string;
+  lapSpeed: string;
+  suggestedRoute: string;
+  status: string;
+}
+
 const CreateWorkout: React.FC = () => {
   const [age, setAge] = useState("");
   const [workouts, setWorkouts] = useState<Workout[]>([]);
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/exercise/getWeeklyExercise/samuel@gmail.com", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) =>
+        setWorkouts(
+          data.map((w: WorkoutApiResponse) => {
+            return {
+              createdAt: w.date,
+              weekDay: w.diaSemana,
+              workoutId: w.id,
+              heartRateZone: w.intensity,
+              totalDistance: w.totalDistance,
+              totalDuration: w.duration,
+              averageSpeed: w.averageSpeed,
+              lapTime: w.lapSpeed,
+              routeSuggestion: w.suggestedRoute,
+            };
+          })
+        )
+      )
+      .catch((error) => console.error("Erro ao buscar workouts:", error));
+  }, []);
 
   const handleOpen = () => {
     setOpen(true);
@@ -107,7 +147,7 @@ const CreateWorkout: React.FC = () => {
         <div style={saveButtonContainerStyle}>
           <Button
             fullWidth
-            variant="contained"
+            variant="outlined"
             color="primary"
             style={{ marginTop: "10px" }}
           >
@@ -126,9 +166,7 @@ const CreateWorkout: React.FC = () => {
 
 const saveButtonContainerStyle: React.CSSProperties = {
   display: "flex",
-  justifyContent: "flex-start",
-  padding: "1rem",
-  width: "30%",
+  width: "100%",
 };
 
 const wrapperStyle: React.CSSProperties = {
