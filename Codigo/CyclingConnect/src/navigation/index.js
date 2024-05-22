@@ -77,6 +77,7 @@ function AuthNavigator(props) {
         options={{
           headerShown: false,
         }}
+        initialParams={props}
       />
       <Stack.Screen
         name="ChangePassword"

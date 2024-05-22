@@ -51,7 +51,7 @@ function Profile({navigation}) {
   return (
     <S.SafeAreaView>
       <S.TouchableWrapper onPress={() => Keyboard.dismiss()}>
-        <S.Container>
+        <S.Container style={{flex: 1}}>
           <S.Content>
             <View>
               <View>

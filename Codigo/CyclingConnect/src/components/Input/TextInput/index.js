@@ -12,6 +12,7 @@ function CustomInput({
   label,
   hasMargin,
   secureTextEntry,
+  multilineText,
   ...props
 }) {
   const [isVisible, setIsVisible] = useState(false);

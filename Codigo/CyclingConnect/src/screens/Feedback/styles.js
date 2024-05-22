@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import {Button} from '../../components';
 import {TouchableWithoutFeedback} from 'react-native';
 import theme from '../../global/theme';
 
@@ -31,9 +32,7 @@ export const Content = styled.View`
   justify-content: space-between;
 `;
 
-export const Header = styled.View`
-  margin-bottom: 10px;
-`;
+export const Header = styled.View``;
 
 export const Title = styled.Text`
   font-family: ${fonts.secondary.secondarySemiBold};
@@ -50,7 +49,7 @@ export const Subtitle = styled.Text`
 export const RatingContainer = styled.View`
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 20px;
+  margin: 20px 0 10px 0;
 `;
 
 export const Error = styled.Text`
@@ -58,4 +57,14 @@ export const Error = styled.Text`
   font-family: ${fonts.primary.primaryRegular};
   font-size: ${fontSizes.smaller};
   color: ${colors.error};
+`;
+
+export const CustomButton = styled(Button).attrs({
+  bgColor: colors.redPalette.primary,
+})``;
+
+export const ButtonText = styled.Text`
+  font-family: ${fonts.primary.primaryBold};
+  font-size: ${fontSizes.regular};
+  color: ${colors.white};
 `;

@@ -25,7 +25,7 @@ const screenOptions = {
   },
 };
 
-function TabNavigator() {
+function TabNavigator({route}) {
   const tabs = [
     {
       name: 'Home',
@@ -61,6 +61,7 @@ function TabNavigator() {
             key={index}
             name={tab.name}
             component={tab.component}
+            initialParams={route.params.props}
             options={({navigation}) => ({
               tabBarShowLabel: false,
               tabBarIcon: props => {

@@ -1,10 +1,17 @@
-import React from 'react';
+import React, {useCallback, useState} from 'react';
 import {View, Text} from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
 import * as S from './styles';
 import {TrainingCard} from '../../components';
 import {FlatList} from 'react-native-gesture-handler';
+import axios from 'axios';
+import {useRoute} from '@react-navigation/native';
 
 function TrainingPlan({navigation}) {
+  const [planilhaTreino, setPlanilhaTreino] = useState([]);
+  const route = useRoute();
+  const {params} = route;
+
   const treinos = [
     {
       id: 1,
@@ -68,6 +75,18 @@ function TrainingPlan({navigation}) {
     },
   ];
 
+  useFocusEffect(
+    useCallback(() => {
+      axios
+        .get(`http://10.0.2.2:8080/exercise/getWeeklyExercise/${params.email}`)
+        .then(response => {
+          setPlanilhaTreino(response.data);
+          console.log('response', response.data);
+        })
+        .catch(err => console.log('Planilha Error', err));
+    }, []),
+  );
+
   return (
     <S.SafeAreaView>
       <S.Container>
@@ -77,7 +96,7 @@ function TrainingPlan({navigation}) {
           </S.Header>
           <View>
             <FlatList
-              data={treinos}
+              data={planilhaTreino}
               renderItem={({item}) => (
                 <TrainingCard
                   key={item.id}
@@ -94,6 +113,23 @@ function TrainingPlan({navigation}) {
               )}
               scrollEnabled={true}
               showsVerticalScrollIndicator={false}
+              ListEmptyComponent={() => (
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      color: '#fff',
+                      textAlign: 'center',
+                    }}>
+                    Ops! Parece que você ainda não tem nenhum treino cadastrado.
+                  </Text>
+                </View>
+              )}
               ListFooterComponent={() => <View style={{paddingBottom: 100}} />}
               style={{flexGrow: 1}}
             />

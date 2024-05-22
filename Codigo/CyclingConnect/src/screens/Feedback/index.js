@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {View, TouchableOpacity, Keyboard} from 'react-native';
 import * as S from './styles';
 
@@ -11,10 +11,14 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {feedbackSchema} from '../../utils/schemas/schemas';
 
 import {CustomInput} from '../../components';
+import MultilineInput from '../../components/Input/MultilineInput';
+import {useRoute} from '@react-navigation/native';
+import axios from 'axios';
 
-function Feedback() {
-  const [defaultRating, setDefaultRating] = useState(0);
+function Feedback({navigation}) {
   const [maxRating] = useState([1, 2, 3, 4, 5]);
+  const route = useRoute();
+  const {params} = route;
 
   const {
     control,
@@ -24,14 +28,39 @@ function Feedback() {
   } = useForm({
     mode: 'onBlur',
     defaultValues: {
-      feedback: '',
+      nextWeekSuggestions: 5, // alterar dps para rating no back end
+      weeklyFeedback: '',
+      nextWeekAvailability: '',
     },
     resolver: zodResolver(feedbackSchema),
   });
 
-  const onSubmit = data => {
-    console.log(data);
-  };
+  const onSubmit = useCallback(async data => {
+    try {
+      const newData = {
+        email: params.email,
+        nextWeekSuggestions: data.nextWeekSuggestions,
+        weeklyFeedback: data.weeklyFeedback,
+        nextWeekAvailability: parseInt(data.nextWeekAvailability),
+      };
+
+      const response = await axios.post(
+        `http://10.0.2.2:8080/feedback/create`,
+        newData,
+      );
+      if (response.status === 200) {
+        navigation.navigate('Home');
+      }
+    } catch (err) {
+      console.log(err);
+      setError('root', [
+        {
+          type: 'manual',
+          message: 'Houve um erro ao enviar o feedback.',
+        },
+      ]);
+    }
+  }, []);
 
   const starImageFilled = (
     <FontAwesomeIcon icon={faFilledStar} size={50} color="#F04444" />
@@ -41,19 +70,17 @@ function Feedback() {
     <FontAwesomeIcon icon={faStar} size={50} color="#F04444" />
   );
 
-  const Rating = () => {
+  const Rating = ({rating, onChange}) => {
     return (
       <S.RatingContainer>
-        {maxRating.map((item, index) => {
-          return (
-            <TouchableOpacity
-              activeOpacity={0.7}
-              key={index}
-              onPress={() => setDefaultRating(item)}>
-              {item <= defaultRating ? starImageFilled : starImageCorner}
-            </TouchableOpacity>
-          );
-        })}
+        {maxRating.map(item => (
+          <TouchableOpacity
+            key={item}
+            onPress={() => onChange(item)}
+            style={{marginRight: 10}}>
+            {item <= rating ? starImageFilled : starImageCorner}
+          </TouchableOpacity>
+        ))}
       </S.RatingContainer>
     );
   };
@@ -67,29 +94,74 @@ function Feedback() {
               <S.Header>
                 <S.Title>Feedback Semanal</S.Title>
                 <S.Subtitle>
-                  Ei fulano, o quanto você curtiu o treino da semana?
+                  Ei, o quanto você curtiu o seu treino da semana?
                 </S.Subtitle>
               </S.Header>
-              <Rating />
               <Controller
-                name="feedback"
+                name="nextWeekSuggestions"
+                control={control}
+                render={({field: {onChange, value}}) => (
+                  <>
+                    <Rating rating={value} onChange={onChange} />
+                  </>
+                )}
+              />
+              <View style={{marginBottom: 40}}>
+                <Controller
+                  name="weeklyFeedback"
+                  control={control}
+                  render={({field: {onChange, onBlur, value}}) => (
+                    <>
+                      <MultilineInput
+                        label="Conte um pouco mais sobre a sua experiência..."
+                        placeholder="Escreva aqui o que você sentiu, suas impressões e o que pode melhorar."
+                        hasMargin={true}
+                        value={value}
+                        onChangeText={onChange}
+                        onBlur={onBlur}
+                        counter={`${200 - value.length} caracteres restantes`}
+                      />
+                    </>
+                  )}
+                />
+              </View>
+              {errors.weeklyFeedback && (
+                <S.Error>{errors.weeklyFeedback.message}</S.Error>
+              )}
+            </View>
+            <View style={{marginBottom: 30}}>
+              <Controller
+                name="nextWeekAvailability"
                 control={control}
                 render={({field: {onChange, onBlur, value}}) => (
                   <CustomInput
-                    teste={true}
-                    label="Conte um pouco mais sobre a sua experiência... "
-                    placeholder="Escreva aqui o que você sentiu, suas impressões e o que pode melhorar."
+                    label="Disponibilidade para a próxima semana"
+                    placeholder="1, 2, 3..."
                     onBlur={onBlur}
                     onChangeText={onChange}
                     value={value}
+                    hasMargin={true}
+                    keyboardType="numeric"
                   />
                 )}
               />
-              {errors.feedback && <S.Error>{errors.feedback.message}</S.Error>}
+              {errors.nextWeekAvailability && (
+                <S.Error>{errors.nextWeekAvailability.message}</S.Error>
+              )}
+            </View>
+            <View>
+              <S.CustomButton
+                fullWidth={true}
+                onPress={handleSubmit(onSubmit)}
+                bgColor={'#fff'}
+                disabled={!isValid || isSubmitting}>
+                <S.ButtonText>Enviar</S.ButtonText>
+              </S.CustomButton>
             </View>
           </S.Content>
         </S.Container>
       </S.TouchableWrapper>
+      <View height={62} />
     </S.SafeAreaView>
   );
 }
