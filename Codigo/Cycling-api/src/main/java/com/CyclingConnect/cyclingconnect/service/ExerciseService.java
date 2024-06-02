@@ -52,6 +52,43 @@ public class ExerciseService {
 
     }
 
+    public boolean verificaDataJaPassou(String data) {
+        LocalDate dataAtual = LocalDate.now();
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate dataFornecida = LocalDate.parse(data, formatter);
+        
+        return dataFornecida.isBefore(dataAtual);
+    }
+
+    public boolean verificandoFormatoHora(String hora) {
+
+        String regex = "\\d{2}:\\d{2}";
+        return Pattern.matches(regex, hora);
+    }
+
+    public boolean verificarHoraValida(String hora) {
+        if (!hora.matches("^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$")) {
+            return false;
+        }
+
+        String[] partes = hora.split(":");
+        int horas = Integer.parseInt(partes[0]);
+        int minutos = Integer.parseInt(partes[1]);
+
+        if (horas < 0 || horas > 23 || minutos < 0 || minutos > 59) {
+            return false;
+        }
+
+        if (horas == 23 && minutos == 59) {
+            return true; 
+        } else if (horas == 0 && minutos == 0) {
+            return true; 
+        }
+
+        return true;
+    }
+
     /**
      * Verifica se a string de data possui o formato correto (dd/mm/aaaa).
      *

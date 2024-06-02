@@ -59,6 +59,9 @@ public class Events {
     @Size(min = 3, message = "Título deve ter no minimo 3 caracteres")
     private String title;
 
+    @Column(name = "location")
+    private String location;
+
     @Column(name = "description")
     @Size(min = 3, message = "Descricão deve ter no minimo 3 caracteres")
     private String description;
@@ -69,10 +72,27 @@ public class Events {
     @Column(name = "dayOfWeek")
     private String dayOfWeek;
 
-    public Events(String title, String description, String date, String dayOfWeek) {
+    @Column(name = "hour")
+    private String hour;
+
+    @Column(name = "registrationStatus")
+    private EventsRegistration registrationStatus;
+
+    @Column(name = "distance")
+    private Integer distance;
+
+    @Column(name = "value")
+    private Double value;
+
+    public Events(String title, String description, String date, String hour , Integer distance, Double value, String location, String dayOfWeek, EventsRegistration registrationStatus) {
         this.title = title;
         this.description = description;
         this.date = date;
+        this.distance = distance;
+        this.value = value;
+        this.hour = hour;
+        this.location = location;
+        this.registrationStatus = registrationStatus;
         this.dayOfWeek = dayOfWeek;
     }
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.CyclingConnect.cyclingconnect.models.events.DeleteEventsDTO;
 import com.CyclingConnect.cyclingconnect.models.events.Events;
 import com.CyclingConnect.cyclingconnect.models.events.EventsDTO;
+import com.CyclingConnect.cyclingconnect.models.events.EventsRegistration;
 import com.CyclingConnect.cyclingconnect.repositories.EventsRepository;
 import com.CyclingConnect.cyclingconnect.service.ExerciseService;
 
@@ -42,6 +43,22 @@ public class EventsController {
             return ResponseEntity.badRequest().body("Formato da data incorreto");
         }
 
+        if (!exerciseService.verificandoFormatoHora(data.hour())) {
+            return ResponseEntity.badRequest().body("Formato da hora incorreto");
+        }
+
+        if (data.distance() < 0) {
+            return ResponseEntity.badRequest().body("Distância menor do que 0");
+        }
+
+        if (!exerciseService.verificarHoraValida(data.hour())) {
+            return ResponseEntity.badRequest().body("Horario invalido");
+        }
+
+        if (data.value() < 0) {
+            return ResponseEntity.badRequest().body("Valor menor do que 0");
+        }
+
         String aux = data.date();
         String[] dataSeparada = aux.split("/");
 
@@ -56,7 +73,7 @@ public class EventsController {
         DayOfWeek diaDaSemana = dataCompleta.getDayOfWeek();
         String dia = exerciseService.transformandoDia(diaDaSemana);
 
-        Events newEvent = new Events(data.title(), data.description(), data.date(), dia);
+        Events newEvent = new Events(data.title(), data.description(), data.date(),data.hour(), data.distance(), data.value(), data.location(), dia, EventsRegistration.ABERTAS);
 
         eventsRepository.save(newEvent);
         return ResponseEntity.status(HttpStatus.CREATED).body("Evento criado com sucesso");
@@ -73,8 +90,15 @@ public class EventsController {
             return ResponseEntity.badRequest().body("Nenhum evento encontrado");
         }
 
-        return ResponseEntity.ok().body(eventsRepository.findAll());
+        List<Events> events = eventsRepository.findAll();
 
+        for (Events event : events) {
+            if(exerciseService.verificaDataJaPassou(event.getDate())){
+                event.setRegistrationStatus(EventsRegistration.FECHADA);
+                eventsRepository.save(event);
+            }
+        }
+        return ResponseEntity.ok().body(eventsRepository.findAll());
     }
 
     /**
