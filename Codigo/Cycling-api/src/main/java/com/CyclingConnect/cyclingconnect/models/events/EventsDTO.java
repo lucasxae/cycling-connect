@@ -17,6 +17,6 @@ package com.CyclingConnect.cyclingconnect.models.events;
  * @param description Uma breve descrição do evento. Esta fornece mais contexto e detalhes sobre o evento.
  * @param date A data do evento no formato "dd/mm/yyyy". Esta especifica quando o evento está programado para ocorrer.
  */
-public record EventsDTO(String title, String description, String date) {
+public record EventsDTO(String title, String description, String date, String hour , Integer distance, Double value, String location) {
     
 }
