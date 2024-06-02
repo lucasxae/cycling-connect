@@ -15,30 +15,35 @@ import lombok.Setter;
 
 /**
  * A classe Events representa uma entidade de evento que será armazenada no banco de dados.
- * Ela contém detalhes como título, descrição, data e dia da semana do evento.
+ * Ela contém detalhes como título, descrição, localização, data, hora, dia da semana, status de registro,
+ * distância e valor do evento.
  * 
- * <p>Esta classe usa anotações de JPA para mapear a entidade para uma tabela no banco de dados e anotações de validação
+ * <p>Esta classe usa anotações JPA para mapear a entidade para uma tabela no banco de dados e anotações de validação
  * para garantir que os campos atendam aos requisitos especificados.
- * 
- * <p>Exemplo de uso:
- * <pre>
- *     Events evento = new Events("Conferência", "Conferência anual de tecnologia", "2024-08-15", "Segunda-feira");
- *     System.out.println(evento.getTitle()); // imprime "Conferência"
- * </pre>
  * 
  * <p>Mapeamento dos campos:
  * <ul>
  *     <li><strong>id</strong>: Identificador único do evento (gerado automaticamente).</li>
  *     <li><strong>title</strong>: Título do evento (mínimo de 3 caracteres).</li>
+ *     <li><strong>location</strong>: Localização do evento.</li>
  *     <li><strong>description</strong>: Descrição do evento (mínimo de 3 caracteres).</li>
- *     <li><strong>date</strong>: Data do evento.</li>
+ *     <li><strong>date</strong>: Data do evento no formato "dd/mm/yyyy".</li>
+ *     <li><strong>hour</strong>: Hora do evento no formato "hh:mm".</li>
  *     <li><strong>dayOfWeek</strong>: Dia da semana do evento.</li>
+ *     <li><strong>registrationStatus</strong>: Status de registro do evento (por exemplo, ABERTO, FECHADO).</li>
+ *     <li><strong>distance</strong>: Distância do evento (em quilômetros).</li>
+ *     <li><strong>value</strong>: Valor do evento (em reais).</li>
  * </ul>
  * 
  * @param title O título do evento. Deve ter no mínimo 3 caracteres.
  * @param description Uma breve descrição do evento. Deve ter no mínimo 3 caracteres.
  * @param date A data do evento no formato "dd/mm/yyyy".
+ * @param hour A hora do evento no formato "hh:mm".
+ * @param distance A distância do evento em quilômetros.
+ * @param value O valor do evento em reais.
+ * @param location A localização do evento.
  * @param dayOfWeek O dia da semana em que o evento ocorrerá.
+ * @param registrationStatus O status de registro do evento.
  */
 
 @Entity
