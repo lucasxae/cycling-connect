@@ -28,41 +28,7 @@ interface Feedback {
 }
 
 const Feedbacks: React.FC = () => {
-  const [feedbacks, setFeedbacks] = React.useState<Feedback[]>([
-    {
-      id: 5,
-      nome: "Ciclista Exemplo",
-      nota: 4,
-      disponibilidadeFutura: "3 dias na semana",
-      statusFeedback: "Aprovado",
-      details:
-        "O ciclista mostrou grande melhoria em sua resistência e velocidade. A técnica de pedalada melhorou significativamente e a habilidade de manter um ritmo constante durante longos períodos foi impressionante. No entanto, a habilidade de subir colinas ainda precisa de algum trabalho. No geral, um ótimo progresso!",
-    },
-    {
-      id: 2,
-      nome: "Exemplo",
-      nota: 5,
-      disponibilidadeFutura: "Sim",
-      statusFeedback: "Aprovado",
-      details: "Detalhes do feedback 2",
-    },
-    {
-      id: 3,
-      nome: "Exemplo",
-      nota: 5,
-      disponibilidadeFutura: "Sim",
-      statusFeedback: "Aprovado",
-      details: "Detalhes do feedback 3",
-    },
-    {
-      id: 4,
-      nome: "Exemplo",
-      nota: 5,
-      disponibilidadeFutura: "Sim",
-      statusFeedback: "Aprovado",
-      details: "Detalhes do feedback 4",
-    },
-  ]);
+  const [feedbacks, setFeedbacks] = React.useState<Feedback[]>([]);
 
   useEffect(() => {
     fetch("http://localhost:3000/feedback")

@@ -40,8 +40,8 @@ public class FeedbackController {
         if (userRepository.findByEmail(data.email()) == null) {
             return ResponseEntity.badRequest().body("Usuário não encontrado");
         }
-        Feedback newFeedback = new Feedback(data.weeklyFeedback(), data.nextWeekAvailability(),
-                data.nextWeekSuggestions());
+        Feedback newFeedback = new Feedback(data.nome(), data.nota(), data.disponibilidadeFutura(),
+                data.statusFeedback(), data.details());
         feedbackRepository.save(newFeedback);
 
         userRepository.findByEmailAsync(data.email()).setFeedback(newFeedback);
