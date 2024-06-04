@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./style.css";
 
 export function Login() {
@@ -10,21 +11,15 @@ export function Login() {
 
   const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError(""); // Limpa erros anteriores
 
     try {
-      const response = await fetch("http://10.0.2.2:8080/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
+      const response = await axios.post("http://localhost:3000/auth/login", {
+        email,
+        password,
       });
 
-      if (!response.ok) {
-        throw new Error("Login failed");
-      }
-
-      const data = await response.json();
+      const data = response.data;
       console.log(data);
 
       localStorage.setItem("token", data.token);
@@ -48,6 +43,7 @@ export function Login() {
             placeholder="johndoe@gmail.com"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
+            required
           />
         </div>
 
@@ -60,18 +56,13 @@ export function Login() {
             placeholder="********"
             onChange={(e) => setPassword(e.target.value)}
             value={password}
+            required
           />
         </div>
 
-        <a href="#"></a>
-
         {error && <p className="error">{error}</p>}
 
-        <button
-          className="button"
-          type="submit"
-          onClick={() => navigate("/feedback")}
-        >
+        <button className="button" type="submit">
           Entrar
         </button>
       </form>
