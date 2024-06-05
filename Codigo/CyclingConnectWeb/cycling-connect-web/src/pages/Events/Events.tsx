@@ -102,10 +102,8 @@ const EventsPage: React.FC = () => {
     console.log(newEvent);
 
     axios
-      .post("https://localhost:5000/events", newEvent)
+      .post("https://localhost:3000/events", newEvent)
       .then((response) => {
-        // Atualize a lista de eventos aqui
-        setEventData([...eventData, newEvent]);
         setOpen(false);
       })
       .catch((error) => {

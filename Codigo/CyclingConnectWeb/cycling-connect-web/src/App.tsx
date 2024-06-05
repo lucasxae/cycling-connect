@@ -24,17 +24,22 @@ function App() {
   });
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Login />}></Route>
-      </Routes>
       <ThemeProvider theme={theme}>
-        <MainLayout>
-          <Routes>
-            <Route path="/planilhas" element={<CreateWorkout />}></Route>
-            <Route path="/feedbacks" element={<Feedbacks />}></Route>
-            <Route path="/eventos" element={<EventsPage />}></Route>
-          </Routes>
-        </MainLayout>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route
+            path="/*"
+            element={
+              <MainLayout>
+                <Routes>
+                  <Route path="/planilhas" element={<CreateWorkout />} />
+                  <Route path="/feedbacks" element={<Feedbacks />} />
+                  <Route path="/eventos" element={<EventsPage />} />
+                </Routes>
+              </MainLayout>
+            }
+          />
+        </Routes>
       </ThemeProvider>
     </>
   );
