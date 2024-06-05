@@ -1,6 +1,7 @@
 package com.CyclingConnect.cyclingconnect.service;
 
 import java.util.Date;
+import java.util.Optional;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.CyclingConnect.cyclingconnect.models.User;
+import com.CyclingConnect.cyclingconnect.models.feedback.Feedback;
+import com.CyclingConnect.cyclingconnect.repositories.FeedbackRepository;
 import com.CyclingConnect.cyclingconnect.repositories.UserRepository;
 
 @Service
@@ -20,6 +23,9 @@ public class ManagementService {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private FeedbackRepository feedbackRepository;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -94,5 +100,21 @@ public class ManagementService {
         Random random = new Random();
         int code = 1000 + random.nextInt(9000);
         return String.valueOf(code);
+    }
+
+    public User updateUser(User user) {
+        // Fetch the feedback from the repository
+        Optional<Feedback> feedback = feedbackRepository.findById(user.getFeedback().getId());
+
+        if (feedback.isPresent()) {
+            // If the feedback exists, you can proceed with updating the user
+            user.setFeedback(feedback.get());
+            userRepository.save(user);
+
+            return user;
+        } else {
+            // If the feedback does not exist, handle the error appropriately
+            throw new RuntimeException("Feedback with id " + user.getFeedback().getId() + " does not exist");
+        }
     }
 }
