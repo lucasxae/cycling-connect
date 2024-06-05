@@ -28,43 +28,73 @@ interface WorkoutApiResponse {
   status: string;
 }
 
+interface Athlete {
+  id: string;
+  name: string;
+  email: string;
+}
+
 const CreateWorkout: React.FC = () => {
-  const [age, setAge] = useState("");
   const [workouts, setWorkouts] = useState<Workout[]>([]);
   const [open, setOpen] = useState(false);
+  const [athletes, setAthletes] = useState<Athlete[]>([]);
+  const [selectedAthlete, setSelectedAthlete] = useState<Athlete | null>(null);
 
   useEffect(() => {
-    fetch("http://localhost:3000/exercise/getWeeklyExercise/samuel@gmail.com", {
+    // ... outros efeitos ...
+
+    fetch("http://localhost:3000/api/athletes", {
       headers: {
         "Content-Type": "application/json",
       },
     })
       .then((response) => response.json())
-      .then((data) =>
-        setWorkouts(
-          data.map((w: WorkoutApiResponse) => {
-            return {
-              createdAt: w.date,
-              weekDay: w.diaSemana,
-              workoutId: w.id,
-              heartRateZone: w.intensity,
-              totalDistance: w.totalDistance,
-              totalDuration: w.duration,
-              averageSpeed: w.averageSpeed,
-              lapTime: w.lapSpeed,
-              routeSuggestion: w.suggestedRoute,
-            };
-          })
-        )
-      )
-      .catch((error) => console.error("Erro ao buscar workouts:", error));
+      .then((data) => {
+        setAthletes(data);
+        setSelectedAthlete(data[0]);
+      })
+      .catch((error) => console.error("Erro ao buscar atletas:", error));
   }, []);
+
+  useEffect(() => {
+    if (selectedAthlete) {
+      fetch(
+        `http://localhost:3000/exercise/getWeeklyExercise/${selectedAthlete.email}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+        .then((response) => response.json())
+        .then((data) =>
+          setWorkouts(
+            data.map((w: WorkoutApiResponse) => {
+              return {
+                createdAt: w.date,
+                weekDay: w.diaSemana,
+                workoutId: w.id,
+                heartRateZone: w.intensity,
+                totalDistance: w.totalDistance,
+                totalDuration: w.duration,
+                averageSpeed: w.averageSpeed,
+                lapTime: w.lapSpeed,
+                routeSuggestion: w.suggestedRoute,
+              };
+            })
+          )
+        )
+        .catch((error) => console.error("Erro ao buscar workouts:", error));
+    }
+  }, [selectedAthlete]);
 
   const handleOpen = () => {
     setOpen(true);
   };
   const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string);
+    const athleteId = event.target.value as string;
+    const athlete = athletes.find((a) => a.id === athleteId);
+    setSelectedAthlete(athlete || null);
   };
 
   const handleAddWorkout = (workout: Workout) => {
@@ -108,13 +138,14 @@ const CreateWorkout: React.FC = () => {
               <Select
                 size="medium"
                 variant="outlined"
-                value={age}
                 onChange={handleChange}
                 style={selectAthleteStyle}
               >
-                <MenuItem value={10}>Eveline</MenuItem>
-                <MenuItem value={20}>Samuel</MenuItem>
-                <MenuItem value={30}>Ana</MenuItem>
+                {athletes.map((athlete) => (
+                  <MenuItem key={athlete.id} value={athlete.id}>
+                    {athlete.name}
+                  </MenuItem>
+                ))}
               </Select>
             </div>
           </div>
