@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../../components/Card/Card";
 import {
   Table,
@@ -54,38 +54,27 @@ const EventsPage: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
-  const [eventData, setEventData] = useState<Event[]>([
-    {
-      id: 1,
-      name: "Event 1",
-      date: "2022-10-10",
-      description: "Description 1",
-      active: true,
-      distance: 100,
-      location: "Local 1",
-      price: 50,
-    },
-    {
-      id: 2,
-      name: "Event 2",
-      date: "2022-11-15",
-      description: "Description 2",
-      active: false,
-      distance: 200,
-      location: "Local 2",
-      price: 100,
-    },
-    {
-      id: 3,
-      name: "Event 3",
-      date: "2022-12-20",
-      description: "Description 3",
-      active: true,
-      distance: 300,
-      location: "Local 3",
-      price: 150,
-    },
-  ]);
+  const [eventData, setEventData] = useState<Event[]>([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/events")
+      .then((response) => {
+        const data = response.data.map((item: any) => ({
+          id: item.id,
+          name: item.title,
+          date: item.date,
+          description: item.description,
+          location: item.location,
+          active: item.registrationStatus === "ABERTAS",
+          distance: item.distance,
+          price: item.value,
+        }));
+        setEventData(data);
+      })
+      .catch((error) => {
+        console.error("Erro:", error);
+      });
+  }, []);
 
   const handleAddEvent = () => {
     setOpen(true);
@@ -113,10 +102,10 @@ const EventsPage: React.FC = () => {
     console.log(newEvent);
 
     axios
-      .post("https://sua-api.com/events", newEvent)
+      .post("https://localhost:5000/events", newEvent)
       .then((response) => {
         // Atualize a lista de eventos aqui
-        setEventData([...eventData, response.data]);
+        setEventData([...eventData, newEvent]);
         setOpen(false);
       })
       .catch((error) => {
@@ -265,7 +254,6 @@ const EventsPage: React.FC = () => {
           <TextField
             margin="dense"
             label="Data do Evento"
-            type="date"
             defaultValue={selectedEvent?.date}
             fullWidth
             InputLabelProps={{
