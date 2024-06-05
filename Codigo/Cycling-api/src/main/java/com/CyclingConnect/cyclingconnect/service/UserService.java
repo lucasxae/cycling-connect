@@ -1,12 +1,13 @@
 package com.CyclingConnect.cyclingconnect.service;
 
-import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.http.HttpStatus;
 
 import com.CyclingConnect.cyclingconnect.models.User;
+import com.CyclingConnect.cyclingconnect.models.UserRole;
 import com.CyclingConnect.cyclingconnect.repositories.UserRepository;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -71,5 +72,17 @@ public class UserService {
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Código inválido");
         }
+    }
+
+    /**
+     * Recupera uma lista de usuários com o papel de "Atleta".
+     * 
+     * Este método consulta o repositório de usuários para encontrar todos os usuários
+     * que possuem o papel de "USER", que representa um atleta.
+     *
+     * @return Lista de usuários que possuem o papel de "Atleta".
+     */
+    public List<User> getAthlete(){
+        return userRepository.findByRole(UserRole.USER);
     }
 }
