@@ -41,9 +41,7 @@ const CreateWorkout: React.FC = () => {
   const [selectedAthlete, setSelectedAthlete] = useState<Athlete | null>(null);
 
   useEffect(() => {
-    // ... outros efeitos ...
-
-    fetch("http://localhost:3000/api/athletes", {
+    fetch("http://localhost:3000/athletes", {
       headers: {
         "Content-Type": "application/json",
       },
@@ -53,47 +51,41 @@ const CreateWorkout: React.FC = () => {
         setAthletes(data);
         setSelectedAthlete(data[0]);
       })
-      .catch((error) => console.error("Erro ao buscar atletas:", error));
+      .catch((error) => {
+        console.error("Erro ao buscar atletas:", error);
+      });
   }, []);
-
-  useEffect(() => {
-    if (selectedAthlete) {
-      fetch(
-        `http://localhost:3000/exercise/getWeeklyExercise/${selectedAthlete.email}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-        .then((response) => response.json())
-        .then((data) =>
-          setWorkouts(
-            data.map((w: WorkoutApiResponse) => {
-              return {
-                createdAt: w.date,
-                weekDay: w.diaSemana,
-                workoutId: w.id,
-                heartRateZone: w.intensity,
-                totalDistance: w.totalDistance,
-                totalDuration: w.duration,
-                averageSpeed: w.averageSpeed,
-                lapTime: w.lapSpeed,
-                routeSuggestion: w.suggestedRoute,
-              };
-            })
-          )
-        )
-        .catch((error) => console.error("Erro ao buscar workouts:", error));
-    }
-  }, [selectedAthlete]);
 
   const handleOpen = () => {
     setOpen(true);
   };
   const handleChange = (event: SelectChangeEvent) => {
     const athleteId = event.target.value as string;
-    const athlete = athletes.find((a) => a.id === athleteId);
+    const athlete = athletes.find((a) => a.id === athleteId) as Athlete;
+    fetch(`http://localhost:3000/exercise/getWeeklyExercise/${athlete.email}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) =>
+        setWorkouts(
+          data.map((w: WorkoutApiResponse) => {
+            return {
+              createdAt: w.date,
+              weekDay: w.diaSemana,
+              workoutId: w.id,
+              heartRateZone: w.intensity,
+              totalDistance: w.totalDistance,
+              totalDuration: w.duration,
+              averageSpeed: w.averageSpeed,
+              lapTime: w.lapSpeed,
+              routeSuggestion: w.suggestedRoute,
+            };
+          })
+        )
+      )
+      .catch((error) => console.error("Erro ao buscar workouts:", error));
     setSelectedAthlete(athlete || null);
   };
 
@@ -123,6 +115,23 @@ const CreateWorkout: React.FC = () => {
     setWorkouts((prevWorkouts) =>
       prevWorkouts.filter((workout) => workout.workoutId !== workoutId)
     );
+  };
+
+  const handleSave = () => {
+    fetch("http://localhost:3000/workouts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(workouts),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Workouts salvos com sucesso:", data);
+      })
+      .catch((error) => {
+        console.error("Erro ao salvar workouts:", error);
+      });
   };
 
   return (
@@ -181,6 +190,7 @@ const CreateWorkout: React.FC = () => {
             variant="contained"
             color="primary"
             style={{ marginTop: "10px" }}
+            onClick={handleSave}
           >
             Salvar
           </Button>
