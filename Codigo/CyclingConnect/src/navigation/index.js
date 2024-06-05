@@ -18,6 +18,7 @@ import {
   DeleteAccount,
   UpdateUserInformation,
   TrainingDetails,
+  EventDetails,
 } from '../screens';
 import {
   NavigationContainer,
@@ -113,6 +114,11 @@ function AuthNavigator(props) {
       <Stack.Screen
         name="TrainingDetails"
         component={TrainingDetails}
+        options={options}
+      />
+      <Stack.Screen
+        name="EventDetails"
+        component={EventDetails}
         options={options}
       />
     </Stack.Navigator>

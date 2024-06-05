@@ -12,69 +12,6 @@ function TrainingPlan({navigation}) {
   const route = useRoute();
   const {params} = route;
 
-  const treinos = [
-    {
-      id: 1,
-      lapSpeed: '40x10min em 80% FCMax',
-      suggestedRoute: 'Parque da cidade, plano',
-      duration: '1:00',
-      averageSpeed: 20,
-      totalDistance: 20,
-      intensity: 'Recuperação (60-70%)',
-      status: 'PENDENTE',
-      date: '20/05/2024',
-      diaSemana: 'Segunda-feira',
-    },
-    {
-      id: 2,
-      lapSpeed: 'Mantenha ritmo constante',
-      suggestedRoute: 'Estrada com leves subidas',
-      duration: '1:30',
-      averageSpeed: 20,
-      totalDistance: 30,
-      intensity: 'Moderada (70-80%)',
-      status: 'PENDENTE',
-      date: '22/05/2024',
-      diaSemana: 'Quarta-feira',
-    },
-    {
-      id: 3,
-      lapSpeed: 'Recuperação ativa',
-      suggestedRoute: 'Ciclovia, rota plana',
-      duration: '1:10',
-      averageSpeed: 22,
-      totalDistance: 25,
-      intensity: 'Leve (50-60%)',
-      status: 'PENDENTE',
-      date: '24/05/2024',
-      diaSemana: 'Sexta-feira',
-    },
-    {
-      id: 4,
-      lapSpeed: '2x20min em 85% FCMax',
-      suggestedRoute: 'Rota com subidas',
-      duration: '2:00',
-      averageSpeed: 20,
-      totalDistance: 40,
-      intensity: 'Alta (80-90%)',
-      status: 'PENDENTE',
-      date: '25/05/2024',
-      diaSemana: 'Sábado',
-    },
-    {
-      id: 5,
-      lapSpeed: '5x5min em 90% FCMax',
-      suggestedRoute: 'Estrada mista',
-      duration: '1:45',
-      averageSpeed: 20,
-      totalDistance: 35,
-      intensity: 'Moderada (70-80%)',
-      status: 'PENDENTE',
-      date: '26/05/2024',
-      diaSemana: 'Domingo',
-    },
-  ];
-
   useFocusEffect(
     useCallback(() => {
       axios
