@@ -28,13 +28,41 @@ interface WorkoutApiResponse {
   status: string;
 }
 
+interface Athlete {
+  id: string;
+  name: string;
+  email: string;
+}
+
 const CreateWorkout: React.FC = () => {
-  const [age, setAge] = useState("");
   const [workouts, setWorkouts] = useState<Workout[]>([]);
   const [open, setOpen] = useState(false);
+  const [athletes, setAthletes] = useState<Athlete[]>([]);
+  const [selectedAthlete, setSelectedAthlete] = useState<Athlete | null>(null);
 
   useEffect(() => {
-    fetch("http://localhost:3000/exercise/getWeeklyExercise/samuel@gmail.com", {
+    fetch("http://localhost:3000/athletes", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setAthletes(data);
+        setSelectedAthlete(data[0]);
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar atletas:", error);
+      });
+  }, []);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleChange = (event: SelectChangeEvent) => {
+    const athleteId = event.target.value as string;
+    const athlete = athletes.find((a) => a.id === athleteId) as Athlete;
+    fetch(`http://localhost:3000/exercise/getWeeklyExercise/${athlete.email}`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -58,13 +86,7 @@ const CreateWorkout: React.FC = () => {
         )
       )
       .catch((error) => console.error("Erro ao buscar workouts:", error));
-  }, []);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string);
+    setSelectedAthlete(athlete || null);
   };
 
   const handleAddWorkout = (workout: Workout) => {
@@ -95,6 +117,23 @@ const CreateWorkout: React.FC = () => {
     );
   };
 
+  const handleSave = () => {
+    fetch("http://localhost:3000/workouts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(workouts),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Workouts salvos com sucesso:", data);
+      })
+      .catch((error) => {
+        console.error("Erro ao salvar workouts:", error);
+      });
+  };
+
   return (
     <div style={containerStyle}>
       <Card>
@@ -108,13 +147,14 @@ const CreateWorkout: React.FC = () => {
               <Select
                 size="medium"
                 variant="outlined"
-                value={age}
                 onChange={handleChange}
                 style={selectAthleteStyle}
               >
-                <MenuItem value={10}>Eveline</MenuItem>
-                <MenuItem value={20}>Samuel</MenuItem>
-                <MenuItem value={30}>Ana</MenuItem>
+                {athletes.map((athlete) => (
+                  <MenuItem key={athlete.id} value={athlete.id}>
+                    {athlete.name}
+                  </MenuItem>
+                ))}
               </Select>
             </div>
           </div>
@@ -150,6 +190,7 @@ const CreateWorkout: React.FC = () => {
             variant="contained"
             color="primary"
             style={{ marginTop: "10px" }}
+            onClick={handleSave}
           >
             Salvar
           </Button>
