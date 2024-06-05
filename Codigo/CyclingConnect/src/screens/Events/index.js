@@ -124,14 +124,22 @@ function Events({navigation}) {
     };
   });
 
+  const mergedEvents = eventFormatted.reduce((acc, cur) => {
+    const date = Object.keys(cur)[0];
+    if (acc[date]) {
+      acc[date].push(...cur[date]);
+    } else {
+      acc[date] = cur[date];
+    }
+    return acc;
+  }, {});
+
+  console.log(mergedEvents);
+
   return (
     <View style={{flex: 1}}>
       <Agenda
-        items={
-          loading
-            ? {}
-            : eventFormatted.reduce((acc, cur) => ({...acc, ...cur}), {})
-        }
+        items={loading ? {} : mergedEvents}
         renderItem={item => renderItem(item)}
         renderEmptyData={() => {
           return loading ? (
