@@ -119,7 +119,11 @@ function AuthNavigator(props) {
       <Stack.Screen
         name="EventDetails"
         component={EventDetails}
-        options={options}
+        options={{
+          headerTransparent: true,
+          headerTitle: '',
+          headerTintColor: '#fff',
+        }}
       />
     </Stack.Navigator>
   );

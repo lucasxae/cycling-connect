@@ -21,7 +21,7 @@ export const SafeAreaView = styled.SafeAreaView`
 
 export const Container = styled.View`
   flex: 1;
-  padding: 0 30px 30px 30px;
+  padding: 10px 30px 30px 30px;
   justify-content: space-between;
 `;
 
