@@ -29,8 +29,8 @@ function EventDetails() {
           width: '100%',
           height: 300,
           marginBottom: 20,
-          borderBottomLeftRadius: 20,
-          borderBottomRightRadius: 20,
+          borderBottomLeftRadius: 30,
+          borderBottomRightRadius: 30,
         }}
       />
       <S.Container>
