@@ -15,18 +15,13 @@ export function Login() {
     setError(""); // Limpa erros anteriores
 
     try {
-      const response = await axios.post("http://localhost:3000/auth/login", {
+      const response = await axios.post("http://localhost:8080/auth/login", {
         email,
         password,
       });
 
       const data = response.data;
       console.log(data);
-
-      if (data.role != "ADMIN") {
-        setError("Acesso negado. Apenas administradores podem fazer login.");
-        return;
-      }
 
       navigate("/planilhas");
       localStorage.setItem("token", data.token);

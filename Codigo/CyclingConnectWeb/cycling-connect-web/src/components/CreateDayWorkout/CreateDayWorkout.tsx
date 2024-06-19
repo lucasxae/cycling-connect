@@ -32,11 +32,11 @@ const CreateDayWorkout: React.FC<CreateDayWorkoutProps> = (props) => {
 
   const handleEditClick = () => {
     setEditModalOpen(true);
+    onEdit(workout);
   };
 
   const handleCloseEditModal = () => {
     setEditModalOpen(false);
-    onEdit(workout);
   };
 
   return (

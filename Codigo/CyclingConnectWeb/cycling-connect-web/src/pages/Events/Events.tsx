@@ -19,13 +19,14 @@ import axios from "axios";
 
 interface Event {
   id: number;
-  name: string;
+  title: string; // Alterado de 'name' para 'title'
   date: string;
   description: string;
   location: string;
   active: boolean;
   distance: number;
-  price: number;
+  value: number;
+  hour: string | undefined;
 }
 
 const containerStyle: React.CSSProperties = {
@@ -57,17 +58,21 @@ const EventsPage: React.FC = () => {
   const [eventData, setEventData] = useState<Event[]>([]);
   useEffect(() => {
     axios
-      .get("http://localhost:3000/events")
+      .get("http://localhost:8080/events/getEvents", {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      })
       .then((response) => {
         const data = response.data.map((item: any) => ({
           id: item.id,
-          name: item.title,
+          title: item.title,
           date: item.date,
           description: item.description,
           location: item.location,
           active: item.registrationStatus === "ABERTAS",
           distance: item.distance,
-          price: item.value,
+          value: item.value,
         }));
         setEventData(data);
       })
@@ -90,19 +95,24 @@ const EventsPage: React.FC = () => {
 
   const handleSave = () => {
     const newEvent = {
-      name: eventName,
+      title: eventName,
       date: eventDate,
+      hour: "00:00",
       description: eventDescription,
       location: eventLocation,
       distance: eventDistance,
-      price: eventPrice,
+      value: eventPrice,
       active: eventActive,
     } as Event;
     setEventData([...eventData, newEvent]);
     console.log(newEvent);
 
     axios
-      .post("https://localhost:3000/events", newEvent)
+      .post("http://localhost:8080/events/create", newEvent, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      })
       .then((response) => {
         setOpen(false);
       })
@@ -162,10 +172,10 @@ const EventsPage: React.FC = () => {
           <TableBody>
             {eventData.map((event) => (
               <TableRow key={event.id}>
-                <TableCell>{event.name}</TableCell>
+                <TableCell>{event.title}</TableCell>
                 <TableCell>{event.date}</TableCell>
                 <TableCell>{event.location}</TableCell>
-                <TableCell>{event.price}</TableCell>
+                <TableCell>{event.value}</TableCell>
                 <TableCell>{event.distance}</TableCell>
                 <TableCell>
                   <Button onClick={() => handleEdit(event)}>Editar</Button>
@@ -240,7 +250,7 @@ const EventsPage: React.FC = () => {
             autoFocus
             margin="dense"
             label="Nome do Evento"
-            defaultValue={selectedEvent?.name}
+            defaultValue={selectedEvent?.title}
             fullWidth
             onChange={(e) =>
               setSelectedEvent({
@@ -305,7 +315,7 @@ const EventsPage: React.FC = () => {
             margin="dense"
             label="Preço"
             type="number"
-            defaultValue={selectedEvent?.price}
+            defaultValue={selectedEvent?.value}
             fullWidth
             onChange={(e) =>
               setSelectedEvent({

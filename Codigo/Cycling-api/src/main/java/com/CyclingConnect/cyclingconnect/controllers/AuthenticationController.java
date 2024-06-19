@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.CyclingConnect.cyclingconnect.infra.security.TokenService;
 import com.CyclingConnect.cyclingconnect.models.AuthenticationDTO;
 import com.CyclingConnect.cyclingconnect.models.LoginResponseDTO;
-
 import com.CyclingConnect.cyclingconnect.models.RegisterDTO;
 import com.CyclingConnect.cyclingconnect.models.User;
 import com.CyclingConnect.cyclingconnect.repositories.UserRepository;
