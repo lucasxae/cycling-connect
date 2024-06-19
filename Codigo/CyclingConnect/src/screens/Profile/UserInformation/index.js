@@ -68,7 +68,7 @@ function UserInformation({navigation}) {
                   <S.Title>Dados Pessoais</S.Title>
                   <S.UserInformation>
                     <S.UserImage
-                      source={require('../../../assets/images/ciclista.jpeg')}
+                      source={require('../../../assets/images/user-icon.png')}
                     />
                   </S.UserInformation>
                 </S.Header>

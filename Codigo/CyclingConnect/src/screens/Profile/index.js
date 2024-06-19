@@ -59,7 +59,7 @@ function Profile({navigation}) {
                   <S.Title>Configurações</S.Title>
                   <S.UserInformation>
                     <S.UserImage
-                      source={require('../../assets/images/ciclista.jpeg')}
+                      source={require('../../assets/images/user-icon.png')}
                     />
                     <S.UserContent>
                       <S.UserName>{userInfo?.login}</S.UserName>

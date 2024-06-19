@@ -41,6 +41,8 @@ export const Card = styled.View`
   margin-right: 15px;
   margin-top: 25px;
   padding-bottom: 20px;
+  border-top-width: 3px;
+  border-color: ${colors.redPalette.primary};
 `;
 
 export const Content = styled.View``;

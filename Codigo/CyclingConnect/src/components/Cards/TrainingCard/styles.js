@@ -51,7 +51,7 @@ export const Description = styled(Subtitle)`
 export const RightPart = styled.View`
   flex: 1;
   padding: 15px;
-  border-left-width: 1px;
-  border-color: #484848;
+  ${({hide}) =>
+    !hide && `border-left-width: 1px; border-color: #484848; width: 100%;`}
   width: 100%;
 `;

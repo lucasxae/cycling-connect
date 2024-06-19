@@ -1,6 +1,9 @@
 import styled from 'styled-components/native';
 import {TouchableWithoutFeedback} from 'react-native';
+
+import ErrorSvg from '../../assets/icons/light_error.svg';
 import theme from '../../global/theme';
+import {Button} from '../../components';
 
 const {colors, fonts, fontSizes} = theme;
 
@@ -52,4 +55,8 @@ export const Error = styled.Text`
   font-size: ${fontSizes.smaller};
   color: ${colors.error};
   text-align: ${({align}) => (align ? align : 'left')};
+`;
+
+export const ErrorIcon = styled(ErrorSvg)`
+  margin-bottom: 5px;
 `;

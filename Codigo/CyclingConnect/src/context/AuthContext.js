@@ -35,32 +35,24 @@ export const AuthProvider = ({children}) => {
   }, []);
 
   const login = async data => {
-    try {
-      const response = await axios.post(
-        'http://10.0.2.2:8080/auth/login',
-        data,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      );
+    const response = await axios.post('http://10.0.2.2:8080/auth/login', data, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
-      setAuthState({
-        data: data,
-        token: response.data.token,
-        authenticated: true,
-      });
+    setAuthState({
+      data: data,
+      token: response.data.token,
+      authenticated: true,
+    });
 
-      axios.defaults.headers.common[
-        'Authorization'
-      ] = `Bearer ${authState.token}`;
+    axios.defaults.headers.common[
+      'Authorization'
+    ] = `Bearer ${authState.token}`;
 
-      await AsyncStorage.setItem('AccessKey', response.data.token);
-      await AsyncStorage.setItem('Email', data.email);
-    } catch (error) {
-      console.log('Erro authContext', error);
-    }
+    await AsyncStorage.setItem('AccessKey', response.data.token);
+    await AsyncStorage.setItem('Email', data.email);
   };
 
   const updateUserEmail = async newEmail => {

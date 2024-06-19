@@ -28,8 +28,10 @@ export const Container = styled.ScrollView.attrs({
 
 export const Content = styled.View`
   flex: 1;
+  min-height: 700px;
   padding: 0 30px 30px 30px;
   justify-content: space-between;
+  margin-bottom: 10px;
 `;
 
 export const Header = styled.View``;
