@@ -1,31 +1,34 @@
 cff-version: 1.0.1
 message: Please cite this software using these metadata.
-title: 
+title: Cycling Connect
 authors:
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names:
+  - family-names: Alves
+    given-names: Ana Luiza Machado
+  - family-names: Carvalho
+    given-names: André Augusto Silva
+  - family-names: Capanema
+    given-names: Guilherme Leroy Teixeira
+  - family-names: Barros
+    given-names: Lucas Henrique Chaves de
+  - family-names: Freitas
+    given-names: Samuel Ribeiro de
   - name-suffix: Professor
     affiliation: PUC Minas
-    family-names: 
-    given-names: 
+    family-names: Veloso
+    given-names: Eveline Alonso
   - name-suffix: Professor
     affiliation: PUC Minas
-    family-names: 
-    given-names: 
+    family-names: Pereira
+    given-names: Lucas Henrique
+  - name-suffix: Professor
+    affiliation: PUC Minas
+    family-names: Lopes
+    given-names: Pedro Pongelupe
 keywords:
-  - 
-  - 
-repository-code: 
+  - cycling
+  - training app
+  - sports technology
+repository-code: https://github.com/ICEI-PUC-Minas-PPLES-TI/plf-es-2024-1-ti3-8981100-cycling-connect
 license: CC-BY-4.0
 version: 1.0.0
-date-released: 2022-07-14
+date-released: 2024-06-19
