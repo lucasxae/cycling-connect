@@ -12,11 +12,7 @@ function TabIcon(props) {
   return (
     <TouchableOpacity onPress={onPress} activeOpacity={1}>
       <Animated.View ref={viewRef} duration={1000}>
-        <Icon
-          icon={item.icon}
-          size={20}
-          color={focused ? colors.redPalette.primary : '#CCC'}
-        />
+        <Icon icon={item.icon} size={20} color={focused ? '#FFF' : '#DDD'} />
       </Animated.View>
     </TouchableOpacity>
   );

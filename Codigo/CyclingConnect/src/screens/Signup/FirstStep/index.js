@@ -1,10 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {useForm, Controller} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {
-  firstStepSignupSchema,
-  signUpSchema,
-} from '../../../utils/schemas/schemas';
+import {firstStepSignupSchema} from '../../../utils/schemas/schemas';
 import {
   Button,
   CustomText,
@@ -25,7 +22,6 @@ import {View} from 'react-native';
 import {faCalendar} from '@fortawesome/free-regular-svg-icons';
 import DatePicker from 'react-native-date-picker';
 import {Keyboard} from 'react-native';
-import * as Progress from 'react-native-progress';
 
 function FirstStep({navigation}) {
   const [progress, setProgress] = useState(0);

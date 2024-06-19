@@ -1,14 +1,13 @@
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import React from 'react';
-import {StatusBar, StyleSheet, Text, useColorScheme, View} from 'react-native';
-
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {StatusBar, useColorScheme} from 'react-native';
 import Navigation from './src/navigation';
 import {ThemeProvider} from 'styled-components';
 import theme from './src/global/theme';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {AuthProvider} from './src/context/AuthContext';
 import Toast from 'react-native-toast-message';
+import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 
 function App() {
   const colorScheme = useColorScheme();
@@ -19,8 +18,10 @@ function App() {
         <GestureHandlerRootView style={{flex: 1}}>
           <ThemeProvider theme={theme}>
             <SafeAreaProvider>
-              <StatusBar />
-              <Navigation colorScheme={colorScheme} />
+              <BottomSheetModalProvider>
+                <StatusBar />
+                <Navigation colorScheme={colorScheme} />
+              </BottomSheetModalProvider>
             </SafeAreaProvider>
           </ThemeProvider>
         </GestureHandlerRootView>

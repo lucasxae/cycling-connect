@@ -1,5 +1,7 @@
 import * as React from 'react';
 import {useAuth} from '../context/AuthContext';
+
+import TabNavigator from './tabs';
 import {
   Welcome,
   Login,
@@ -10,8 +12,14 @@ import {
   FirstStep,
   LastStep,
   ChangePassword,
+  Profile,
+  UserInformation,
+  ChangeEmail,
+  DeleteAccount,
+  UpdateUserInformation,
+  TrainingDetails,
+  EventDetails,
 } from '../screens';
-import TabNavigator from './tabs';
 import {
   NavigationContainer,
   DefaultTheme,
@@ -61,6 +69,7 @@ function RootNavigator() {
 }
 
 function AuthNavigator(props) {
+  console.log('AuthNavigator', props);
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -69,12 +78,52 @@ function AuthNavigator(props) {
         options={{
           headerShown: false,
         }}
+        initialParams={props}
       />
       <Stack.Screen
         name="ChangePassword"
         component={ChangePassword}
+        options={options}
+      />
+      <Stack.Screen
+        name="ChangeEmail"
+        component={ChangeEmail}
+        options={options}
+      />
+      <Stack.Screen
+        name="DeleteAccount"
+        component={DeleteAccount}
+        options={options}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
         initialParams={props}
         options={options}
+      />
+      <Stack.Screen
+        name="UserInformation"
+        component={UserInformation}
+        options={options}
+      />
+      <Stack.Screen
+        name="UpdateUserInformation"
+        component={UpdateUserInformation}
+        options={options}
+      />
+      <Stack.Screen
+        name="TrainingDetails"
+        component={TrainingDetails}
+        options={options}
+      />
+      <Stack.Screen
+        name="EventDetails"
+        component={EventDetails}
+        options={{
+          headerTransparent: true,
+          headerTitle: '',
+          headerTintColor: '#fff',
+        }}
       />
     </Stack.Navigator>
   );

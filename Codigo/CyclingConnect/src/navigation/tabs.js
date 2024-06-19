@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {useAuth} from '../context/AuthContext';
 import {Button} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Home, Events, Feedback, TrainingPlan} from '../screens';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {
@@ -8,14 +8,16 @@ import {
   faCalendar,
   faEnvelope,
   faList,
+  faCog,
 } from '@fortawesome/free-solid-svg-icons';
 import TabIcon from '../components/Tabs/TabIcon';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 const Tab = createBottomTabNavigator();
 
 const screenOptions = {
-  headerShown: false,
   tabBarStyle: {
+    backgroundColor: '#f04444',
     position: 'absolute',
     bottom: 16,
     right: 16,
@@ -25,9 +27,7 @@ const screenOptions = {
   },
 };
 
-function TabNavigator() {
-  const {onLogout} = useAuth();
-
+function TabNavigator({route}) {
   const tabs = [
     {
       name: 'Home',
@@ -42,15 +42,15 @@ function TabNavigator() {
       icon: faCalendar,
     },
     {
-      name: 'Feedback',
-      label: 'Feedback',
-      component: Feedback,
+      name: 'TrainingPlan',
+      label: 'TrainingPlan',
+      component: TrainingPlan,
       icon: faList,
     },
     {
-      name: 'TrainingPlan',
-      label: 'Planilhas',
-      component: TrainingPlan,
+      name: 'Feedback',
+      label: 'Feedback',
+      component: Feedback,
       icon: faEnvelope,
     },
   ];
@@ -63,19 +63,25 @@ function TabNavigator() {
             key={index}
             name={tab.name}
             component={tab.component}
+            initialParams={route.params.props}
             options={({navigation}) => ({
               tabBarShowLabel: false,
               tabBarIcon: props => {
                 return (
-                  <TabIcon
-                    {...props}
-                    item={tab}
-                    onPress={() => navigation.navigate(tab.name)}
-                  />
+                  <TouchableOpacity>
+                    <TabIcon
+                      {...props}
+                      item={tab}
+                      onPress={() => navigation.navigate(tab.name)}
+                    />
+                  </TouchableOpacity>
                 );
               },
               headerShown: true,
-              headerRight: () => <Button onPress={onLogout} title="Sair" />,
+              headerShadowVisible: false,
+              headerTintColor: '#fff',
+              headerTitle: '',
+              headerStyle: {backgroundColor: '#222'},
             })}
           />
         );

@@ -12,8 +12,6 @@ function ChangePassword({navigation}) {
   const route = useRoute();
   const {params} = route;
 
-  console.log(params.props.email);
-
   const {
     control,
     handleSubmit,
@@ -31,7 +29,7 @@ function ChangePassword({navigation}) {
   const onSubmit = useCallback(async data => {
     try {
       const newData = {
-        email: params.props.email,
+        email: params.email,
         password: data.password,
       };
 

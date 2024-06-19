@@ -1,6 +1,7 @@
 import React, {createContext, useContext, useState, useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import {set} from 'react-hook-form';
 
 const AuthContext = createContext();
 
@@ -8,7 +9,7 @@ export const useAuth = () => {
   return useContext(AuthContext);
 };
 
-export const AuthProvider = ({children, navigation}) => {
+export const AuthProvider = ({children}) => {
   const [authState, setAuthState] = useState({
     token: null,
     authenticated: null,
@@ -17,9 +18,11 @@ export const AuthProvider = ({children, navigation}) => {
   useEffect(() => {
     const loadToken = async () => {
       const token = await AsyncStorage.getItem('AccessKey');
+      const data = await AsyncStorage.getItem('Email');
 
       if (token) {
         setAuthState({
+          data: {email: data},
           token,
           authenticated: true,
         });
@@ -32,30 +35,47 @@ export const AuthProvider = ({children, navigation}) => {
   }, []);
 
   const login = async data => {
-    try {
-      const response = await axios.post(
-        'http://10.0.2.2:8080/auth/login',
-        data,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      );
+    const response = await axios.post('http://10.0.2.2:8080/auth/login', data, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
+    setAuthState({
+      data: data,
+      token: response.data.token,
+      authenticated: true,
+    });
+
+    axios.defaults.headers.common[
+      'Authorization'
+    ] = `Bearer ${authState.token}`;
+
+    await AsyncStorage.setItem('AccessKey', response.data.token);
+    await AsyncStorage.setItem('Email', data.email);
+  };
+
+  const updateUserEmail = async newEmail => {
+    setAuthState({
+      data: {email: newEmail, password: authState.data.password},
+      token: authState.token,
+      authenticated: true,
+    });
+  };
+
+  const deleteAccount = async email => {
+    const response = await axios.delete(
+      `http://10.0.2.2:8080/api/users/deleteByEmail/${email}`,
+    );
+    if (response.status === 200) {
+      await AsyncStorage.removeItem('AccessKey');
+      axios.defaults.headers.common = [''];
       setAuthState({
-        data: data,
-        token: response.data.token,
-        authenticated: true,
+        data: null,
+        token: null,
+        authenticated: false,
       });
-
-      axios.defaults.headers.common[
-        'Authorization'
-      ] = `Bearer ${authState.token}`;
-
-      await AsyncStorage.setItem('AccessKey', response.data.token);
-    } catch (error) {
-      console.log('Erro authContext', error);
+      console.log('Conta deletada!');
     }
   };
 
@@ -73,6 +93,8 @@ export const AuthProvider = ({children, navigation}) => {
   const value = {
     onLogin: login,
     onLogout: logout,
+    onUpdateEmail: updateUserEmail,
+    onDeleteAccount: deleteAccount,
     authState,
   };
 

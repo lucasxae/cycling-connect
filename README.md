@@ -103,16 +103,41 @@ Após a instalação, abra o Android Studio e siga o passo a passo a seguir:
 
 <details>
 <summary>
-<strong>[Linux] Target OS: Android</strong>
+<strong>[Windows] Dashboard: Web</strong>
 </summary>
-Será adicionado em breve.
-</details>
+  
+Este guia tem como objetivo fornecer instruções passo a passo para configurar e executar um projeto React para desenvolvimento Web.
+### Pré-requisitos
 
-<details>
-<summary>
-<strong>[macOS] Target OS: Android e IOS</strong>
-</summary>
-Será adicionado em breve.
+- [Git](https://git-scm.com/)
+- [Npm](https://docs.npmjs.com/)
+- Node na versão LTS (>= 18.20.1)
+  - Caso você queira alternar entre diferentes versões do Node, utilize o [nvm](https://github.com/coreybutler/nvm-windows).
+- JDK (Java Development Kit) na versão 17.0.10
+### Passo a passo
+
+Navege até a pasta da aplicação web:
+```powershell
+cd .\Codigo\
+cd CyclingConnectWeb
+cd cycling-connect-web
+```
+
+#### 1. **Instalação do npm e suas configurações**
+
+```powershell
+npm install
+```
+ #### 2. **Como rodar o projeto**
+ 
+ ```powershell
+npm run dev
+```
+_Observação: Ao rodar esse comando será gerado um link com a url local_
+
+
+_Observação: se você já possui o Node no seu sistema, certifique-se que esteja na versão 18 ou superior. Se você já possui o JDK no seu sistema, recomenda-se utilizar o JDK17. Pode ocorrer alguns problemas ao usar versões superiores do JDK._
+
 </details>
 
 ### Configurações de Projeto
