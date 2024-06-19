@@ -7,14 +7,19 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 import com.CyclingConnect.cyclingconnect.models.User;
+import com.CyclingConnect.cyclingconnect.models.UserRole;
 
 import jakarta.transaction.Transactional;
+import java.util.List;
+
 
 /**
  * Repositório para operações relacionadas a usuários.
  */
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
+
+    List<User> findByRole(UserRole role);
 
     UserDetails findByEmail(String email);
 

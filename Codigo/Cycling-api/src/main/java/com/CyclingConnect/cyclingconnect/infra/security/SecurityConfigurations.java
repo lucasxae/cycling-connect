@@ -61,6 +61,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.DELETE, "/events/delete").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/events/getEvents").permitAll()
                         .requestMatchers(HttpMethod.GET, "/exercise/getWeeklyExercise/{email}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/users/getAthlete").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

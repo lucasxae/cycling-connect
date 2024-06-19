@@ -1,10 +1,11 @@
 import { useState } from "react";
 import MainLayout from "./layouts/MainLayout.tsx";
 import CreateWorkout from "./pages/CreateWorkout/CreateWorkout.tsx";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material";
 import Feedbacks from "./pages/Feedbacks/Feedbacks.tsx";
 import { Login } from "./pages/Login/login.tsx";
+import EventsPage from "./pages/Events/Events.tsx";
 function App() {
   const [count, setCount] = useState(0);
   const theme = createTheme({
@@ -23,16 +24,22 @@ function App() {
   });
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Login />}></Route>
-      </Routes>
       <ThemeProvider theme={theme}>
-        <MainLayout>
-          <Routes>
-            <Route path="/planilhas" element={<CreateWorkout />}></Route>
-            <Route path="/feedbacks" element={<Feedbacks />}></Route>
-          </Routes>
-        </MainLayout>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route
+            path="/*"
+            element={
+              <MainLayout>
+                <Routes>
+                  <Route path="/planilhas" element={<CreateWorkout />} />
+                  <Route path="/feedbacks" element={<Feedbacks />} />
+                  <Route path="/eventos" element={<EventsPage />} />
+                </Routes>
+              </MainLayout>
+            }
+          />
+        </Routes>
       </ThemeProvider>
     </>
   );
