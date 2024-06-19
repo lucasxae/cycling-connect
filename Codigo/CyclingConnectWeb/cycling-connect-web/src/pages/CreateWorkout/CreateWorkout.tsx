@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { format, parseISO } from "date-fns";
 import Card from "../../components/Card/Card";
-import { Select, MenuItem, SelectChangeEvent, Button } from "@mui/material";
+
+import {
+  Select,
+  MenuItem,
+  SelectChangeEvent,
+  Button,
+  duration,
+} from "@mui/material";
 import CreateDayWorkout from "../../components/CreateDayWorkout/CreateDayWorkout";
 import CreateWorkoutModal from "../../components/CreateWorkoutModal/CreateWorkoutModal";
+import axios from "axios";
 interface Workout {
   createdAt: string;
   weekDay: string;
@@ -30,7 +39,7 @@ interface WorkoutApiResponse {
 
 interface Athlete {
   id: string;
-  name: string;
+  username: string;
   email: string;
 }
 
@@ -41,9 +50,10 @@ const CreateWorkout: React.FC = () => {
   const [selectedAthlete, setSelectedAthlete] = useState<Athlete | null>(null);
 
   useEffect(() => {
-    fetch("http://localhost:3000/athletes", {
+    fetch("http://localhost:8080/api/users/getAthlete", {
       headers: {
         "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token") || "",
       },
     })
       .then((response) => response.json())
@@ -62,9 +72,10 @@ const CreateWorkout: React.FC = () => {
   const handleChange = (event: SelectChangeEvent) => {
     const athleteId = event.target.value as string;
     const athlete = athletes.find((a) => a.id === athleteId) as Athlete;
-    fetch(`http://localhost:3000/exercise/getWeeklyExercise/${athlete.email}`, {
+    fetch(`http://localhost:8080/exercise/getWeeklyExercise/${athlete.email}`, {
       headers: {
         "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token") || "",
       },
     })
       .then((response) => response.json())
@@ -95,7 +106,7 @@ const CreateWorkout: React.FC = () => {
       {
         ...workout,
         workoutId: (prevWorkouts.length + 1).toString(),
-        createdAt: new Date().toISOString().split("T")[0],
+        createdAt: format(new Date().toISOString(), "dd/MM/yyyy"),
       },
     ]);
   };
@@ -118,19 +129,34 @@ const CreateWorkout: React.FC = () => {
   };
 
   const handleSave = () => {
-    fetch("http://localhost:3000/workouts", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(workouts),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Workouts salvos com sucesso:", data);
+    console.log("Salvando workouts:", workouts);
+    axios
+      .post(
+        "http://localhost:8080/exercise/create",
+        {
+          exercises: workouts.map((workout) => ({
+            lapSpeed: workout.lapTime,
+            suggestedRoute: workout.routeSuggestion,
+            duration: workout.totalDuration,
+            averageSpeed: parseInt(workout.averageSpeed),
+            totalDistance: parseInt(workout.totalDistance),
+            intesity: workout.heartRateZone,
+            date: workout.createdAt,
+            email: selectedAthlete?.email,
+          })),
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: localStorage.getItem("token") || "",
+          },
+        }
+      )
+      .then((response) => {
+        console.log("Workouts salvos com sucesso:", response.data);
       })
       .catch((error) => {
-        console.error("Erro ao salvar workouts:", error);
+        console.log("Erro ao salvar workouts:", error);
       });
   };
 
@@ -152,7 +178,7 @@ const CreateWorkout: React.FC = () => {
               >
                 {athletes.map((athlete) => (
                   <MenuItem key={athlete.id} value={athlete.id}>
-                    {athlete.name}
+                    {athlete.username}
                   </MenuItem>
                 ))}
               </Select>

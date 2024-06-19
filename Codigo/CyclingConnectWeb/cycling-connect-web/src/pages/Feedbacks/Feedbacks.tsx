@@ -31,7 +31,12 @@ const Feedbacks: React.FC = () => {
   const [feedbacks, setFeedbacks] = React.useState<Feedback[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/feedback")
+    fetch("http://localhost:8080/feedback", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token") || "",
+      },
+    })
       .then((response) => response.json())
       .then((data) => setFeedbacks(data))
       .catch((error) => console.error("Erro ao buscar feedbacks:", error));
