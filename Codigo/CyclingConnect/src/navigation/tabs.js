@@ -8,8 +8,10 @@ import {
   faCalendar,
   faEnvelope,
   faList,
+  faCog,
 } from '@fortawesome/free-solid-svg-icons';
 import TabIcon from '../components/Tabs/TabIcon';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 const Tab = createBottomTabNavigator();
 
@@ -80,13 +82,6 @@ function TabNavigator({route}) {
               headerTintColor: '#fff',
               headerTitle: '',
               headerStyle: {backgroundColor: '#222'},
-              headerRight: () =>
-                tab.name === 'Home' && (
-                  <Button
-                    onPress={() => navigation.navigate('Profile')}
-                    title="Menu"
-                  />
-                ),
             })}
           />
         );

@@ -28,7 +28,7 @@ function Feedback({navigation}) {
   } = useForm({
     mode: 'onBlur',
     defaultValues: {
-      nextWeekSuggestions: 5, // alterar dps para rating no back end
+      nextWeekSuggestions: 5,
       weeklyFeedback: '',
       nextWeekAvailability: '',
     },
@@ -38,11 +38,15 @@ function Feedback({navigation}) {
   const onSubmit = useCallback(async data => {
     try {
       const newData = {
+        nome: 'Ciclista',
         email: params.email,
-        nextWeekSuggestions: data.nextWeekSuggestions,
-        weeklyFeedback: data.weeklyFeedback,
-        nextWeekAvailability: parseInt(data.nextWeekAvailability),
+        nota: data.nextWeekSuggestions,
+        disponibilidadeFutura: `${data.nextWeekAvailability} dias`,
+        statusFeedback: 'Aprovado',
+        details: data.weeklyFeedback,
       };
+
+      console.log(newData);
 
       const response = await axios.post(
         `http://10.0.2.2:8080/feedback/create`,
@@ -110,7 +114,7 @@ function Feedback({navigation}) {
                   </>
                 )}
               />
-              <View style={{marginBottom: 40}}>
+              <View>
                 <Controller
                   name="weeklyFeedback"
                   control={control}
@@ -143,8 +147,7 @@ function Feedback({navigation}) {
                     placeholder="1, 2, 3..."
                     onBlur={onBlur}
                     onChangeText={onChange}
-                    value={onlyNumbers(value)}
-                    hasMargin={true}
+                    value={value}
                     keyboardType="numeric"
                     maxLength={1}
                   />

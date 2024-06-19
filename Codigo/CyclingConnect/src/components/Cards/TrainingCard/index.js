@@ -3,7 +3,7 @@ import {View, Text} from 'react-native';
 import moment from 'moment';
 import * as S from './styles';
 
-function TrainingCard({onPress, ...item}) {
+function TrainingCard({onPress, hide = false, ...item}) {
   const getMonth = () => {
     moment.locale('pt');
 
@@ -28,12 +28,14 @@ function TrainingCard({onPress, ...item}) {
 
   return (
     <S.Card onPress={onPress}>
-      <S.LeftPart>
-        <S.Day>{item.diaSemana.toLowerCase().slice(0, 3)}</S.Day>
-        <S.Number>{moment(item.date, 'DD/MM/YYYY').format('DD')}</S.Number>
-        <S.Month>{getMonth().slice(0, 3)}</S.Month>
-      </S.LeftPart>
-      <S.RightPart>
+      {!hide && (
+        <S.LeftPart>
+          <S.Day>{item.diaSemana.toLowerCase().slice(0, 3)}</S.Day>
+          <S.Number>{moment(item.date, 'DD/MM/YYYY').format('DD')}</S.Number>
+          <S.Month>{getMonth().slice(0, 3)}</S.Month>
+        </S.LeftPart>
+      )}
+      <S.RightPart hide={hide}>
         <S.Title>Ciclismo</S.Title>
         <S.Subtitle>{item.intensity}</S.Subtitle>
         <S.Description>

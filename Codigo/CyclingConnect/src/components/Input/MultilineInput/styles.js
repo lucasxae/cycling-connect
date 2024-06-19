@@ -5,7 +5,6 @@ const {colors, fonts, fontSizes} = theme;
 
 export const Container = styled.View`
   margin-top: ${props => (props.hasMargin ? 14 : 0)}px;
-  margin-bottom: 40px;
 `;
 
 export const Label = styled.Text`
