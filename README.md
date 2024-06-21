@@ -43,6 +43,10 @@ Este guia tem como objetivo fornecer instruções passo a passo para configurar 
 
 _Verificar dependências para processadores AMD no site oficial do React Native._
 
+_Observação: clone o projeto em um diretório com poucos caracteres - o CMake, utilizado para geração de build, possui problemas com path longos.
+Opte por utilizar um diretório pequeno como, por exemplo: `C:/SeuNome/NossoProjeto` ao invés de `C:/SeuNome/EngSoftware/Projetos/plf-es-2024-1-ti3-8981100-cycling-connect/...`
+Caso encontre problemas, renomeie o projeto (que será clonado como `plf-es-2024-1-ti3-8981100-cycling-connect`) para um nome mais curto._
+
 ### Passo a passo
 
 #### 1. **Instalação das dependências**
